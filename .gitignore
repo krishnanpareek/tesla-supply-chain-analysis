@@ -41,6 +41,15 @@ data/raw/**/*.parquet
 data/raw/**/*.xml
 data/raw/**/*.pdf
 
+# Multi-MB SEC primary filings (re-download via data/reference/download_log.md)
+data/raw/sec_edgar/**/*.htm
+data/raw/sec_edgar/**/*.html
+
+# Transient download helper artifacts
+data/reference/_tmp_*.json
+data/reference/_sec_*.json
+data/reference/_sec_*.atom
+
 # Allow small placeholder / inventory companions under raw
 !data/raw/**/README.md
 !data/raw/**/.gitkeep

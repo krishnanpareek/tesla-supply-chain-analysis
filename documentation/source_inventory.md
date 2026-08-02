@@ -52,7 +52,7 @@ Traceability log for every externally sourced dataset in this project.
 | Access_Date | 2026-08-02 |
 | Reliability_Notes | Official company disclosure; suitable as **reported** metrics. Vehicle group definitions may change over time — capture wording from each release. |
 | Limitations | Not SKU-level or factory-level. Deliveries ≠ retail “sales” in all contexts. Production–delivery gap is **not** unsold inventory. Energy metrics are deployments, not vehicle inventory. |
-| Status | URL verified (hub + example releases). **MANUAL LOCATE:** download each historical quarterly update needed for the time series and log per-file publication date / period in a download log. |
+| Status | URL verified. **Downloaded for Q1 2022–Q2 2026** as SEC 8-K EX-99.1 HTML under `data/raw/tesla_ir/`. Per-file publication dates and reporting periods: `data/reference/download_log.md`. |
 
 ### SRC-TESLA-IR-002 — Quarterly Shareholder / Financial Updates (context)
 
@@ -119,7 +119,7 @@ Traceability log for every externally sourced dataset in this project.
 | Access_Date | 2026-08-02 |
 | Reliability_Notes | Document URLs verified via EDGAR archives on access date. |
 | Limitations | Still need systematic extraction of each line item into `Fact_Financials` with period tags; do not copy numbers into this inventory until extraction with citation. |
-| Status | Seed URLs verified. **MANUAL LOCATE:** remaining historical 10-Q/10-K periods in scope (recommend at least 12–16 quarters for trend charts). |
+| Status | Seed URLs verified. **Downloaded for report dates 2022-03-31 through 2026-06-30** (14× 10-Q + 4× 10-K) under `data/raw/sec_edgar/` (gitignored; URLs in `data/reference/download_log.md`). |
 
 ---
 
@@ -391,8 +391,8 @@ Traceability log for every externally sourced dataset in this project.
 
 ## Manual action checklist (for you before data-load phases)
 
-1. **Tesla IR:** From https://ir.tesla.com/press, save each quarterly production/deliveries/deployments release in scope into `data/raw/tesla_ir/` and fill publication date + period in a download log.
-2. **SEC:** From https://www.sec.gov/edgar/browse/?CIK=1318605, download remaining 10-Q/10-K HTML (or XBRL) for your analysis window into `data/raw/sec_edgar/`.
+1. **Tesla IR:** DONE for Q1 2022–Q2 2026 — see `data/raw/tesla_ir/` and `data/reference/download_log.md`.
+2. **SEC:** DONE for report dates 2022-03-31–2026-06-30 — local files in `data/raw/sec_edgar/` (gitignored); URLs in download log.
 3. **NHTSA:** From https://www.nhtsa.gov/nhtsa-datasets-and-apis, download chosen recall/complaint ZIPs into `data/raw/nhtsa/` (do not commit large files).
 4. **CEC:** Open https://www.energy.ca.gov/files/zev-and-infrastructure-stats-data and the New ZEV Sales dashboard; download tables and log data-as-of dates into `data/raw/cec/`.
 5. **AFDC:** Use https://afdc.energy.gov/data_download for electric stations; if using API, create NREL key and local `.env`.
