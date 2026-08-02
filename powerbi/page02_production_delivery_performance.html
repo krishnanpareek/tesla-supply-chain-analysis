@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 2 — Production & Delivery Performance | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg0: #0f1419;
+      --bg1: #171d25;
+      --bg2: #1e2630;
+      --line: #2c3642;
+      --text: #e8eef4;
+      --muted: #93a1b0;
+      --faint: #6b7886;
+      --accent: #3d9c84;
+      --accent-dim: #2a6f5e;
+      --warn: #c4923a;
+      --prod: #6aa8ff;
+      --deliv: #3d9c84;
+      --gap-pos: #6aa8ff;
+      --gap-neg: #c4923a;
+      --radius: 10px;
+      --font: "IBM Plex Sans", system-ui, sans-serif;
+      --display: "Newsreader", Georgia, serif;
+      --mono: "IBM Plex Mono", ui-monospace, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, #1a3030 0%, transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, #1a2438 0%, transparent 50%),
+        var(--bg0);
+      min-height: 100vh;
+    }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 64px; }
+    header { margin-bottom: 22px; }
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin: 0 0 8px;
+    }
+    h1 {
+      font-family: var(--display);
+      font-weight: 600;
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
+      line-height: 1.15;
+      margin: 0 0 8px;
+    }
+    .sub { color: var(--muted); max-width: 62ch; margin: 0; font-size: 0.95rem; }
+    .controls {
+      display: flex; flex-wrap: wrap; gap: 12px; align-items: end;
+      margin: 20px 0 18px; padding: 14px 16px;
+      background: var(--bg1); border: 1px solid var(--line); border-radius: var(--radius);
+    }
+    label { display: grid; gap: 4px; font-size: 12px; color: var(--faint); }
+    select {
+      background: var(--bg2); color: var(--text); border: 1px solid var(--line);
+      border-radius: 6px; padding: 8px 10px; font: inherit; min-width: 160px;
+    }
+    .kpis {
+      display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px;
+      margin-bottom: 16px;
+    }
+    @media (max-width: 960px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .kpis { grid-template-columns: 1fr; } }
+    .kpi {
+      background: var(--bg1); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 14px 14px 12px; cursor: default; position: relative;
+    }
+    .kpi:hover { border-color: var(--accent-dim); }
+    .kpi .lbl { font-size: 11px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.04em; }
+    .kpi .val { font-family: var(--display); font-size: 1.55rem; margin-top: 6px; font-weight: 600; }
+    .kpi .meta { font-family: var(--mono); font-size: 10px; color: var(--muted); margin-top: 6px; }
+    .kpi.gap-pos .val { color: var(--gap-pos); }
+    .kpi.gap-neg .val { color: var(--gap-neg); }
+    .grid2 { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; margin-bottom: 12px; }
+    @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+    .panel {
+      background: var(--bg1); border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 14px 16px 16px; min-height: 280px;
+    }
+    .panel h2 {
+      font-size: 0.95rem; font-weight: 600; margin: 0 0 4px;
+    }
+    .panel .hint { color: var(--faint); font-size: 12px; margin: 0 0 12px; }
+    canvas { width: 100%; height: 220px; display: block; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: left; }
+    th { color: var(--faint); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; font-family: var(--mono); font-size: 12px; }
+    tr:hover td { background: rgba(61, 156, 132, 0.06); }
+    .callout {
+      margin-top: 14px; padding: 14px 16px; border-left: 3px solid var(--accent);
+      background: var(--bg1); border-radius: 0 var(--radius) var(--radius) 0;
+      color: var(--muted); font-size: 0.9rem; line-height: 1.45;
+    }
+    .tooltip {
+      position: fixed; z-index: 50; max-width: 340px; pointer-events: none;
+      background: #10161d; border: 1px solid var(--line); border-radius: 8px;
+      padding: 10px 12px; font-size: 12px; line-height: 1.4;
+      box-shadow: none; display: none;
+    }
+    .tooltip strong { display: block; margin-bottom: 4px; color: var(--text); }
+    .tooltip code { font-family: var(--mono); font-size: 10px; color: var(--accent); word-break: break-all; }
+    .pill {
+      display: inline-block; font-family: var(--mono); font-size: 10px;
+      padding: 2px 6px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted);
+    }
+    .legend { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; font-size: 12px; color: var(--muted); }
+    .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Power BI Page 2 · Portfolio prototype</p>
+      <h1>Production &amp; Delivery Performance</h1>
+      <p class="sub">
+        Tesla public IR production/delivery series (Q1 2022–Q2 2026). Figures are reported from SEC 8-K Exhibit 99.1;
+        gap and rates are calculated. Hover any KPI or chart point for source file citation.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label>Focus period
+        <select id="periodSelect"></select>
+      </label>
+      <label>Vehicle group (detail table)
+        <select id="groupSelect">
+          <option value="ALL">All groups</option>
+          <option value="Total">Total</option>
+          <option value="Model 3/Y">Model 3/Y</option>
+          <option value="Model S/X">Model S/X</option>
+          <option value="Other Models">Other Models</option>
+        </select>
+      </label>
+      <span class="pill" id="taxonomyPill"></span>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Production vs Deliveries (Total)</h2>
+        <p class="hint">Reported · hover points for Source_File / Publication_Date</p>
+        <div class="legend">
+          <span><i style="background:var(--prod)"></i>Produced</span>
+          <span><i style="background:var(--deliv)"></i>Delivered</span>
+        </div>
+        <canvas id="chartTrend" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Production–Delivery Gap (Calculated)</h2>
+        <p class="hint">Produced − Delivered · not unsold inventory</p>
+        <canvas id="chartGap" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Delivery mix by vehicle group</h2>
+        <p class="hint">Reported segment deliveries · taxonomy break at 2023Q4 (Model S/X → Other Models)</p>
+        <canvas id="chartMix" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Deliveries — QoQ growth &amp; 4Q rolling average</h2>
+        <p class="hint">Calculated from Total deliveries</p>
+        <div class="legend">
+          <span><i style="background:var(--warn)"></i>QoQ growth</span>
+          <span><i style="background:var(--deliv)"></i>4Q rolling avg (vehicles)</span>
+        </div>
+        <canvas id="chartGrowth" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Period detail</h2>
+      <p class="hint">Includes Source_File for citation discipline</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Group</th>
+              <th>Produced</th>
+              <th>Delivered</th>
+              <th>Gap</th>
+              <th>Conv.</th>
+              <th>Energy GWh</th>
+              <th>Published</th>
+              <th>Source file</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">Executive interpretation.</strong>
+      Reported production and deliveries do not move in lockstep. Positive and negative gaps both appear in the public series.
+      The data indicates timing and logistics effects can dominate a single quarter; additional internal data would be required to attribute any quarter to demand, shutdowns, or mix.
+      Vehicle-group labels change at Q4 2023 (<code>Model S/X</code> → <code>Other Models</code>) and must not be treated as one continuous segment without disclosure.
+    </div>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+  <script src="_embed_data.js"></script>
+  <script>
+    const DATA = window.FACT_TESLA_OPS || [];
+    const tip = document.getElementById("tooltip");
+
+    function periodSort(id) {
+      return Number(id.slice(0, 4)) * 10 + Number(id.slice(-1));
+    }
+    function fmt(n) {
+      if (n === null || n === undefined || Number.isNaN(n)) return "—";
+      return Math.round(n).toLocaleString("en-US");
+    }
+    function fmtPct(n) {
+      if (n === null || n === undefined || Number.isNaN(n)) return "—";
+      return (n * 100).toFixed(1) + "%";
+    }
+    function totals() {
+      return DATA.filter((d) => d.Vehicle_Group === "Total")
+        .sort((a, b) => periodSort(a.Period_ID) - periodSort(b.Period_ID));
+    }
+    function showTip(html, x, y) {
+      tip.innerHTML = html;
+      tip.style.display = "block";
+      const pad = 14;
+      tip.style.left = Math.min(x + pad, window.innerWidth - 360) + "px";
+      tip.style.top = Math.min(y + pad, window.innerHeight - 180) + "px";
+    }
+    function hideTip() { tip.style.display = "none"; }
+
+    function citationHtml(row, metricName, metricLabel, valueText) {
+      return `<strong>${row.Period_ID} · ${row.Vehicle_Group} · ${metricName} (${metricLabel})</strong>
+        Value: ${valueText}<br/>
+        Reporting period: ${row.Reporting_Period}<br/>
+        Published: ${row.Publication_Date}<br/>
+        Source ID: ${row.Source_ID}<br/>
+        <code>${row.Source_File}</code><br/>
+        <span style="color:#93a1b0">Gap is not unsold inventory.</span>`;
+    }
+
+    const T = totals();
+    const periodSelect = document.getElementById("periodSelect");
+    T.forEach((r) => {
+      const opt = document.createElement("option");
+      opt.value = r.Period_ID;
+      opt.textContent = r.Period_ID + " (" + r.Reporting_Period + ")";
+      periodSelect.appendChild(opt);
+    });
+    periodSelect.value = T[T.length - 1].Period_ID;
+
+    function selectedTotal() {
+      return T.find((r) => r.Period_ID === periodSelect.value) || T[T.length - 1];
+    }
+
+    function renderKpis() {
+      const row = selectedTotal();
+      const idx = T.findIndex((r) => r.Period_ID === row.Period_ID);
+      const yoyBase = idx >= 4 ? T[idx - 4].Vehicles_Delivered : null;
+      const yoy = yoyBase ? (row.Vehicles_Delivered - yoyBase) / yoyBase : null;
+      const gapClass = row.Production_Delivery_Gap > 0 ? "gap-pos" : row.Production_Delivery_Gap < 0 ? "gap-neg" : "";
+      const cards = [
+        { name: "Vehicles Produced", label: "Reported", val: fmt(row.Vehicles_Produced), raw: row.Vehicles_Produced, cls: "" },
+        { name: "Vehicles Delivered", label: "Reported", val: fmt(row.Vehicles_Delivered), raw: row.Vehicles_Delivered, cls: "" },
+        { name: "Production–Delivery Gap", label: "Calculated", val: fmt(row.Production_Delivery_Gap), raw: row.Production_Delivery_Gap, cls: gapClass },
+        { name: "Delivery Conversion Rate", label: "Calculated", val: fmtPct(row.Delivery_Conversion_Rate), raw: row.Delivery_Conversion_Rate, cls: "" },
+        { name: "Deliveries YoY Growth", label: "Calculated", val: fmtPct(yoy), raw: yoy, cls: "" },
+      ];
+      const el = document.getElementById("kpis");
+      el.innerHTML = "";
+      cards.forEach((c) => {
+        const div = document.createElement("div");
+        div.className = "kpi " + c.cls;
+        div.innerHTML = `<div class="lbl">${c.name}</div><div class="val">${c.val}</div><div class="meta">${c.label} · ${row.Period_ID}</div>`;
+        div.addEventListener("mousemove", (e) => {
+          showTip(citationHtml(row, c.name, c.label, c.val), e.clientX, e.clientY);
+        });
+        div.addEventListener("mouseleave", hideTip);
+        el.appendChild(div);
+      });
+      const flags = row.Format_Flags || "";
+      document.getElementById("taxonomyPill").textContent = flags.includes("Other_Models")
+        ? "Taxonomy: Other Models era"
+        : "Taxonomy: Model S/X era";
+    }
+
+    function drawLineChart(canvas, series, colors, yFormat) {
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.height;
+      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      const pad = { l: 48, r: 12, t: 12, b: 36 };
+      const plotW = w - pad.l - pad.r;
+      const plotH = h - pad.t - pad.b;
+      const n = series[0].values.length;
+      let min = Infinity, max = -Infinity;
+      series.forEach((s) => s.values.forEach((v) => { if (v != null) { min = Math.min(min, v); max = Math.max(max, v); } }));
+      if (min === max) { min -= 1; max += 1; }
+      const y0 = Math.min(0, min);
+      const span = max - y0 || 1;
+      const xAt = (i) => pad.l + (n === 1 ? plotW / 2 : (i / (n - 1)) * plotW);
+      const yAt = (v) => pad.t + plotH - ((v - y0) / span) * plotH;
+
+      ctx.strokeStyle = "#2c3642"; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t + plotH); ctx.lineTo(pad.l + plotW, pad.t + plotH); ctx.stroke();
+      // zero line if in range
+      if (y0 < 0 && max > 0) {
+        ctx.strokeStyle = "#3a4552";
+        ctx.beginPath(); ctx.moveTo(pad.l, yAt(0)); ctx.lineTo(pad.l + plotW, yAt(0)); ctx.stroke();
+      }
+
+      series.forEach((s, si) => {
+        ctx.strokeStyle = colors[si]; ctx.lineWidth = 2; ctx.beginPath();
+        let started = false;
+        s.values.forEach((v, i) => {
+          if (v == null) return;
+          const x = xAt(i), y = yAt(v);
+          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+        s.values.forEach((v, i) => {
+          if (v == null) return;
+          ctx.fillStyle = colors[si];
+          ctx.beginPath(); ctx.arc(xAt(i), yAt(v), 3.2, 0, Math.PI * 2); ctx.fill();
+        });
+      });
+
+      ctx.fillStyle = "#6b7886"; ctx.font = "10px IBM Plex Mono, monospace";
+      T.forEach((r, i) => {
+        if (i % 2 !== 0 && i !== T.length - 1) return;
+        const x = xAt(i);
+        ctx.fillText(r.Period_ID.replace("20", "'"), x - 14, h - 12);
+      });
+      ctx.fillText(yFormat(max), 4, pad.t + 8);
+      ctx.fillText(yFormat(y0), 4, pad.t + plotH);
+
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        let best = 0, bestDist = Infinity;
+        for (let i = 0; i < n; i++) {
+          const d = Math.abs(xAt(i) - x);
+          if (d < bestDist) { bestDist = d; best = i; }
+        }
+        if (bestDist > 24) { hideTip(); return; }
+        const row = T[best];
+        const lines = series.map((s, si) => `${s.name}: ${yFormat(s.values[best])}`).join("<br/>");
+        showTip(citationHtml(row, series.map((s) => s.name).join(" / "), series[0].label, lines), e.clientX, e.clientY);
+      };
+      canvas.onmouseleave = hideTip;
+    }
+
+    function drawGapBars(canvas) {
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.height;
+      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      const pad = { l: 48, r: 12, t: 12, b: 36 };
+      const plotW = w - pad.l - pad.r;
+      const plotH = h - pad.t - pad.b;
+      const vals = T.map((r) => r.Production_Delivery_Gap);
+      const max = Math.max(...vals.map(Math.abs), 1);
+      const xAt = (i) => pad.l + (i + 0.15) * (plotW / vals.length);
+      const barW = (plotW / vals.length) * 0.7;
+      const yAt = (v) => pad.t + plotH / 2 - (v / max) * (plotH / 2);
+      ctx.strokeStyle = "#3a4552";
+      ctx.beginPath(); ctx.moveTo(pad.l, pad.t + plotH / 2); ctx.lineTo(pad.l + plotW, pad.t + plotH / 2); ctx.stroke();
+      vals.forEach((v, i) => {
+        const y = yAt(v);
+        const y0 = pad.t + plotH / 2;
+        ctx.fillStyle = v >= 0 ? "#6aa8ff" : "#c4923a";
+        const top = Math.min(y, y0);
+        const bh = Math.abs(y - y0);
+        ctx.fillRect(xAt(i), top, barW, Math.max(bh, 1));
+      });
+      ctx.fillStyle = "#6b7886"; ctx.font = "10px IBM Plex Mono, monospace";
+      ctx.fillText("prod > deliv", 4, pad.t + 10);
+      ctx.fillText("deliv > prod", 4, pad.t + plotH - 2);
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        let best = 0, bestDist = Infinity;
+        for (let i = 0; i < vals.length; i++) {
+          const cx = xAt(i) + barW / 2;
+          const d = Math.abs(cx - x);
+          if (d < bestDist) { bestDist = d; best = i; }
+        }
+        if (bestDist > 20) { hideTip(); return; }
+        const row = T[best];
+        showTip(citationHtml(row, "Production–Delivery Gap", "Calculated", fmt(row.Production_Delivery_Gap)), e.clientX, e.clientY);
+      };
+      canvas.onmouseleave = hideTip;
+    }
+
+    function drawMix(canvas) {
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.height;
+      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      const pad = { l: 36, r: 12, t: 18, b: 36 };
+      const plotW = w - pad.l - pad.r;
+      const plotH = h - pad.t - pad.b;
+      const periods = T.map((r) => r.Period_ID);
+      const breakIdx = periods.indexOf("2023Q4");
+      periods.forEach((pid, i) => {
+        const segs = DATA.filter((d) => d.Period_ID === pid && d.Vehicle_Group !== "Total");
+        const sum = segs.reduce((a, s) => a + s.Vehicles_Delivered, 0) || 1;
+        let y = pad.t;
+        const x = pad.l + i * (plotW / periods.length) + 2;
+        const bw = (plotW / periods.length) - 4;
+        segs.forEach((s) => {
+          const bh = (s.Vehicles_Delivered / sum) * plotH;
+          ctx.fillStyle = s.Vehicle_Group === "Model 3/Y" ? "#3d9c84"
+            : s.Vehicle_Group === "Model S/X" ? "#6aa8ff" : "#c4923a";
+          ctx.fillRect(x, y, bw, bh);
+          y += bh;
+        });
+      });
+      if (breakIdx >= 0) {
+        const x = pad.l + breakIdx * (plotW / periods.length);
+        ctx.strokeStyle = "#e8eef4";
+        ctx.setLineDash([4, 3]);
+        ctx.beginPath(); ctx.moveTo(x, pad.t - 4); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.fillStyle = "#93a1b0"; ctx.font = "10px IBM Plex Sans, sans-serif";
+        ctx.fillText("taxonomy break", x + 4, pad.t - 6);
+      }
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const i = Math.max(0, Math.min(periods.length - 1, Math.floor((x - pad.l) / (plotW / periods.length))));
+        const pid = periods[i];
+        const segs = DATA.filter((d) => d.Period_ID === pid && d.Vehicle_Group !== "Total");
+        const totalRow = T.find((r) => r.Period_ID === pid);
+        const body = segs.map((s) => `${s.Vehicle_Group}: ${fmt(s.Vehicles_Delivered)}`).join("<br/>");
+        showTip(citationHtml(totalRow, "Delivery mix (segments)", "Reported", body), e.clientX, e.clientY);
+      };
+      canvas.onmouseleave = hideTip;
+    }
+
+    function drawGrowth(canvas) {
+      const qoq = T.map((r, i) => {
+        if (i === 0) return null;
+        const prev = T[i - 1].Vehicles_Delivered;
+        return (r.Vehicles_Delivered - prev) / prev;
+      });
+      const roll = T.map((_, i) => {
+        const slice = T.slice(Math.max(0, i - 3), i + 1);
+        return slice.reduce((a, r) => a + r.Vehicles_Delivered, 0) / slice.length;
+      });
+      // dual: bars for qoq mapped to -axis, line for roll on secondary — simplify to two panels in one canvas
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.height;
+      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      const pad = { l: 48, r: 48, t: 12, b: 36 };
+      const plotW = w - pad.l - pad.r;
+      const plotH = h - pad.t - pad.b;
+      const qmin = Math.min(...qoq.filter((v) => v != null), 0);
+      const qmax = Math.max(...qoq.filter((v) => v != null), 0.01);
+      const rmin = Math.min(...roll);
+      const rmax = Math.max(...roll);
+      const xAt = (i) => pad.l + (i + 0.2) * (plotW / T.length);
+      const barW = (plotW / T.length) * 0.55;
+      const yQ = (v) => {
+        const span = qmax - qmin || 1;
+        return pad.t + plotH - ((v - qmin) / span) * plotH;
+      };
+      const yR = (v) => {
+        const span = rmax - rmin || 1;
+        return pad.t + plotH - ((v - rmin) / span) * plotH;
+      };
+      // zero for qoq
+      if (qmin < 0 && qmax > 0) {
+        ctx.strokeStyle = "#3a4552";
+        ctx.beginPath(); ctx.moveTo(pad.l, yQ(0)); ctx.lineTo(pad.l + plotW, yQ(0)); ctx.stroke();
+      }
+      qoq.forEach((v, i) => {
+        if (v == null) return;
+        const y = yQ(v);
+        const y0 = yQ(0);
+        ctx.fillStyle = "#c4923a";
+        ctx.fillRect(xAt(i), Math.min(y, y0), barW, Math.max(Math.abs(y - y0), 1));
+      });
+      ctx.strokeStyle = "#3d9c84"; ctx.lineWidth = 2; ctx.beginPath();
+      roll.forEach((v, i) => {
+        const x = xAt(i) + barW / 2;
+        const y = yR(v);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.stroke();
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        let best = 0, bestDist = Infinity;
+        for (let i = 0; i < T.length; i++) {
+          const d = Math.abs(xAt(i) + barW / 2 - x);
+          if (d < bestDist) { bestDist = d; best = i; }
+        }
+        if (bestDist > 22) { hideTip(); return; }
+        const row = T[best];
+        const g = qoq[best];
+        const rr = roll[best];
+        showTip(
+          citationHtml(
+            row,
+            "QoQ growth / 4Q rolling avg",
+            "Calculated",
+            `QoQ: ${fmtPct(g)}<br/>4Q rolling avg deliveries: ${fmt(rr)}`
+          ),
+          e.clientX,
+          e.clientY
+        );
+      };
+      canvas.onmouseleave = hideTip;
+    }
+
+    function renderTable() {
+      const g = document.getElementById("groupSelect").value;
+      const pid = periodSelect.value;
+      let rows = DATA.filter((d) => d.Period_ID === pid);
+      if (g !== "ALL") rows = rows.filter((d) => d.Vehicle_Group === g);
+      rows.sort((a, b) => a.Vehicle_Group.localeCompare(b.Vehicle_Group));
+      const body = document.getElementById("detailBody");
+      body.innerHTML = rows.map((r) => `<tr>
+        <td>${r.Period_ID}</td>
+        <td>${r.Vehicle_Group}</td>
+        <td class="num">${fmt(r.Vehicles_Produced)}</td>
+        <td class="num">${fmt(r.Vehicles_Delivered)}</td>
+        <td class="num">${fmt(r.Production_Delivery_Gap)}</td>
+        <td class="num">${fmtPct(r.Delivery_Conversion_Rate)}</td>
+        <td class="num">${r.Energy_Storage_GWh == null ? "—" : r.Energy_Storage_GWh}</td>
+        <td>${r.Publication_Date}</td>
+        <td><code style="font-size:10px;color:#3d9c84">${r.Source_File}</code></td>
+      </tr>`).join("");
+    }
+
+    function renderAll() {
+      renderKpis();
+      drawLineChart(
+        document.getElementById("chartTrend"),
+        [
+          { name: "Vehicles Produced", label: "Reported", values: T.map((r) => r.Vehicles_Produced) },
+          { name: "Vehicles Delivered", label: "Reported", values: T.map((r) => r.Vehicles_Delivered) },
+        ],
+        ["#6aa8ff", "#3d9c84"],
+        fmt
+      );
+      drawGapBars(document.getElementById("chartGap"));
+      drawMix(document.getElementById("chartMix"));
+      drawGrowth(document.getElementById("chartGrowth"));
+      renderTable();
+    }
+
+    periodSelect.addEventListener("change", renderAll);
+    document.getElementById("groupSelect").addEventListener("change", renderTable);
+    window.addEventListener("resize", renderAll);
+    if (!DATA.length) {
+      document.querySelector(".wrap").insertAdjacentHTML(
+        "afterbegin",
+        "<p style='color:#c4923a'>Fact data failed to load. Ensure powerbi/_embed_data.js is present.</p>"
+      );
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>
