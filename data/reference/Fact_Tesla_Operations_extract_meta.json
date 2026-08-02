@@ -1,0 +1,344 @@
+[
+  {
+    "period_id": "2022Q1",
+    "reporting_period": "2022-01-01 to 2022-03-31",
+    "publication_date": "2022-04-04",
+    "source_file": "tesla_production_deliveries_Q1_2022_2022-04-04_tsla-ex991_6.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2023Q1",
+    "reporting_period": "2023-01-01 to 2023-03-31",
+    "publication_date": "2023-04-03",
+    "source_file": "tesla_production_deliveries_Q1_2023_2023-04-03_tsla-ex991_7.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2024Q1",
+    "reporting_period": "2024-01-01 to 2024-03-31",
+    "publication_date": "2024-04-02",
+    "source_file": "tesla_production_deliveries_Q1_2024_2024-04-02_tsla-ex99_1.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_unit=MWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2025Q1",
+    "reporting_period": "2025-01-01 to 2025-03-31",
+    "publication_date": "2025-04-02",
+    "source_file": "tesla_production_deliveries_Q1_2025_2025-04-02_exhibit9911.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2026Q1",
+    "reporting_period": "2026-01-01 to 2026-03-31",
+    "publication_date": "2026-04-02",
+    "source_file": "tesla_production_deliveries_Q1_2026_2026-04-02_exhibit9911111.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2022Q2",
+    "reporting_period": "2022-04-01 to 2022-06-30",
+    "publication_date": "2022-07-05",
+    "source_file": "tesla_production_deliveries_Q2_2022_2022-07-05_tsla-ex991_6.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2023Q2",
+    "reporting_period": "2023-04-01 to 2023-06-30",
+    "publication_date": "2023-07-03",
+    "source_file": "tesla_production_deliveries_Q2_2023_2023-07-03_tsla-ex99_1.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2024Q2",
+    "reporting_period": "2024-04-01 to 2024-06-30",
+    "publication_date": "2024-07-02",
+    "source_file": "tesla_production_deliveries_Q2_2024_2024-07-02_exhibit991.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2025Q2",
+    "reporting_period": "2025-04-01 to 2025-06-30",
+    "publication_date": "2025-07-02",
+    "source_file": "tesla_production_deliveries_Q2_2025_2025-07-02_exhibit99111.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2026Q2",
+    "reporting_period": "2026-04-01 to 2026-06-30",
+    "publication_date": "2026-07-02",
+    "source_file": "tesla_production_deliveries_Q2_2026_2026-07-02_exhibit99111111.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2022Q3",
+    "reporting_period": "2022-07-01 to 2022-09-30",
+    "publication_date": "2022-10-03",
+    "source_file": "tesla_production_deliveries_Q3_2022_2022-10-03_tsla-ex991_6.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2023Q3",
+    "reporting_period": "2023-07-01 to 2023-09-30",
+    "publication_date": "2023-10-02",
+    "source_file": "tesla_production_deliveries_Q3_2023_2023-10-02_tsla-ex99_1.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2024Q3",
+    "reporting_period": "2024-07-01 to 2024-09-30",
+    "publication_date": "2024-10-02",
+    "source_file": "tesla_production_deliveries_Q3_2024_2024-10-02_ex991.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2025Q3",
+    "reporting_period": "2025-07-01 to 2025-09-30",
+    "publication_date": "2025-10-02",
+    "source_file": "tesla_production_deliveries_Q3_2025_2025-10-02_exhibit991111.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2022Q4",
+    "reporting_period": "2022-10-01 to 2022-12-31",
+    "publication_date": "2023-01-03",
+    "source_file": "tesla_production_deliveries_Q4_2022_2023-01-03_tsla-ex991_6.htm",
+    "format_flags": [
+      "vehicle_group_label=Model_S_X",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model S/X",
+      "Model 3/Y"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2023Q4",
+    "reporting_period": "2023-10-01 to 2023-12-31",
+    "publication_date": "2024-01-02",
+    "source_file": "tesla_production_deliveries_Q4_2023_2024-01-02_tsla-ex99_1.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Vehicle_Production_Deliveries",
+      "energy_storage=not_disclosed_in_release"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": false
+  },
+  {
+    "period_id": "2024Q4",
+    "reporting_period": "2024-10-01 to 2024-12-31",
+    "publication_date": "2025-01-02",
+    "source_file": "tesla_production_deliveries_Q4_2024_2025-01-02_exhibit991.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  },
+  {
+    "period_id": "2025Q4",
+    "reporting_period": "2025-10-01 to 2025-12-31",
+    "publication_date": "2026-01-02",
+    "source_file": "tesla_production_deliveries_Q4_2025_2026-01-02_exhibit9914.htm",
+    "format_flags": [
+      "vehicle_group_label=Other_Models",
+      "release_title=Production_Deliveries_Deployments",
+      "energy_unit=GWh"
+    ],
+    "validation": [
+      "Validation OK: segment sums equal Total row"
+    ],
+    "segment_groups": [
+      "Model 3/Y",
+      "Other Models"
+    ],
+    "has_energy": true
+  }
+]
