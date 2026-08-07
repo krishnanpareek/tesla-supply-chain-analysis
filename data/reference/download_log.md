@@ -129,6 +129,8 @@ Extract: `scripts/extract_fact_recalls_flat.py` → `Fact_Recalls.csv` (MAKETXT=
 
 Hub: https://www.energy.ca.gov/files/zev-and-infrastructure-stats-data
 
+**Revision note (2026-08-07):** CEC press release of 2025-07-31 reported 2025Q2 total ZEV sales = **100,671**. The exports above (Data as of **June 30, 2026**; filename last updated **07-17-2026**; live dashboard last updated **July 20, 2026**) revise that quarter to **101,623**. County and ZIP sheets agree; not an extract error. See `documentation/source_inventory.md` SRC-CEC-001.
+
 ---
 
 ## E. USGS — Mineral Commodity Summaries 2026

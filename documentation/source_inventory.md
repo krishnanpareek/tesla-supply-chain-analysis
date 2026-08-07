@@ -205,17 +205,17 @@ Traceability log for every externally sourced dataset in this project.
 | Source_URL | https://www.energy.ca.gov/data-reports/energy-almanac/zero-emission-vehicle-and-infrastructure-statistics-collection/new-zev |
 | Collection hub | https://www.energy.ca.gov/data-reports/energy-almanac/zero-emission-vehicle-and-infrastructure-statistics-collection |
 | Citation landing (CEC) | https://www.energy.ca.gov/zevstats |
-| Publication_Date | Dashboard states update metadata on page (example observed in search snippet: data-as-of / dashboard-updated fields — **copy exact dates from page at download**) |
+| Publication_Date | Export used: `New_ZEV_Sales_Last_updated_07-17-2026_ada.xlsx` (+ companion `LDV_Sales_and_Shares_Last_updated_07-17-2026_ada.xlsx`). Readme / live dashboard: **Data as of June 30, 2026**; dashboard last updated **July 20, 2026** (page checked 2026-08-07). |
 | Reporting_Period | Quarterly updates of DMV-based new ZEV registration analysis; geographic grain may include county / MSA / ZIP depending on view |
 | File_Format | Dashboard export / downloadable tables (CSV/XLSX when offered) |
-| Update_Frequency | Quarterly (CEC description) |
+| Update_Frequency | Quarterly (CEC description); prior-quarter figures are revised in later snapshots |
 | Data_Fields | Manufacturer, model, fuel type (BEV/PHEV/FCEV), geography, period, vehicle counts |
 | Data_Definition | CEC analysis of California DMV data to infer **new ZEV sales/registrations** (method documented by CEC; not a raw DMV dump) |
 | Primary/Secondary | Primary → `Fact_EV_Market` (CA registrations / sales side) |
-| Access_Date | 2026-08-02 |
-| Reliability_Notes | Authoritative for **California** ZEV market stats. Methodology for “new sale” inference has changed over time — read CEC notes before YoY comparisons. |
-| Limitations | California-only for this source. Not national Tesla deliveries. County/ZIP assignments use mailing address rules with exceptions. |
-| Status | Page URLs verified. **MANUAL LOCATE:** use dashboard “download data” control and/or CEC file bundle (SRC-CEC-003) to obtain manufacturer/model-level tables; record exact export filename + data-as-of date. |
+| Access_Date | 2026-08-02 (exports); inventory revision note 2026-08-07 |
+| Reliability_Notes | Authoritative for **California** ZEV market stats. Methodology for “new sale” inference has changed over time (CEC notes May 2025 audit; 2023/2025 method updates) — read CEC notes before YoY comparisons. CEC Readme: current-year quarters are preliminary and change until year-end Q4 finalization. |
+| Limitations | California-only for this source. Not national Tesla deliveries. County/ZIP assignments use mailing address rules with exceptions (incl. Out Of State). |
+| Status | Exports logged in `data/reference/download_log.md`. **Revision vs press release:** CEC news release [2025-07-31](https://www.energy.ca.gov/news/2025-07/over-100000-zevs-sold-california-second-quarter-2025) cited **100,671** total CA ZEV sales for **2025Q2** (21.6% of new LDV). Same quarter in the June 30, 2026 snapshot sums to **101,623** (+952 / ~0.95%) on both County and ZIP sheets — not an extraction error. Gap is a later dashboard revision (~11 months after the release). Excluding “Out Of State” (1,400) yields 100,223 and does **not** reproduce 100,671, so the press figure is not a different geographic filter on this file. Prefer the export data-as-of date over contemporaneous press totals. |
 
 ### SRC-CEC-002 — Light-Duty Vehicle Population & EV Chargers (same collection)
 
@@ -383,7 +383,7 @@ Traceability log for every externally sourced dataset in this project.
 | SRC-NHTSA-001 | NHTSA | Fact_Recalls | Hub verified; ZIP selection MANUAL LOCATE |
 | SRC-NHTSA-002 | NHTSA | Fact_Complaints | Hub verified; large ZIP MANUAL LOCATE |
 | SRC-NHTSA-003 | NHTSA | Recalls/Complaints alternate | API docs verified; model spellings MANUAL LOCATE |
-| SRC-CEC-001/002/003 | CEC | Fact_EV_Market | Pages verified; export files MANUAL LOCATE |
+| SRC-CEC-001/002/003 | CEC | Fact_EV_Market | ZEV/LDV exports logged (Data as of June 30, 2026); 2025Q2 press vs export revision noted under SRC-CEC-001 |
 | SRC-AFDC-001/002 | DOE AFDC / NREL | Fact_EV_Market (chargers) | Hub/docs verified; snapshot + API key MANUAL LOCATE |
 | SRC-USGS-001/002/003 | USGS | Fact_Raw_Materials | MCS hubs verified; commodity CSV/PDF extract MANUAL LOCATE |
 
