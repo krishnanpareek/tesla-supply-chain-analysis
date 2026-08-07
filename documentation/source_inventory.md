@@ -145,7 +145,7 @@ Traceability log for every externally sourced dataset in this project.
 | Access_Date | 2026-08-02 |
 | Reliability_Notes | Official U.S. safety regulator database. `POTAFF` is potential units affected as reported — treat as **reported**, not confirmed repairs completed. |
 | Limitations | U.S.-centric. Component text is free-form. Do not assert supplier causation from component strings. Large files — gitignore; store locally under `data/raw/nhtsa/`. |
-| Status | Hub + import-instructions URL verified. **MANUAL LOCATE:** choose specific ZIP(s) (e.g., recent year slices vs full history) from the hub table and log exact filenames + Updated timestamps. |
+| Status | Downloaded 2026-08-07: `FLAT_RCL_PRE_2010.zip` + `FLAT_RCL_POST_2010.zip` (+ `RCL.txt`, import instructions). Last-Modified HTTP 2026-08-07 07:05:12 GMT. Primary extract path for `Fact_Recalls` via `scripts/extract_fact_recalls_flat.py`. |
 
 ### SRC-NHTSA-002 — Complaints flat files
 

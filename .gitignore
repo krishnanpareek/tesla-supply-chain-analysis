@@ -37,6 +37,7 @@ data/raw/**/*.xls
 data/raw/**/*.zip
 data/raw/**/*.gz
 data/raw/**/*.json
+data/raw/**/*.jsonl
 data/raw/**/*.parquet
 data/raw/**/*.xml
 data/raw/**/*.pdf

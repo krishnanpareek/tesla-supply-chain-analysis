@@ -1,0 +1,17 @@
+Year,Recall_Campaign_Count,Potential_Units_Affected_Sum,Source_ID,Snapshot_Date,Metric_Label,Notes
+2009,1,345,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2010,1,439,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2013,1,1228,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2014,1,21081,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2015,1,59415,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2016,2,9405,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2017,3,39288,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2018,2,88267,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2019,2,68762,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2020,4,26217,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2021,11,658319,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2022,20,3769598,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2023,14,2590641,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2024,16,5138161,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2025,11,745075,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign
+2026,3,233616,SRC-NHTSA-001,2026-08-07,reported,Campaigns attributed to earliest Report_Received_Date year; units = max POTAFF per campaign

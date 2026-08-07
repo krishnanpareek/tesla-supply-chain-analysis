@@ -97,4 +97,44 @@ Exact local file inventory for Phase 3 raw downloads.
 
 - Local IR copies are SEC-filed HTML exhibits, not the ir.tesla.com PDF mirror (Akamai blocked automated PDF pulls from this environment). Figures are the same company-reported release content.
 - SEC primary documents are iXBRL HTML; presentation markup is verbose. Extraction scripts must target reported line items carefully.
-- No values from these files have been loaded into fact tables yet.
+
+---
+
+## C. NHTSA — Recalls flat files (primary for Fact_Recalls)
+
+| Source_ID | Local_Filename | Last-Modified (HTTP) | Source_URL | Bytes | Access_Date |
+|-----------|----------------|----------------------|------------|-------|-------------|
+| SRC-NHTSA-001 | `FLAT_RCL_PRE_2010.zip` | 2026-08-07 07:05:12 GMT | https://static.nhtsa.gov/odi/ffdd/rcl/FLAT_RCL_PRE_2010.zip | 7373962 | 2026-08-07 |
+| SRC-NHTSA-001 | `FLAT_RCL_POST_2010.zip` | 2026-08-07 07:05:12 GMT | https://static.nhtsa.gov/odi/ffdd/rcl/FLAT_RCL_POST_2010.zip | 14775798 | 2026-08-07 |
+| SRC-NHTSA-001 | `RCL.txt` | 2026-08-07 07:05:12 GMT | https://static.nhtsa.gov/odi/ffdd/rcl/RCL.txt | 3053 | 2026-08-07 |
+| SRC-NHTSA-001 | `Import_Instructions_Recalls.pdf` | 2023-10-27 | https://static.nhtsa.gov/odi/ffdd/rcl/Import_Instructions_Recalls.pdf | 1030032 | 2026-08-07 |
+
+Extract: `scripts/extract_fact_recalls_flat.py` → `Fact_Recalls.csv` (MAKETXT=TESLA). POTAFF populated.
+
+### C2. NHTSA API snapshot (superseded for Fact_Recalls; retained for complaints path)
+
+| Source_ID | Dataset | Local files | Snapshot_Date | Notes |
+|-----------|---------|-------------|---------------|-------|
+| SRC-NHTSA-003 | recallsByVehicle / complaintsByVehicle | `data/raw/nhtsa/*_raw.jsonl` (gitignored) | 2026-08-02 | API path dropped for Fact_Recalls after flat-file rebuild. Still used historically for complaints extract. |
+
+---
+
+## D. CEC — ZEV sales & chargers
+
+| Source_ID | Local_Filename | Data_As_Of | Source_URL | Bytes |
+|-----------|----------------|------------|------------|-------|
+| SRC-CEC-001 | `New_ZEV_Sales_Last_updated_07-17-2026_ada.xlsx` | June 30, 2026 | https://www.energy.ca.gov/filebrowser/download/9805?fid=9805 | 5873992 |
+| SRC-CEC-001 | `LDV_Sales_and_Shares_Last_updated_07-17-2026_ada.xlsx` | June 30, 2026 | https://www.energy.ca.gov/filebrowser/download/9806?fid=9806 | 194592 |
+| SRC-CEC-002 | `EV_Chargers_Last_updated_04-21-2026_ada.xlsx` | December 31, 2025 | https://www.energy.ca.gov/filebrowser/download/9662?fid=9662 | 85225 |
+
+Hub: https://www.energy.ca.gov/files/zev-and-infrastructure-stats-data
+
+---
+
+## E. USGS — Mineral Commodity Summaries 2026
+
+| Source_ID | Local_Filename | Publication_Date | Source_URL | Bytes |
+|-----------|----------------|------------------|------------|-------|
+| SRC-USGS-001 | `MCS2026_Commodities_Data.csv` | 2026-02-06 | https://www.sciencebase.gov/catalog/file/get/69837e43b66b01367d7ec7c7?f=__disk__d3%2Fac%2F84%2Fd3ac8466552946c5e8caa2c2c6338d9e1aff655d | 3189010 |
+
+ScienceBase item: https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7 · DOI https://doi.org/10.5066/P1WKQ63T
