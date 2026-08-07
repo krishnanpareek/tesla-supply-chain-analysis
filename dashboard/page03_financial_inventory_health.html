@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 3 — Financial &amp; Inventory Health | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <nav class="site-nav" id="siteNav"></nav>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Dashboard Page 3 · Fact_Financials</p>
+      <h1>Financial &amp; Inventory Health</h1>
+      <p class="sub">
+        SEC 10-Q / 10-K line items for Q1 2022–Q2 2026 (USD millions). Revenue, inventory, and cash-flow figures
+        trace to EDGAR filings; margins, free cash flow, and inventory days are calculated. Hover any KPI
+        or chart point for Source_File / Source_URL citation.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label>Focus period
+        <select id="periodSelect"></select>
+      </label>
+      <span class="pill" id="formPill"></span>
+      <span class="pill" id="cashPill"></span>
+      <span class="pill" id="plPill"></span>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+    <section class="kpis" id="kpis2"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Total vs Automotive Revenue</h2>
+        <p class="hint">USD millions · Q1–Q3 reported; Q4 = annual − 9-mo YTD (calculated)</p>
+        <div class="legend">
+          <span><i style="background:var(--prod)"></i>Total revenue</span>
+          <span><i style="background:var(--deliv)"></i>Automotive revenue</span>
+        </div>
+        <canvas id="chartRev" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Automotive Gross Margin</h2>
+        <p class="hint">Calculated · (Auto rev − Auto COGS) / Auto rev</p>
+        <canvas id="chartMargin" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Inventory (Period-End)</h2>
+        <p class="hint">Reported consolidated inventory ($M) · not vehicle units · days estimate in KPIs/table</p>
+        <div class="legend">
+          <span><i style="background:var(--warn)"></i>Inventory ($M)</span>
+        </div>
+        <canvas id="chartInv" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Operating Cash Flow, CapEx &amp; Free Cash Flow</h2>
+        <p class="hint">OCF/CapEx may be YTD-derived · FCF = OCF − CapEx (CapEx as outflow magnitude)</p>
+        <div class="legend">
+          <span><i style="background:var(--deliv)"></i>OCF</span>
+          <span><i style="background:var(--warn)"></i>CapEx</span>
+          <span><i style="background:var(--prod)"></i>FCF</span>
+        </div>
+        <canvas id="chartCash" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Period detail</h2>
+      <p class="hint">Every row cites Source_File · units USD millions unless noted</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Form</th>
+              <th>Total Rev</th>
+              <th>Auto Rev</th>
+              <th>Auto GM</th>
+              <th>Inventory</th>
+              <th>Inv Days</th>
+              <th>OCF</th>
+              <th>CapEx</th>
+              <th>FCF</th>
+              <th>Source file</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">Analytical notes.</strong>
+      Inventory is a consolidated balance-sheet total — not finished-vehicle units and not the production–delivery gap from Page 2.
+      Inventory days use automotive COGS as the flow proxy and are labeled <em>estimated</em>.
+      Q4 P&amp;L and cash-flow fields are calculated as fiscal-year 10-K totals minus Q3 nine-month YTD; Q2/Q3 cash flows are often YTD minus prior YTD.
+      CapEx is stored as a positive cash-outflow magnitude so Free Cash Flow = Operating Cash Flow − CapEx.
+    </div>
+    <p class="footer-note">Source: data/processed/Fact_Financials.csv · extraction log: data/reference/Fact_Financials_extraction_log.csv · DAX reference: powerbi/dax/Page03_Financial_Inventory_Measures.md</p>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+  <script src="data/fact_financials.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    Dash.renderNav("03");
+    const DATA = (window.FACT_FINANCIALS || [])
+      .slice()
+      .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
+
+    const periodSelect = document.getElementById("periodSelect");
+    DATA.forEach((r) => {
+      const opt = document.createElement("option");
+      opt.value = r.Period_ID;
+      opt.textContent = r.Period_ID + " (" + r.Reporting_Period + ")";
+      periodSelect.appendChild(opt);
+    });
+    if (DATA.length) periodSelect.value = DATA[DATA.length - 1].Period_ID;
+
+    function selected() {
+      return DATA.find((r) => r.Period_ID === periodSelect.value) || DATA[DATA.length - 1];
+    }
+
+    /** Q4 P&L quarter values are derived from 10-K annual − 9-mo YTD. */
+    function isQ4(row) {
+      return String(row.Period_ID || "").endsWith("Q4");
+    }
+
+    function plLabel(row) {
+      return isQ4(row) ? "Calculated" : "Reported";
+    }
+
+    function ocfLabel(row) {
+      const raw = row.OCF_Capex_Metric_Label || "";
+      if (/reported/i.test(raw) && !/calculated/i.test(raw)) return "Reported";
+      if (/calculated/i.test(raw)) return "Calculated";
+      return raw || "Calculated";
+    }
+
+    function cite(row, metricName, metricLabel, valueText, note) {
+      return Dash.citationHtml({
+        periodId: row.Period_ID,
+        metricName,
+        metricLabel,
+        valueText,
+        reportingPeriod: row.Reporting_Period,
+        publicationDate: row.Publication_Date,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File,
+        sourceUrl: row.Source_URL,
+        note: note || ("Unit: " + (row.Unit || "USD_millions")),
+      });
+    }
+
+    function bindKpi(el, row, name, label, valText, cls, note) {
+      const div = document.createElement("div");
+      div.className = "kpi " + (cls || "");
+      div.innerHTML =
+        `<div class="lbl">${name}</div>` +
+        `<div class="val">${valText}</div>` +
+        `<div class="meta">${label} · ${row.Period_ID}</div>`;
+      div.addEventListener("mousemove", (e) => {
+        Dash.showTip(cite(row, name, label, valText, note), e.clientX, e.clientY);
+      });
+      div.addEventListener("mouseleave", Dash.hideTip);
+      el.appendChild(div);
+    }
+
+    function renderKpis() {
+      const row = selected();
+      if (!row) return;
+      const el1 = document.getElementById("kpis");
+      const el2 = document.getElementById("kpis2");
+      el1.innerHTML = "";
+      el2.innerHTML = "";
+
+      const pl = plLabel(row);
+      const plNote = isQ4(row)
+        ? "Q4 P&L = fiscal-year 10-K total − Q3 nine-month YTD (calculated)."
+        : "Three-month amount as reported in the 10-Q.";
+
+      bindKpi(el1, row, "Total Revenue", pl, Dash.fmtUSD(row.Total_Revenue), "", plNote);
+      bindKpi(el1, row, "Automotive Revenue", pl, Dash.fmtUSD(row.Automotive_Revenue), "", plNote);
+      bindKpi(
+        el1,
+        row,
+        "Automotive Gross Margin",
+        "Calculated",
+        Dash.fmtPct(row.Automotive_Gross_Margin),
+        "",
+        "GP " + Dash.fmtUSD(row.Automotive_Gross_Profit) + " = Auto rev − Auto COGS"
+      );
+      bindKpi(el1, row, "Net Income", pl, Dash.fmtUSD(row.Net_Income), "", plNote);
+
+      const ocf = ocfLabel(row);
+      const fcfCls = row.Free_Cash_Flow >= 0 ? "pos" : "neg";
+      bindKpi(
+        el2,
+        row,
+        "Inventory",
+        "Reported",
+        Dash.fmtUSD(row.Inventory),
+        "",
+        "Consolidated inventory balance — not vehicle units; not production–delivery gap."
+      );
+      bindKpi(
+        el2,
+        row,
+        "Inventory Days (Est.)",
+        "Estimated",
+        Dash.fmt(row.Inventory_Days_Estimate, 1) + " days",
+        "",
+        "Inv ÷ (Auto COGS ÷ days in period). Proxy only."
+      );
+      bindKpi(
+        el2,
+        row,
+        "Operating Cash Flow",
+        ocf,
+        Dash.fmtUSD(row.Operating_Cash_Flow),
+        "",
+        row.OCF_Capex_Metric_Label || row.CashFlow_Basis
+      );
+      bindKpi(
+        el2,
+        row,
+        "Free Cash Flow",
+        "Calculated",
+        Dash.fmtUSD(row.Free_Cash_Flow),
+        fcfCls,
+        "OCF − CapEx (CapEx stored as positive outflow). " + (row.OCF_Capex_Metric_Label || "")
+      );
+
+      document.getElementById("formPill").textContent =
+        (row.Form || "—") + " · filed " + (row.Publication_Date || "—");
+      document.getElementById("cashPill").textContent =
+        "Cash: " + (row.OCF_Capex_Metric_Label || row.CashFlow_Basis || "—");
+      document.getElementById("plPill").textContent =
+        "P&L: " + pl + (isQ4(row) ? " (annual − 9-mo)" : " (three-month)");
+    }
+
+    function labels() {
+      return DATA.map((r) => r.Period_ID.replace("20", "'"));
+    }
+
+    function renderCharts() {
+      if (!DATA.length) return;
+      const labs = labels();
+
+      Dash.drawLineChart(
+        document.getElementById("chartRev"),
+        [
+          { color: "#6aa8ff", values: DATA.map((r) => r.Total_Revenue) },
+          { color: "#3d9c84", values: DATA.map((r) => r.Automotive_Revenue) },
+        ],
+        {
+          labels: labs,
+          yFormat: (v) => Dash.fmt(v / 1000, 1) + "k",
+          onHover: (i, x, y) => {
+            const r = DATA[i];
+            Dash.showTip(
+              cite(
+                r,
+                "Revenue",
+                plLabel(r),
+                "Total " + Dash.fmtUSD(r.Total_Revenue) + " · Auto " + Dash.fmtUSD(r.Automotive_Revenue)
+              ),
+              x,
+              y
+            );
+          },
+        }
+      );
+
+      Dash.drawLineChart(
+        document.getElementById("chartMargin"),
+        [{ color: "#3d9c84", values: DATA.map((r) => r.Automotive_Gross_Margin) }],
+        {
+          labels: labs,
+          yFormat: (v) => (v * 100).toFixed(0) + "%",
+          onHover: (i, x, y) => {
+            const r = DATA[i];
+            Dash.showTip(
+              cite(
+                r,
+                "Automotive Gross Margin",
+                "Calculated",
+                Dash.fmtPct(r.Automotive_Gross_Margin),
+                "GP " + Dash.fmtUSD(r.Automotive_Gross_Profit) + " = Auto rev − Auto COGS"
+              ),
+              x,
+              y
+            );
+          },
+        }
+      );
+
+      Dash.drawLineChart(
+        document.getElementById("chartInv"),
+        [{ color: "#c4923a", values: DATA.map((r) => r.Inventory) }],
+        {
+          labels: labs,
+          yFormat: (v) => Dash.fmt(v, 0),
+          onHover: (i, x, y) => {
+            const r = DATA[i];
+            Dash.showTip(
+              cite(
+                r,
+                "Inventory",
+                "Reported",
+                Dash.fmtUSD(r.Inventory) + " · days est. " + Dash.fmt(r.Inventory_Days_Estimate, 1),
+                "Inventory days = Inv ÷ (Auto COGS ÷ days in period). Not vehicle units."
+              ),
+              x,
+              y
+            );
+          },
+        }
+      );
+
+      Dash.drawLineChart(
+        document.getElementById("chartCash"),
+        [
+          { color: "#3d9c84", values: DATA.map((r) => r.Operating_Cash_Flow) },
+          { color: "#c4923a", values: DATA.map((r) => r.Capital_Expenditures) },
+          { color: "#6aa8ff", values: DATA.map((r) => r.Free_Cash_Flow) },
+        ],
+        {
+          labels: labs,
+          zeroBaseline: true,
+          yFormat: (v) => Dash.fmt(v, 0),
+          onHover: (i, x, y) => {
+            const r = DATA[i];
+            Dash.showTip(
+              cite(
+                r,
+                "Cash flow",
+                ocfLabel(r) + " / Calculated FCF",
+                "OCF " +
+                  Dash.fmtUSD(r.Operating_Cash_Flow) +
+                  " · CapEx " +
+                  Dash.fmtUSD(r.Capital_Expenditures) +
+                  " · FCF " +
+                  Dash.fmtUSD(r.Free_Cash_Flow),
+                r.OCF_Capex_Metric_Label || r.CashFlow_Basis
+              ),
+              x,
+              y
+            );
+          },
+        }
+      );
+    }
+
+    function renderTable() {
+      const body = document.getElementById("detailBody");
+      body.innerHTML = "";
+      DATA.slice()
+        .reverse()
+        .forEach((r) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+          <td>${r.Period_ID}</td>
+          <td>${r.Form}</td>
+          <td class="num">${Dash.fmt(r.Total_Revenue)}</td>
+          <td class="num">${Dash.fmt(r.Automotive_Revenue)}</td>
+          <td class="num">${Dash.fmtPct(r.Automotive_Gross_Margin)}</td>
+          <td class="num">${Dash.fmt(r.Inventory)}</td>
+          <td class="num">${Dash.fmt(r.Inventory_Days_Estimate, 1)}</td>
+          <td class="num">${Dash.fmt(r.Operating_Cash_Flow)}</td>
+          <td class="num">${Dash.fmt(r.Capital_Expenditures)}</td>
+          <td class="num">${Dash.fmt(r.Free_Cash_Flow)}</td>
+          <td><code style="font-size:10px;color:var(--accent)">${r.Source_File}</code></td>`;
+          tr.addEventListener("mousemove", (e) => {
+            Dash.showTip(
+              cite(
+                r,
+                "Period detail",
+                "See column labels",
+                r.Period_ID + " · " + r.Form,
+                "P&L: " + plLabel(r) + " · Cash: " + (r.OCF_Capex_Metric_Label || "—")
+              ),
+              e.clientX,
+              e.clientY
+            );
+          });
+          tr.addEventListener("mouseleave", Dash.hideTip);
+          body.appendChild(tr);
+        });
+    }
+
+    function renderAll() {
+      renderKpis();
+      renderCharts();
+      renderTable();
+    }
+
+    periodSelect.addEventListener("change", renderKpis);
+    window.addEventListener("resize", renderCharts);
+
+    if (!DATA.length) {
+      document.querySelector(".wrap").insertAdjacentHTML(
+        "afterbegin",
+        "<p style='color:#c4923a'>Fact data failed to load. Ensure dashboard/data/fact_financials.js is present.</p>"
+      );
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>
