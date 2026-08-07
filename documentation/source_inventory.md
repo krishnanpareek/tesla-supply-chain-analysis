@@ -325,9 +325,9 @@ Traceability log for every externally sourced dataset in this project.
 | Data_Definition | Earliest comprehensive USGS government compilation of nonfuel mineral statistics and industry notes |
 | Primary/Secondary | Primary → `Fact_Raw_Materials` |
 | Access_Date | 2026-08-02 |
-| Reliability_Notes | Authoritative public minerals statistics. Some cells are USGS **estimates** within the MCS — preserve USGS footnotes; label as **reported** when published as USGS figures, and note USGS-estimated cells explicitly in the dictionary. |
+| Reliability_Notes | Authoritative public minerals statistics. Preserve USGS footnotes. In `Fact_Raw_Materials`, `Metric_Label=estimated` when USGS Notes contain “Estimated”; otherwise `reported`. World mine production often marks both 2024 and 2025 as estimated for Li/Co; Ni more often estimates 2025 only. Prefer **2025** as the newest year in MCS 2026. |
 | Limitations | National/global commodity grain — not Tesla-specific procurement. Do not claim lithium prices caused Tesla margin moves. |
-| Status | Hub + MCS 2026 pubs URL verified. **MANUAL LOCATE:** download PDF and commodity sheets for Li, Co, Ni, graphite; prior MCS years if multi-year fact table desired. |
+| Status | Hub + MCS 2026 pubs URL verified. Commodity chapter PDFs: lithium / cobalt / nickel / graphite under `https://pubs.usgs.gov/periodicals/mcs2026/`. |
 
 ### SRC-USGS-002 — MCS machine-readable data release (CSV)
 
@@ -337,19 +337,20 @@ Traceability log for every externally sourced dataset in this project.
 | Dataset_Name | USGS Mineral Commodity Summaries Data Release (CSV entities) |
 | Organization | U.S. Geological Survey |
 | Source_URL | https://www.usgs.gov/centers/national-minerals-information-center/data |
-| MCS 2025 data release (example catalog item) | https://www.sciencebase.gov/catalog/item/677eaf95d34e760b392c4970 |
-| MCS 2025 data release landing (USGS) | https://www.usgs.gov/data/us-geological-survey-mineral-commodity-summaries-2025-data-release-ver-20-april-2025 |
-| Publication_Date | Per release version (e.g., MCS 2025 data release ver. 2.0, April 2025) |
-| Reporting_Period | Annual salient statistics / world production tables |
-| File_Format | CSV (zipped packages) |
+| MCS 2026 data release (ScienceBase) | https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7 |
+| DOI (data release) | https://doi.org/10.5066/P1WKQ63T |
+| Local file | `data/raw/usgs/MCS2026_Commodities_Data.csv` (logged in `data/reference/download_log.md`) |
+| Publication_Date | 2026-02-06 |
+| Reporting_Period | Annual salient statistics / world production tables (years 2021–2025 in this release) |
+| File_Format | CSV |
 | Update_Frequency | Annual (versioned data releases) |
 | Data_Fields | Production, imports, exports, apparent consumption, price/unit value, net import reliance, world production by country (as provided in entities) |
-| Data_Definition | Tabular database companion to MCS narrative/PDF |
-| Primary/Secondary | Primary (preferred for reproducible loads) |
+| Data_Definition | Tabular database companion to MCS narrative/PDF — source extract for `Fact_Raw_Materials` |
+| Primary/Secondary | Primary (preferred for reproducible loads); cross-check PDF chapters under SRC-USGS-001 |
 | Access_Date | 2026-08-02 |
-| Reliability_Notes | Use CSV entities when available for auditability; cross-check against PDF commodity sheets. |
+| Reliability_Notes | Use CSV for auditability; cross-check against PDF commodity sheets. `Metric_Label` follows USGS Notes (“Estimated” → estimated). |
 | Limitations | Commodity naming and unit conventions must be normalized in Dim_Commodity. |
-| Status | Data & Tools hub + 2025 ScienceBase item verified. **MANUAL LOCATE:** MCS 2026 data release ZIP link from the MCS 2026 page (“Data release for Mineral Commodity Summaries 2026”) and confirm lithium/cobalt/nickel/graphite tables. |
+| Status | MCS 2026 ScienceBase CSV downloaded and loaded into `Fact_Raw_Materials` (Li, Co, Ni, natural graphite). |
 
 ### SRC-USGS-003 — Individual commodity information pages
 
@@ -385,7 +386,7 @@ Traceability log for every externally sourced dataset in this project.
 | SRC-NHTSA-003 | NHTSA | Recalls/Complaints alternate | API docs verified; model spellings MANUAL LOCATE |
 | SRC-CEC-001/002/003 | CEC | Fact_EV_Market | ZEV/LDV exports logged (Data as of June 30, 2026); 2025Q2 press vs export revision noted under SRC-CEC-001 |
 | SRC-AFDC-001/002 | DOE AFDC / NREL | Fact_EV_Market (chargers) | Hub/docs verified; snapshot + API key MANUAL LOCATE |
-| SRC-USGS-001/002/003 | USGS | Fact_Raw_Materials | MCS hubs verified; commodity CSV/PDF extract MANUAL LOCATE |
+| SRC-USGS-001/002/003 | USGS | Fact_Raw_Materials | MCS 2026 CSV loaded; Metric_Label follows USGS Estimated notes; PDF chapters for spot-check |
 
 ---
 

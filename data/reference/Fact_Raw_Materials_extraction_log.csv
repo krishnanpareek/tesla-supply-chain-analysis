@@ -1,0 +1,409 @@
+Commodity,Country,Statistics,Year,Field_Value,Metric_Label,Source_File,Source_URL,Notes
+Cobalt,United States,Production,2021,650.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2021,1800.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Estimated from consumption of purchased scrap.
+Cobalt,United States,Import,2021,9790.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Export,2021,4930.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Consumption,2021,7270.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Includes reported data and U.S. Geological Survey estimates.
+Cobalt,United States,Consumption,2021,6650.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as secondary production + imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Price,2021,24.21,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Source: S&P Global Platts Metals Week. Cobalt cathode is refined cobalt metal produced by an electrolytic process.
+Cobalt,United States,Price,2021,23.17,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Stock,2021,1010.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates. -- Stocks held by consumers and processors; excludes stocks held by trading companies and held for investment purposes.
+Cobalt,United States,Stock,2021,50.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Net import reliance,2021,73.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined for 2021–22 as imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Production,2022,500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2022,1920.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Estimated from consumption of purchased scrap.
+Cobalt,United States,Import,2022,10500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Export,2022,5360.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Consumption,2022,7570.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Includes reported data and U.S. Geological Survey estimates.
+Cobalt,United States,Consumption,2022,7150.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as secondary production + imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Price,2022,30.78,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Source: S&P Global Platts Metals Week. Cobalt cathode is refined cobalt metal produced by an electrolytic process.
+Cobalt,United States,Price,2022,28.83,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Stock,2022,946.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates. -- Stocks held by consumers and processors; excludes stocks held by trading companies and held for investment purposes.
+Cobalt,United States,Stock,2022,34.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Net import reliance,2022,73.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined for 2021–22 as imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Production,2023,500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2023,2030.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Estimated from consumption of purchased scrap.
+Cobalt,United States,Import,2023,9500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Export,2023,5110.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Consumption,2023,7840.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Includes reported data and U.S. Geological Survey estimates.
+Cobalt,United States,Consumption,2023,6440.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as secondary production + imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Price,2023,17.2,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Source: S&P Global Platts Metals Week. Cobalt cathode is refined cobalt metal produced by an electrolytic process.
+Cobalt,United States,Price,2023,15.48,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Stock,2023,925.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates. -- Stocks held by consumers and processors; excludes stocks held by trading companies and held for investment purposes.
+Cobalt,United States,Stock,2023,34.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Net import reliance,2023,69.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined for 2021–22 as imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Production,2024,200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2024,2050.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Estimated from consumption of purchased scrap.
+Cobalt,United States,Import,2024,10800.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Export,2024,4880.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Consumption,2024,7830.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Includes reported data and U.S. Geological Survey estimates.
+Cobalt,United States,Consumption,2024,7960.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as secondary production + imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Price,2024,16.77,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Source: S&P Global Platts Metals Week. Cobalt cathode is refined cobalt metal produced by an electrolytic process.
+Cobalt,United States,Price,2024,11.84,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Stock,2024,956.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates. -- Stocks held by consumers and processors; excludes stocks held by trading companies and held for investment purposes.
+Cobalt,United States,Stock,2024,34.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Net import reliance,2024,74.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined for 2021–22 as imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Production,2025,300.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2025,2000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Estimated from consumption of purchased scrap.
+Cobalt,United States,Import,2025,14000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Export,2025,4500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Consumption,2025,8000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates.
+Cobalt,United States,Consumption,2025,9600.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as secondary production + imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,United States,Price,2025,21.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Source: S&P Global Platts Metals Week. Cobalt cathode is refined cobalt metal produced by an electrolytic process.
+Cobalt,United States,Price,2025,15.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Stock,2025,1500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Includes reported data and U.S. Geological Survey estimates. -- Stocks held by consumers and processors; excludes stocks held by trading companies and held for investment purposes.
+Cobalt,United States,Stock,2025,34.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Net import reliance,2025,79.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined for 2021–22 as imports – exports ± adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included."
+Cobalt,Norway,Import sources 2021-2024,2021–24,26.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,Finland,Import sources 2021-2024,2021–24,16.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,Canada,Import sources 2021-2024,2021–24,14.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,Japan,Import sources 2021-2024,2021–24,14.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,Other countries,Import sources 2021-2024,2021–24,30.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Cobalt,United States,Production,2024,200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Australia,Production,2024,4780.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Canada,Production,2024,3350.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,China,Production,2024,2000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Congo (Kinshasa),Production,2024,226000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Cuba,Production,2024,3450.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Indonesia,Production,2024,35000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Madagascar,Production,2024,3100.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Papua New Guinea,Production,2024,2630.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Philippines,Production,2024,3100.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Russia,Production,2024,8000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Turkey,Production,2024,2200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Other countries,Production,2024,7780.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,World total,Production,2024,302000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Production,2025,300.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Australia,Production,2025,3700.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Canada,Production,2025,3500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,China,Production,2025,2000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Congo (Kinshasa),Production,2025,230000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Cuba,Production,2025,2000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Indonesia,Production,2025,44000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Madagascar,Production,2025,3900.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Papua New Guinea,Production,2025,2800.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Philippines,Production,2025,3700.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Russia,Production,2025,7700.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Turkey,Production,2025,1900.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,Other countries,Production,2025,9100.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,World total,Production,2025,310000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Cobalt,United States,Reserves,2025,70000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Australia,Reserves,2025,1700000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"See Appendix C for resource and reserve definitions and information concerning data sources. -- For Australia, Joint Ore Reserves Committee-compliant or equivalent reserves were 680,000 tons."
+Cobalt,Canada,Reserves,2025,220000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,China,Reserves,2025,160000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Congo (Kinshasa),Reserves,2025,6000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Cuba,Reserves,2025,500000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Indonesia,Reserves,2025,760000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Madagascar,Reserves,2025,100000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Papua New Guinea,Reserves,2025,84000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Philippines,Reserves,2025,260000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Russia,Reserves,2025,800000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Data from the Russia Ministry of Natural Resources.
+Cobalt,Turkey,Reserves,2025,91000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,Other countries,Reserves,2025,780000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Cobalt,World total,Reserves,2025,12000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),United States,Production,2021,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Import,2021,53000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Export,2021,8660.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Consumption,2021,44300.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Price,2021,1330.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2021,2010.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2021,629.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Net import reliance,2021,100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Production,2022,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Import,2022,89200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Export,2022,9500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Consumption,2022,79700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Price,2022,1200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2022,2590.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2022,563.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Net import reliance,2022,100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Production,2023,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Import,2023,73500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Export,2023,7780.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Consumption,2023,65700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Price,2023,1080.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2023,2380.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2023,607.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Net import reliance,2023,100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Production,2024,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Import,2024,73900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Export,2024,8740.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Consumption,2024,65200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Price,2024,1050.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2024,2810.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Price,2024,535.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Net import reliance,2024,100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports.
+Graphite (Natural),United States,Production,2025,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Import,2025,79000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Export,2025,8400.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Consumption,2025,71000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Defined as imports – exports.
+Graphite (Natural),United States,Price,2025,1000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Price,2025,2600.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Price,2025,470.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Net import reliance,2025,100.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Defined as imports – exports.
+Graphite (Natural),China,Import sources 2021-2024,2021–24,46.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Includes Hong Kong.
+Graphite (Natural),Canada,Import sources 2021-2024,2021–24,13.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Mozambique,Import sources 2021-2024,2021–24,13.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Mexico,Import sources 2021-2024,2021–24,12.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Other countries,Import sources 2021-2024,2021–24,16.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Production,2024,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Austria,Production,2024,100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Brazil,Production,2024,58000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Canada,Production,2024,11700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),China,Production,2024,1270000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Germany,Production,2024,140.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),India,Production,2024,17600.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),"Korea, North",Production,2024,8100.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),"Korea, Republic of",Production,2024,1000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Madagascar,Production,2024,85000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Mexico,Production,2024,706.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Mozambique,Production,2024,39000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Norway,Production,2024,5340.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Russia,Production,2024,20000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Sri Lanka,Production,2024,3000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Tanzania,Production,2024,27000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Turkey,Production,2024,2600.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Ukraine,Production,2024,900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Vietnam,Production,2024,500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),World total,Production,2024,1550000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),United States,Production,2025,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Graphite (Natural),Austria,Production,2025,200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Brazil,Production,2025,65000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Canada,Production,2025,8000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),China,Production,2025,1400000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Germany,Production,2025,140.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),India,Production,2025,17000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),"Korea, North",Production,2025,8000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),"Korea, Republic of",Production,2025,500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Madagascar,Production,2025,80000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Mexico,Production,2025,740.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Mozambique,Production,2025,60000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Norway,Production,2025,6600.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Russia,Production,2025,25000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Sri Lanka,Production,2025,3200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Tanzania,Production,2025,75000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Turkey,Production,2025,2200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Ukraine,Production,2025,800.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),Vietnam,Production,2025,500.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),World total,Production,2025,1800000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Graphite (Natural),United States,Reserves,2025,s,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Included in “World total.”
+Graphite (Natural),Austria,Reserves,2025,s,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Included in “World total.”
+Graphite (Natural),Brazil,Reserves,2025,74000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Canada,Reserves,2025,5900000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),China,Reserves,2025,100000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Germany,Reserves,2025,s,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Included in “World total.”
+Graphite (Natural),India,Reserves,2025,8600000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),"Korea, North",Reserves,2025,2000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),"Korea, Republic of",Reserves,2025,1800000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Madagascar,Reserves,2025,27000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Mexico,Reserves,2025,3100000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Mozambique,Reserves,2025,25000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Norway,Reserves,2025,600000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Russia,Reserves,2025,14000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Sri Lanka,Reserves,2025,1500000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Tanzania,Reserves,2025,18000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Turkey,Reserves,2025,6900000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),Ukraine,Reserves,2025,s,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Included in “World total.”
+Graphite (Natural),Vietnam,Reserves,2025,9700000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Graphite (Natural),World total,Reserves,2025,310000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,United States,Production,2021,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Import,2021,2640.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Export,2021,1870.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Consumption,2021,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as production + imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Price,2021,11700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Lithium carbonate price assessments for spot and long-term contracts. Source: Benchmark Mineral Intelligence Ltd.
+Lithium,United States,Employment,2021,70.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Net import reliance,2021,>25,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Production,2022,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Import,2022,3260.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Export,2022,2440.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Consumption,2022,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as production + imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Price,2022,63700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Lithium carbonate price assessments for spot and long-term contracts. Source: Benchmark Mineral Intelligence Ltd.
+Lithium,United States,Employment,2022,70.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Net import reliance,2022,>25,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Production,2023,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Import,2023,3390.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Export,2023,1960.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Consumption,2023,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as production + imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Price,2023,39000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Lithium carbonate price assessments for spot and long-term contracts. Source: Benchmark Mineral Intelligence Ltd.
+Lithium,United States,Employment,2023,70.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Net import reliance,2023,>50,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Production,2024,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Import,2024,3020.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Export,2024,1690.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Consumption,2024,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as production + imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Price,2024,11800.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Lithium carbonate price assessments for spot and long-term contracts. Source: Benchmark Mineral Intelligence Ltd.
+Lithium,United States,Employment,2024,70.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Net import reliance,2024,>50,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Production,2025,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Import,2025,3800.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,United States,Export,2025,2000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,United States,Consumption,2025,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as production + imports – exports ± adjustments for industry stock changes.
+Lithium,United States,Price,2025,9000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Lithium carbonate price assessments for spot and long-term contracts. Source: Benchmark Mineral Intelligence Ltd.
+Lithium,United States,Employment,2025,70.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,United States,Net import reliance,2025,>50,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Defined as imports – exports ± adjustments for industry stock changes.
+Lithium,Chile,Import sources 2021-2024,2021–24,54.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,Argentina,Import sources 2021-2024,2021–24,43.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,Other countries,Import sources 2021-2024,2021–24,3.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,United States,Production,2024,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,Argentina,Production,2024,13800.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Reported.
+Lithium,Australia,Production,2024,82700.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Brazil,Production,2024,10200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Canada,Production,2024,4820.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Chile,Production,2024,48900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Reported.
+Lithium,China,Production,2024,41400.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Mali,Production,2024,770.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Portugal,Production,2024,380.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Zimbabwe,Production,2024,20000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Other countries,Production,2024,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Other countries with reported reserves include Austria, Congo (Kinshasa), Czechia, Finland, Germany, Ghana, Mexico, Namibia, Serbia, and Spain."
+Lithium,World total,Production,2024,222000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Excludes U.S. production.
+Lithium,United States,Production,2025,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Lithium,Argentina,Production,2025,23000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Australia,Production,2025,92000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Brazil,Production,2025,12000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Canada,Production,2025,5600.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Chile,Production,2025,56000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,China,Production,2025,62000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Mali,Production,2025,9400.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Portugal,Production,2025,380.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Zimbabwe,Production,2025,28000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Lithium,Other countries,Production,2025,—,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Other countries with reported reserves include Austria, Congo (Kinshasa), Czechia, Finland, Germany, Ghana, Mexico, Namibia, Serbia, and Spain."
+Lithium,World total,Production,2025,290000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Excludes U.S. production.
+Lithium,United States,Reserves,2025,4400000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Argentina,Reserves,2025,4400000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Australia,Reserves,2025,8400000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"See Appendix C for resource and reserve definitions and information concerning data sources. -- For Australia, Joint Ore Reserves Committee-compliant or equivalent reserves were 5.1 million tons."
+Lithium,Brazil,Reserves,2025,540000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Canada,Reserves,2025,1600000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Chile,Reserves,2025,9200000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,China,Reserves,2025,4600000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Mali,Reserves,2025,370000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Portugal,Reserves,2025,60000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Zimbabwe,Reserves,2025,500000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Lithium,Other countries,Reserves,2025,2400000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"See Appendix C for resource and reserve definitions and information concerning data sources. -- Other countries with reported reserves include Austria, Congo (Kinshasa), Czechia, Finland, Germany, Ghana, Mexico, Namibia, Serbia, and Spain."
+Lithium,World total,Reserves,2025,37000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,United States,Production,2021,18400.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2021,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2021,18.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2021,108000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2021,34400.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2021,14900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2021,11600.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2021,29200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2021,92100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2021,156000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Significant revisions were made to secondary scrap estimates following review of updated data.
+Nickel,United States,Consumption,2021,97500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined as primary imports – primary exports ± adjustments for industry stock changes, excluding secondary consumer stocks."
+Nickel,United States,Consumption,2021,254000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as apparent primary consumption + reported secondary consumption.
+Nickel,United States,Price,2021,18476.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Price,2021,8.38,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2021,25100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2021,1296.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Net import reliance,2021,38.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as imports – exports ± adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%."
+Nickel,United States,Production,2022,17500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2022,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2022,s,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,less than ½ unit.
+Nickel,United States,Import,2022,127000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2022,37300.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2022,15200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2022,11100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2022,44400.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2022,96700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2022,153000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Significant revisions were made to secondary scrap estimates following review of updated data.
+Nickel,United States,Consumption,2022,117000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined as primary imports – primary exports ± adjustments for industry stock changes, excluding secondary consumer stocks."
+Nickel,United States,Consumption,2022,270000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as apparent primary consumption + reported secondary consumption.
+Nickel,United States,Price,2022,25815.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Price,2022,11.71,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2022,23200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2022,6.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Net import reliance,2022,43.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as imports – exports ± adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%."
+Nickel,United States,Production,2023,16400.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2023,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2023,4.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2023,112000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2023,39600.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2023,9100.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2023,12200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2023,57200.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2023,107000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2023,140000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Significant revisions were made to secondary scrap estimates following review of updated data.
+Nickel,United States,Consumption,2023,98500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined as primary imports – primary exports ± adjustments for industry stock changes, excluding secondary consumer stocks."
+Nickel,United States,Consumption,2023,238000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as apparent primary consumption + reported secondary consumption.
+Nickel,United States,Price,2023,21495.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Price,2023,9.75,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2023,25700.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2023,1506.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Net import reliance,2023,41.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as imports – exports ± adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%."
+Nickel,United States,Production,2024,7490.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2024,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2024,12.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2024,105000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2024,40000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2024,5630.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2024,15900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Export,2024,46900.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2024,114000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Consumption,2024,121000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Significant revisions were made to secondary scrap estimates following review of updated data.
+Nickel,United States,Consumption,2024,90300.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Defined as primary imports – primary exports ± adjustments for industry stock changes, excluding secondary consumer stocks."
+Nickel,United States,Consumption,2024,211000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Defined as apparent primary consumption + reported secondary consumption.
+Nickel,United States,Price,2024,16812.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Price,2024,7.63,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2024,25500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Stock,2024,258.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Net import reliance,2024,43.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as imports – exports ± adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%."
+Nickel,United States,Production,2025,10000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Production,2025,W,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Import,2025,20.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Import,2025,100000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Import,2025,45000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Export,2025,11000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Export,2025,9800.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Export,2025,35200.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Consumption,2025,120000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Consumption,2025,130000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Significant revisions were made to secondary scrap estimates following review of updated data.
+Nickel,United States,Consumption,2025,90000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as primary imports – primary exports ± adjustments for industry stock changes, excluding secondary consumer stocks."
+Nickel,United States,Consumption,2025,220000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Defined as apparent primary consumption + reported secondary consumption.
+Nickel,United States,Price,2025,15000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Price,2025,6.9,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Stock,2025,25000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Stock,2025,110.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Net import reliance,2025,41.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"Estimated. -- Defined as imports – exports ± adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%."
+Nickel,Canada,Import sources 2021-2024,2021–24,44.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Norway,Import sources 2021-2024,2021–24,11.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Australia,Import sources 2021-2024,2021–24,8.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Brazil,Import sources 2021-2024,2021–24,7.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Other countries,Import sources 2021-2024,2021–24,30.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Canada,Import sources 2021-2024,2021–24,41.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Mexico,Import sources 2021-2024,2021–24,27.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United Kingdom,Import sources 2021-2024,2021–24,9.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Other countries,Import sources 2021-2024,2021–24,23.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2024,7490.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Australia,Production,2024,98000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Brazil,Production,2024,67500.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Canada,Production,2024,125000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,China,Production,2024,115000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Indonesia,Production,2024,2310000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,New Caledonia,Production,2024,116000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Overseas territory of France.
+Nickel,Philippines,Production,2024,354000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Russia,Production,2024,205000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,Other countries,Production,2024,308000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,World total,Production,2024,3710000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,
+Nickel,United States,Production,2025,10000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Australia,Production,2025,45000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Brazil,Production,2025,70000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Canada,Production,2025,140000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,China,Production,2025,120000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Indonesia,Production,2025,2600000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,New Caledonia,Production,2025,140000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated. -- Overseas territory of France.
+Nickel,Philippines,Production,2025,270000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Russia,Production,2025,200000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,Other countries,Production,2025,290000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,World total,Production,2025,3900000.0,estimated,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,Estimated.
+Nickel,United States,Reserves,2025,340000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,Australia,Reserves,2025,25000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,"See Appendix C for resource and reserve definitions and information concerning data sources. -- For Australia, Joint Ore Reserves Committee-compliant or equivalent reserves were 11 million tons."
+Nickel,Brazil,Reserves,2025,16000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,Canada,Reserves,2025,2200000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,China,Reserves,2025,4400000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,Indonesia,Reserves,2025,62000000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,New Caledonia,Reserves,2025,7100000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources. -- Overseas territory of France.
+Nickel,Philippines,Reserves,2025,4800000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,Russia,Reserves,2025,8300000.0,reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,Other countries,Reserves,2025,">9,100,000",reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.
+Nickel,World total,Reserves,2025,">140,000,000",reported,MCS2026_Commodities_Data.csv,https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7,See Appendix C for resource and reserve definitions and information concerning data sources.

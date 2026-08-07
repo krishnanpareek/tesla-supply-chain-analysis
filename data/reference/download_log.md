@@ -137,6 +137,8 @@ Hub: https://www.energy.ca.gov/files/zev-and-infrastructure-stats-data
 
 | Source_ID | Local_Filename | Publication_Date | Source_URL | Bytes |
 |-----------|----------------|------------------|------------|-------|
-| SRC-USGS-001 | `MCS2026_Commodities_Data.csv` | 2026-02-06 | https://www.sciencebase.gov/catalog/file/get/69837e43b66b01367d7ec7c7?f=__disk__d3%2Fac%2F84%2Fd3ac8466552946c5e8caa2c2c6338d9e1aff655d | 3189010 |
+| SRC-USGS-002 | `MCS2026_Commodities_Data.csv` | 2026-02-06 | https://www.sciencebase.gov/catalog/file/get/69837e43b66b01367d7ec7c7?f=__disk__d3%2Fac%2F84%2Fd3ac8466552946c5e8caa2c2c6338d9e1aff655d | 3189010 |
 
-ScienceBase item: https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7 · DOI https://doi.org/10.5066/P1WKQ63T
+ScienceBase item: https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7 · DOI https://doi.org/10.5066/P1WKQ63T  
+PDF chapters (SRC-USGS-001): https://pubs.usgs.gov/publication/mcs2026 — e.g. `mcs2026-lithium.pdf`, `mcs2026-cobalt.pdf`, `mcs2026-nickel.pdf`.  
+`Fact_Raw_Materials`: `Metric_Label=estimated` when USGS Notes contain “Estimated”; primary dashboard year = **2025**.
