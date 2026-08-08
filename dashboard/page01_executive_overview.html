@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 1 — Executive Overview | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <nav class="site-nav" id="siteNav"></nav>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Dashboard Page 1 · Executive Overview</p>
+      <h1>Tesla Supply Chain Analysis</h1>
+      <p class="sub">
+        Cross-page snapshot from the same public facts used on Pages 2–6.
+        Production–delivery gap is not unsold inventory; complaints are allegations;
+        CA ZEV share is not national deliveries; charger counts are public ports;
+        USGS 2025 mineral figures are often estimated. Hover any KPI for Source_File.
+      </p>
+    </header>
+
+    <div class="controls">
+      <span class="pill" id="opsPill"></span>
+      <span class="pill" id="finPill"></span>
+      <span class="pill" id="evPill"></span>
+      <span class="pill" id="chgPill"></span>
+      <span class="pill">Public data only</span>
+    </div>
+
+    <p class="hint" style="margin:0 0 8px">Page 2 · Production &amp; delivery</p>
+    <section class="kpis" id="kpisOps"></section>
+
+    <p class="hint" style="margin:18px 0 8px">Page 3 · Financial &amp; inventory</p>
+    <section class="kpis k5" id="kpisFin"></section>
+
+    <p class="hint" style="margin:18px 0 8px">Page 5 · CA EV market &amp; public charging</p>
+    <section class="kpis" id="kpisMarket"></section>
+
+    <p class="hint" style="margin:18px 0 8px">Page 4 · Quality &amp; Page 6 · Battery materials</p>
+    <section class="kpis" id="kpisRisk"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Deliveries vs automotive revenue</h2>
+        <p class="hint">Ops reported · revenue reported/calculated · different units (pattern only)</p>
+        <div class="legend">
+          <span><i style="background:var(--deliv)"></i>Vehicles delivered</span>
+          <span><i style="background:var(--prod)"></i>Automotive revenue ($M)</span>
+        </div>
+        <canvas id="chartBridge" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Detail pages</h2>
+        <p class="hint">Full charts, filters, and citation tooltips</p>
+        <div id="navCards" style="display:grid;gap:10px;margin-top:8px"></div>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">Portfolio framing.</strong>
+      Built entirely from verifiable public sources (Tesla IR / SEC EDGAR, NHTSA ODI flat files, CEC, USGS MCS 2026).
+      Metrics are labeled reported, calculated, or estimated at the field level.
+      No internal Tesla factory, supplier-contract, or SKU inventory data is claimed.
+    </div>
+    <p class="footer-note">Primary deliverable: HTML dashboard · DAX measure logic under powerbi/dax/ · Page 1 aggregates Pages 2–6</p>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+  <script src="data/fact_tesla_operations.js"></script>
+  <script src="data/fact_financials.js"></script>
+  <script src="data/fact_nhtsa_annual.js"></script>
+  <script src="data/fact_complaints_annual.js"></script>
+  <script src="data/fact_ev_market.js"></script>
+  <script src="data/fact_ev_chargers.js"></script>
+  <script src="data/fact_raw_materials_kpi.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    Dash.renderNav("01");
+
+    const OPS = (window.FACT_TESLA_OPS || [])
+      .filter((r) => r.Vehicle_Group === "Total")
+      .slice()
+      .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
+    const FIN = (window.FACT_FINANCIALS || [])
+      .slice()
+      .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
+    const NHT = (window.FACT_NHTSA_ANNUAL || []).slice().sort((a, b) => a.Year - b.Year);
+    const CMP = (window.FACT_COMPLAINTS_ANNUAL || []).slice().sort((a, b) => a.Year - b.Year);
+    const EV = (window.FACT_EV_MARKET || [])
+      .slice()
+      .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
+    const CHG = window.FACT_EV_CHARGERS || [];
+    const MAT = window.FACT_RAW_MATERIALS_KPI || [];
+
+    const ops = OPS[OPS.length - 1];
+    const fin = FIN[FIN.length - 1];
+    const nht = NHT[NHT.length - 1];
+    const cmp = CMP[CMP.length - 1];
+    const ev = EV[EV.length - 1];
+    const chg = CHG[0];
+    const li = MAT.find((r) => r.Commodity === "Lithium") || MAT[0];
+
+    if (ops) document.getElementById("opsPill").textContent = "Ops " + ops.Period_ID;
+    if (fin) document.getElementById("finPill").textContent = "Financials " + fin.Period_ID;
+    if (ev) document.getElementById("evPill").textContent = "CA ZEV " + ev.Period_ID;
+    if (chg) document.getElementById("chgPill").textContent = "Public ports " + chg.Snapshot_Label;
+
+    function kpi(el, name, val, label, citeOpts) {
+      const div = document.createElement("div");
+      div.className = "kpi";
+      div.innerHTML =
+        `<div class="lbl">${name}</div><div class="val">${val}</div><div class="meta">${label}</div>`;
+      div.addEventListener("mousemove", (e) =>
+        Dash.showTip(Dash.citationHtml(citeOpts), e.clientX, e.clientY)
+      );
+      div.addEventListener("mouseleave", Dash.hideTip);
+      el.appendChild(div);
+    }
+
+    function fmtNir(v) {
+      if (v == null || v === "") return "—";
+      if (typeof v === "number") return Dash.fmt(v, 0) + "%";
+      const s = String(v);
+      return s.includes("%") ? s : s + "%";
+    }
+
+    // —— Page 2 ——
+    const elOps = document.getElementById("kpisOps");
+    if (ops) {
+      kpi(elOps, "Vehicles Delivered", Dash.fmt(ops.Vehicles_Delivered), "Reported · " + ops.Period_ID, {
+        periodId: ops.Period_ID,
+        metricName: "Vehicles delivered",
+        metricLabel: "Reported",
+        valueText: Dash.fmt(ops.Vehicles_Delivered),
+        reportingPeriod: ops.Reporting_Period || ops.Period_ID,
+        publicationDate: ops.Publication_Date,
+        sourceId: ops.Source_ID,
+        sourceFile: ops.Source_File,
+        sourceUrl: ops.Source_URL,
+        note: "Fact_Tesla_Operations · Total vehicle group · Page 2",
+      });
+      kpi(elOps, "Vehicles Produced", Dash.fmt(ops.Vehicles_Produced), "Reported · " + ops.Period_ID, {
+        periodId: ops.Period_ID,
+        metricName: "Vehicles produced",
+        metricLabel: "Reported",
+        valueText: Dash.fmt(ops.Vehicles_Produced),
+        reportingPeriod: ops.Reporting_Period || ops.Period_ID,
+        publicationDate: ops.Publication_Date,
+        sourceId: ops.Source_ID,
+        sourceFile: ops.Source_File,
+        sourceUrl: ops.Source_URL,
+        note: "Fact_Tesla_Operations · Page 2",
+      });
+      kpi(
+        elOps,
+        "Production–Delivery Gap",
+        Dash.fmt(ops.Production_Delivery_Gap),
+        "Calculated · not inventory · " + ops.Period_ID,
+        {
+          periodId: ops.Period_ID,
+          metricName: "Production–delivery gap",
+          metricLabel: "Calculated",
+          valueText: Dash.fmt(ops.Production_Delivery_Gap),
+          reportingPeriod: ops.Reporting_Period || ops.Period_ID,
+          publicationDate: ops.Publication_Date,
+          sourceId: ops.Source_ID,
+          sourceFile: ops.Source_File,
+          sourceUrl: ops.Source_URL,
+          note: "Produced − Delivered. Not unsold inventory. Page 2",
+        }
+      );
+      kpi(
+        elOps,
+        "Energy Storage Deployed",
+        ops.Energy_Storage_GWh != null ? Dash.fmt(ops.Energy_Storage_GWh, 1) + " GWh" : "—",
+        "Reported · " + ops.Period_ID,
+        {
+          periodId: ops.Period_ID,
+          metricName: "Energy storage deployed",
+          metricLabel: "Reported",
+          valueText: Dash.fmt(ops.Energy_Storage_GWh, 1) + " GWh",
+          reportingPeriod: ops.Reporting_Period || ops.Period_ID,
+          publicationDate: ops.Publication_Date,
+          sourceId: ops.Source_ID,
+          sourceFile: ops.Source_File,
+          sourceUrl: ops.Source_URL,
+          note: "Fact_Tesla_Operations · GWh · Page 2",
+        }
+      );
+    }
+
+    // —— Page 3 ——
+    const elFin = document.getElementById("kpisFin");
+    if (fin) {
+      kpi(elFin, "Automotive Revenue", Dash.fmtUSD(fin.Automotive_Revenue), "Reported · " + fin.Period_ID, {
+        periodId: fin.Period_ID,
+        metricName: "Automotive revenue",
+        metricLabel: "Reported",
+        valueText: Dash.fmtUSD(fin.Automotive_Revenue),
+        reportingPeriod: fin.Reporting_Period,
+        publicationDate: fin.Publication_Date,
+        sourceId: fin.Source_ID,
+        sourceFile: fin.Source_File,
+        sourceUrl: fin.Source_URL,
+        note: "USD millions · Page 3",
+      });
+      kpi(elFin, "Auto Gross Margin", Dash.fmtPct(fin.Automotive_Gross_Margin), "Calculated · " + fin.Period_ID, {
+        periodId: fin.Period_ID,
+        metricName: "Automotive gross margin",
+        metricLabel: "Calculated",
+        valueText: Dash.fmtPct(fin.Automotive_Gross_Margin),
+        reportingPeriod: fin.Reporting_Period,
+        publicationDate: fin.Publication_Date,
+        sourceId: fin.Source_ID,
+        sourceFile: fin.Source_File,
+        sourceUrl: fin.Source_URL,
+        note: "Page 3",
+      });
+      kpi(elFin, "Inventory", Dash.fmtUSD(fin.Inventory), "Reported BS · " + fin.Period_ID, {
+        periodId: fin.Period_ID,
+        metricName: "Inventory",
+        metricLabel: "Reported",
+        valueText: Dash.fmtUSD(fin.Inventory),
+        reportingPeriod: fin.Reporting_Period,
+        publicationDate: fin.Publication_Date,
+        sourceId: fin.Source_ID,
+        sourceFile: fin.Source_File,
+        sourceUrl: fin.Source_URL,
+        note: "Consolidated $ inventory, not vehicle units · Page 3",
+      });
+      kpi(
+        elFin,
+        "Inventory Days (est.)",
+        Dash.fmt(fin.Inventory_Days_Estimate, 1),
+        "Estimated · " + fin.Period_ID,
+        {
+          periodId: fin.Period_ID,
+          metricName: "Inventory days",
+          metricLabel: "Estimated",
+          valueText: Dash.fmt(fin.Inventory_Days_Estimate, 1),
+          reportingPeriod: fin.Reporting_Period,
+          publicationDate: fin.Publication_Date,
+          sourceId: fin.Source_ID,
+          sourceFile: fin.Source_File,
+          sourceUrl: fin.Source_URL,
+          note: "Page 3 estimated days-on-hand proxy",
+        }
+      );
+      kpi(elFin, "Free Cash Flow", Dash.fmtUSD(fin.Free_Cash_Flow), "Calculated · " + fin.Period_ID, {
+        periodId: fin.Period_ID,
+        metricName: "Free cash flow",
+        metricLabel: "Calculated",
+        valueText: Dash.fmtUSD(fin.Free_Cash_Flow),
+        reportingPeriod: fin.Reporting_Period,
+        publicationDate: fin.Publication_Date,
+        sourceId: fin.Source_ID,
+        sourceFile: fin.Source_File,
+        sourceUrl: fin.Source_URL,
+        note: (fin.OCF_Capex_Metric_Label || "") + " · Page 3",
+      });
+    }
+
+    // —— Page 5 ——
+    const elMkt = document.getElementById("kpisMarket");
+    if (ev) {
+      kpi(
+        elMkt,
+        "Tesla Share of CA ZEV",
+        Dash.fmtPct(ev.Tesla_Share_of_ZEV_Sales),
+        "Calculated · " + ev.Period_ID,
+        {
+          periodId: ev.Period_ID,
+          metricName: "Tesla share of CA ZEV sales",
+          metricLabel: "Calculated",
+          valueText: Dash.fmtPct(ev.Tesla_Share_of_ZEV_Sales),
+          reportingPeriod: ev.Period_ID + " · California",
+          publicationDate: ev.Data_As_Of,
+          sourceId: ev.Source_ID,
+          sourceFile: ev.Source_File_ZEV,
+          sourceUrl: ev.Source_URL_ZEV,
+          note: "Not national deliveries · Page 5",
+        }
+      );
+      kpi(
+        elMkt,
+        "Tesla CA ZEV Sales",
+        Dash.fmt(ev.Tesla_ZEV_Sales_CA),
+        "Reported · " + ev.Period_ID,
+        {
+          periodId: ev.Period_ID,
+          metricName: "Tesla CA ZEV sales",
+          metricLabel: "Reported",
+          valueText: Dash.fmt(ev.Tesla_ZEV_Sales_CA),
+          reportingPeriod: ev.Period_ID + " · California",
+          publicationDate: ev.Data_As_Of,
+          sourceId: ev.Source_ID,
+          sourceFile: ev.Source_File_ZEV,
+          sourceUrl: ev.Source_URL_ZEV,
+          note: "Page 5",
+        }
+      );
+      kpi(
+        elMkt,
+        "Total CA ZEV Sales",
+        Dash.fmt(ev.Total_ZEV_Sales_CA),
+        "Reported · " + ev.Period_ID,
+        {
+          periodId: ev.Period_ID,
+          metricName: "Total CA ZEV sales",
+          metricLabel: "Reported",
+          valueText: Dash.fmt(ev.Total_ZEV_Sales_CA),
+          reportingPeriod: ev.Period_ID + " · California",
+          publicationDate: ev.Data_As_Of,
+          sourceId: ev.Source_ID,
+          sourceFile: ev.Source_File_ZEV,
+          sourceUrl: ev.Source_URL_ZEV,
+          note: "Page 5",
+        }
+      );
+    }
+    if (chg) {
+      kpi(
+        elMkt,
+        "CA Public Charging Ports",
+        Dash.fmt(chg.Public_Ports_Total),
+        "Reported · " + chg.Snapshot_Label + " · ports",
+        {
+          periodId: chg.Snapshot_Label,
+          metricName: "Public charging ports",
+          metricLabel: chg.Metric_Label || "Reported",
+          valueText: Dash.fmt(chg.Public_Ports_Total),
+          reportingPeriod: "Snapshot " + chg.Snapshot_Label + " · unit: charging ports",
+          publicationDate: chg.Data_As_Of_File,
+          sourceId: chg.Source_ID,
+          sourceFile: chg.Source_File,
+          sourceUrl: chg.Source_URL,
+          note:
+            "Public L1+L2+DCFC only. Excludes shared-private (" +
+            Dash.fmt(chg.Shared_Private_Ports_Total) +
+            ") and residential. Page 5",
+        }
+      );
+    }
+
+    // —— Page 4 + Page 6 ——
+    const elRisk = document.getElementById("kpisRisk");
+    if (nht) {
+      kpi(
+        elRisk,
+        "Recall Campaigns (" + nht.Year + ")",
+        Dash.fmt(nht.Recall_Campaign_Count),
+        "Reported · SRC-NHTSA-001",
+        {
+          periodId: String(nht.Year),
+          metricName: "Recall campaigns",
+          metricLabel: nht.Metric_Label || "Reported",
+          valueText: Dash.fmt(nht.Recall_Campaign_Count),
+          reportingPeriod: "Calendar " + nht.Year,
+          publicationDate: nht.Snapshot_Date,
+          sourceId: nht.Source_ID,
+          sourceFile: "Fact_NHTSA_Annual.csv",
+          sourceUrl: "https://www.nhtsa.gov/nhtsa-datasets-and-apis",
+          note: (nht.Notes || "") + " · Page 4 flat-file recalls",
+        }
+      );
+      kpi(
+        elRisk,
+        "Potential Units Affected (" + nht.Year + ")",
+        Dash.fmt(nht.Potential_Units_Affected_Sum),
+        "Reported POTAFF · " + nht.Year,
+        {
+          periodId: String(nht.Year),
+          metricName: "Potential units affected",
+          metricLabel: nht.Metric_Label || "Reported",
+          valueText: Dash.fmt(nht.Potential_Units_Affected_Sum),
+          reportingPeriod: "Calendar " + nht.Year,
+          publicationDate: nht.Snapshot_Date,
+          sourceId: nht.Source_ID,
+          sourceFile: "Fact_NHTSA_Annual.csv",
+          note: "Max POTAFF per campaign, then summed · not repairs completed · Page 4",
+        }
+      );
+    }
+    if (cmp) {
+      kpi(
+        elRisk,
+        "Complaints Filed (" + cmp.Year + ")",
+        Dash.fmt(cmp.Complaint_Count),
+        "Reported allegations · SRC-NHTSA-002",
+        {
+          periodId: String(cmp.Year),
+          metricName: "Complaints filed",
+          metricLabel: cmp.Metric_Label || "Reported",
+          valueText: Dash.fmt(cmp.Complaint_Count),
+          reportingPeriod: "Calendar " + cmp.Year,
+          publicationDate: cmp.Snapshot_Date,
+          sourceId: cmp.Source_ID,
+          sourceFile: "Fact_Complaints / FLAT_CMPL",
+          sourceUrl: "https://www.nhtsa.gov/nhtsa-datasets-and-apis",
+          note: (cmp.Notes || "Distinct ODINO allegations") + " · Page 4",
+        }
+      );
+    }
+    if (li) {
+      const nirText = fmtNir(li.Net_Import_Reliance_US);
+      const nirLabel = li.Net_Import_Reliance_Metric_Label || "estimated";
+      const top = (li.Top_Producers || []).find((p) => !/world/i.test(p.Country || ""));
+      kpi(elRisk, "US Lithium Import Reliance", nirText, nirLabel + " · USGS MCS 2025", {
+        periodId: "Lithium",
+        metricName: "US net import reliance (lithium)",
+        metricLabel: nirLabel,
+        valueText: nirText,
+        reportingPeriod: "MCS year " + (li.Net_Import_Reliance_Year || li.Primary_Year),
+        publicationDate: li.Publication_Date,
+        sourceId: li.Source_ID,
+        sourceFile: li.Source_File,
+        sourceUrl: li.Source_URL,
+        note:
+          (li.Net_Import_Reliance_Notes || "Structural market statistic — not Tesla purchase volume") +
+          " · Page 6",
+      });
+      if (top) {
+        kpi(
+          elRisk,
+          "Top Li Producer (2025)",
+          top.Country + " · " + Dash.fmt(top.Value),
+          (top.Metric_Label || "estimated") + " · metric tons",
+          {
+            periodId: "Lithium",
+            metricName: "Top lithium producer output",
+            metricLabel: top.Metric_Label || "estimated",
+            valueText: top.Country + " " + Dash.fmt(top.Value) + " " + (top.Unit || ""),
+            reportingPeriod: "MCS year " + (li.Top_Producers_Year || 2025),
+            publicationDate: li.Publication_Date,
+            sourceId: li.Source_ID,
+            sourceFile: li.Source_File,
+            sourceUrl: li.Source_URL,
+            note: (top.Notes || "") + " · World total " + Dash.fmt(li.World_Mine_Production) + " · Page 6",
+          }
+        );
+      }
+    }
+
+    // Bridge chart
+    if (FIN.length) {
+      const periods = FIN.map((r) => r.Period_ID);
+      const deliv = periods.map((pid) => {
+        const o = OPS.find((r) => r.Period_ID === pid);
+        return o ? o.Vehicles_Delivered : null;
+      });
+      Dash.drawLineChart(
+        document.getElementById("chartBridge"),
+        [
+          { color: "#3d9c84", values: deliv },
+          { color: "#6aa8ff", values: FIN.map((r) => r.Automotive_Revenue) },
+        ],
+        {
+          labels: periods.map((p) => p.replace("20", "'")),
+          yFormat: (v) => Dash.fmt(v, 0),
+          onHover: (i, x, y) => {
+            const f = FIN[i];
+            const o = OPS.find((r) => r.Period_ID === f.Period_ID);
+            Dash.showTip(
+              Dash.citationHtml({
+                periodId: f.Period_ID,
+                metricName: "Deliveries / Auto revenue",
+                metricLabel: "Reported",
+                valueText:
+                  "Deliveries " +
+                  Dash.fmt(o && o.Vehicles_Delivered) +
+                  " · Auto rev " +
+                  Dash.fmtUSD(f.Automotive_Revenue),
+                reportingPeriod: f.Reporting_Period,
+                publicationDate: f.Publication_Date,
+                sourceId: f.Source_ID,
+                sourceFile: f.Source_File + (o ? " + " + o.Source_File : ""),
+                sourceUrl: f.Source_URL,
+                note: "Different units on one axis for pattern comparison only — use Pages 2–3 for analysis",
+              }),
+              x,
+              y
+            );
+          },
+        }
+      );
+    }
+
+    const links = [
+      ["02 Production & Delivery", "page02_production_delivery_performance.html", "Tesla IR / SEC 8-K EX-99.1"],
+      ["03 Financial & Inventory", "page03_financial_inventory_health.html", "SEC 10-Q / 10-K iXBRL"],
+      ["04 Quality & Recalls", "page04_quality_recall_risk.html", "NHTSA ODI flat files"],
+      ["05 EV Market (CA)", "page05_ev_market_infrastructure.html", "CEC ZEV sales & public ports"],
+      ["06 Battery Materials", "page06_battery_material_risk.html", "USGS MCS 2026"],
+    ];
+    document.getElementById("navCards").innerHTML = links
+      .map(
+        ([t, href, s]) =>
+          `<a href="${href}" style="display:block;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);background:var(--bg2);color:var(--text);text-decoration:none">
+        <div style="font-weight:600">${t}</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:4px">${s}</div>
+      </a>`
+      )
+      .join("");
+  </script>
+</body>
+</html>

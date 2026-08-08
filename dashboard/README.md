@@ -10,12 +10,12 @@ Interactive six-page HTML dashboard for the Tesla supply-chain portfolio project
 
 | Page | File | Status |
 |------|------|--------|
-| 1 Executive Overview | `page01_executive_overview.html` | Pending (build last) |
+| 1 Executive Overview | `page01_executive_overview.html` | In review |
 | 2 Production & Delivery | `page02_production_delivery_performance.html` | Live |
 | 3 Financial & Inventory | `page03_financial_inventory_health.html` | Live |
 | 4 Quality & Recall Risk | `page04_quality_recall_risk.html` | Live |
 | 5 EV Market & Infrastructure | `page05_ev_market_infrastructure.html` | Live |
-| 6 Battery Material Risk | `page06_battery_material_risk.html` | In review |
+| 6 Battery Material Risk | `page06_battery_material_risk.html` | Live |
 
 ## How to view
 
