@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 5 — EV Market &amp; Infrastructure | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <nav class="site-nav" id="siteNav"></nav>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Dashboard Page 5 · Fact_EV_Market · Fact_EV_Chargers_CA</p>
+      <h1>EV Market &amp; Infrastructure</h1>
+      <p class="sub">
+        California Energy Commission new ZEV sales and <em>public</em> charging-port inventory.
+        Tesla share of CA ZEV sales is calculated from reported manufacturer counts.
+        This is California registration-based sales — not national Tesla deliveries.
+        Hover for Source_File / Source_URL.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label>Focus period
+        <select id="periodSelect"></select>
+      </label>
+      <label>Detail table
+        <select id="tableMode">
+          <option value="recent">2022+ quarters</option>
+          <option value="all">All periods</option>
+        </select>
+      </label>
+      <span class="pill" id="asOfPill"></span>
+      <span class="pill">Geography: California</span>
+      <span class="pill">Sales: SRC-CEC-001</span>
+      <span class="pill">Chargers: SRC-CEC-002 (public ports)</span>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+    <section class="kpis" id="kpis2"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Tesla vs total CA ZEV sales</h2>
+        <p class="hint">Reported · CEC County sheet aggregated statewide</p>
+        <div class="legend">
+          <span><i style="background:var(--deliv)"></i>Tesla ZEV sales</span>
+          <span><i style="background:var(--prod)"></i>Total ZEV sales</span>
+        </div>
+        <canvas id="chartSales" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Tesla share of CA ZEV sales</h2>
+        <p class="hint">Calculated · Tesla ÷ total ZEV</p>
+        <canvas id="chartShare" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>ZEV share of light-duty sales</h2>
+        <p class="hint">Calculated from CEC LDV sales workbook</p>
+        <canvas id="chartZevShare" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>CA public charging ports (snapshots)</h2>
+        <p class="hint">Reported ports · public only · not stations · not shared-private</p>
+        <div class="legend">
+          <span><i style="background:var(--warn)"></i>Public ports total</span>
+          <span><i style="background:var(--prod)"></i>Public DC fast</span>
+        </div>
+        <canvas id="chartChargers" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Quarter detail</h2>
+      <p class="hint" id="tableHint">Citation columns point to CEC download files</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Tesla ZEV</th>
+              <th>Total ZEV</th>
+              <th>Tesla share</th>
+              <th>LDV total</th>
+              <th>ZEV share LDV</th>
+              <th>Source (ZEV file)</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">Scope limits.</strong>
+      CEC “new ZEV sales” are inferred from DMV registrations with methodology changes in 2023 and 2025 — treat long YoY spans cautiously.
+      Prefer the export <em>Data as of</em> date over contemporaneous press totals (2025Q2 press cited 100,671; this June 30, 2026 export revises that quarter to 101,623).
+      Charger figures are <em>ports</em>, not stations. Page KPIs use <strong>public</strong> ports only (Level 1 + Level 2 + DC fast).
+      CEC’s workbook <code>Total</code> also includes shared-private ports (workplaces, multi-family, fleets) and excludes residential — that broader total is retained in the fact table as <code>All_Sectors_Ports_Total</code> but is not the headline infrastructure KPI.
+    </div>
+    <p class="footer-note">Sources: Fact_EV_Market.csv · Fact_EV_Chargers_CA.csv · DAX: powerbi/dax/Page05_EV_Market_Measures.md</p>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+  <script src="data/fact_ev_market.js"></script>
+  <script src="data/fact_ev_chargers.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    Dash.renderNav("05");
+    const DATA = (window.FACT_EV_MARKET || [])
+      .slice()
+      .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
+    const CHG = (window.FACT_EV_CHARGERS || []).slice();
+    const CHG_CHRONO = CHG.slice().reverse();
+
+    const periodSelect = document.getElementById("periodSelect");
+    const tableMode = document.getElementById("tableMode");
+    DATA.forEach((r) => {
+      const o = document.createElement("option");
+      o.value = r.Period_ID;
+      o.textContent = r.Period_ID + " (" + (r.Data_Year || "") + " Q" + (r.Quarter || "") + ")";
+      periodSelect.appendChild(o);
+    });
+    if (DATA.length) periodSelect.value = DATA[DATA.length - 1].Period_ID;
+
+    const asOf = DATA[0] && DATA[0].Data_As_Of;
+    document.getElementById("asOfPill").textContent = "ZEV data as of " + (asOf || "—");
+
+    function selected() {
+      return DATA.find((r) => r.Period_ID === periodSelect.value) || DATA[DATA.length - 1];
+    }
+
+    function latestChargers() {
+      return CHG[0] || null;
+    }
+
+    function citeSales(row, name, label, val, note) {
+      return Dash.citationHtml({
+        periodId: row.Period_ID,
+        metricName: name,
+        metricLabel: label,
+        valueText: val,
+        reportingPeriod: row.Period_ID + " · " + (row.Geography || "California"),
+        publicationDate: row.Data_As_Of,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File_ZEV,
+        sourceUrl: row.Source_URL_ZEV,
+        note: note || row.Notes,
+      });
+    }
+
+    function citeLdv(row, name, label, val) {
+      return Dash.citationHtml({
+        periodId: row.Period_ID,
+        metricName: name,
+        metricLabel: label,
+        valueText: val,
+        reportingPeriod: row.Period_ID + " · California",
+        publicationDate: row.Data_As_Of,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File_LDV,
+        sourceUrl: row.Source_URL_LDV,
+        note: "From LDV sales workbook statewide sum",
+      });
+    }
+
+    function citeChg(row, name, val, note) {
+      return Dash.citationHtml({
+        periodId: row.Snapshot_Label,
+        metricName: name,
+        metricLabel: row.Metric_Label || "reported",
+        valueText: val,
+        reportingPeriod: "Snapshot " + row.Snapshot_Label + " · unit: charging ports",
+        publicationDate: row.Data_As_Of_File,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File,
+        sourceUrl: row.Source_URL,
+        note: note || row.Notes || "Public ports only on Page 5 KPIs",
+      });
+    }
+
+    function bindKpi(el, html, onMove) {
+      const div = document.createElement("div");
+      div.className = "kpi";
+      div.innerHTML = html;
+      div.addEventListener("mousemove", onMove);
+      div.addEventListener("mouseleave", Dash.hideTip);
+      el.appendChild(div);
+    }
+
+    function renderKpis() {
+      const row = selected();
+      if (!row) return;
+      const el1 = document.getElementById("kpis");
+      const el2 = document.getElementById("kpis2");
+      el1.innerHTML = "";
+      el2.innerHTML = "";
+
+      bindKpi(
+        el1,
+        `<div class="lbl">Tesla CA ZEV Sales</div>
+         <div class="val">${Dash.fmt(row.Tesla_ZEV_Sales_CA)}</div>
+         <div class="meta">Reported · ${row.Period_ID}</div>`,
+        (e) => Dash.showTip(
+          citeSales(row, "Tesla CA ZEV Sales", "Reported", Dash.fmt(row.Tesla_ZEV_Sales_CA)),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">Total CA ZEV Sales</div>
+         <div class="val">${Dash.fmt(row.Total_ZEV_Sales_CA)}</div>
+         <div class="meta">Reported · ${row.Period_ID}</div>`,
+        (e) => Dash.showTip(
+          citeSales(
+            row,
+            "Total CA ZEV Sales",
+            "Reported",
+            Dash.fmt(row.Total_ZEV_Sales_CA),
+            row.Period_ID === "2025Q2"
+              ? "June 30, 2026 export; CEC press 2025-07-31 cited 100,671 for this quarter."
+              : row.Notes
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">Tesla Share of ZEV</div>
+         <div class="val">${Dash.fmtPct(row.Tesla_Share_of_ZEV_Sales)}</div>
+         <div class="meta">Calculated · ${row.Period_ID}</div>`,
+        (e) => Dash.showTip(
+          citeSales(row, "Tesla Share of ZEV", "Calculated", Dash.fmtPct(row.Tesla_Share_of_ZEV_Sales)),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">ZEV Share of LDV</div>
+         <div class="val">${Dash.fmtPct(row.ZEV_Share_of_LDV_Sales)}</div>
+         <div class="meta">Calculated · ${row.Period_ID}</div>`,
+        (e) => Dash.showTip(
+          citeLdv(row, "ZEV Share of LDV", "Calculated", Dash.fmtPct(row.ZEV_Share_of_LDV_Sales)),
+          e.clientX, e.clientY
+        )
+      );
+
+      const chg = latestChargers();
+      if (chg) {
+        bindKpi(
+          el2,
+          `<div class="lbl">Public Charging Ports</div>
+           <div class="val">${Dash.fmt(chg.Public_Ports_Total)}</div>
+           <div class="meta">Reported · ${chg.Snapshot_Label}</div>`,
+          (e) => Dash.showTip(
+            citeChg(
+              chg,
+              "Public Charging Ports",
+              Dash.fmt(chg.Public_Ports_Total),
+              "Public L1 + L2 + DC fast. Excludes shared-private (" +
+                Dash.fmt(chg.Shared_Private_Ports_Total) +
+                ") and residential. All-sectors workbook total = " +
+                Dash.fmt(chg.All_Sectors_Ports_Total) + "."
+            ),
+            e.clientX, e.clientY
+          )
+        );
+        bindKpi(
+          el2,
+          `<div class="lbl">Public Level 2 Ports</div>
+           <div class="val">${Dash.fmt(chg.Public_Level_2)}</div>
+           <div class="meta">Reported · ${chg.Snapshot_Label}</div>`,
+          (e) => Dash.showTip(
+            citeChg(chg, "Public Level 2 Ports", Dash.fmt(chg.Public_Level_2)),
+            e.clientX, e.clientY
+          )
+        );
+        bindKpi(
+          el2,
+          `<div class="lbl">Public DC Fast Ports</div>
+           <div class="val">${Dash.fmt(chg.Public_DC_Fast)}</div>
+           <div class="meta">Reported · ${chg.Snapshot_Label}</div>`,
+          (e) => Dash.showTip(
+            citeChg(chg, "Public DC Fast Ports", Dash.fmt(chg.Public_DC_Fast)),
+            e.clientX, e.clientY
+          )
+        );
+        bindKpi(
+          el2,
+          `<div class="lbl">Shared-Private Ports (context)</div>
+           <div class="val">${Dash.fmt(chg.Shared_Private_Ports_Total)}</div>
+           <div class="meta">Not in public KPI · ${chg.Snapshot_Label}</div>`,
+          (e) => Dash.showTip(
+            citeChg(
+              chg,
+              "Shared-Private Ports",
+              Dash.fmt(chg.Shared_Private_Ports_Total),
+              "Workplaces / multi-family / fleets. Excluded from public availability KPI. Not residential."
+            ),
+            e.clientX, e.clientY
+          )
+        );
+      }
+    }
+
+    function renderCharts() {
+      if (!DATA.length) return;
+      const labs = DATA.map((r) => r.Period_ID.replace("20", "'"));
+
+      Dash.drawLineChart(
+        document.getElementById("chartSales"),
+        [
+          { color: "#3d9c84", values: DATA.map((r) => r.Tesla_ZEV_Sales_CA) },
+          { color: "#6aa8ff", values: DATA.map((r) => r.Total_ZEV_Sales_CA) },
+        ],
+        {
+          labels: labs,
+          yFormat: (v) => Dash.fmt(v / 1000, 1) + "k",
+          onHover: (i, x, y) => {
+            const r = DATA[i];
+            Dash.showTip(
+              citeSales(
+                r,
+                "ZEV sales",
+                "Reported",
+                "Tesla " + Dash.fmt(r.Tesla_ZEV_Sales_CA) + " · Total " + Dash.fmt(r.Total_ZEV_Sales_CA)
+              ),
+              x, y
+            );
+          },
+        }
+      );
+
+      Dash.drawLineChart(
+        document.getElementById("chartShare"),
+        [{ color: "#3d9c84", values: DATA.map((r) => r.Tesla_Share_of_ZEV_Sales) }],
+        {
+          labels: labs,
+          yFormat: (v) => (v * 100).toFixed(0) + "%",
+          onHover: (i, x, y) =>
+            Dash.showTip(
+              citeSales(DATA[i], "Tesla share of ZEV", "Calculated", Dash.fmtPct(DATA[i].Tesla_Share_of_ZEV_Sales)),
+              x, y
+            ),
+        }
+      );
+
+      Dash.drawLineChart(
+        document.getElementById("chartZevShare"),
+        [{ color: "#c4923a", values: DATA.map((r) => r.ZEV_Share_of_LDV_Sales) }],
+        {
+          labels: labs,
+          yFormat: (v) => (v * 100).toFixed(0) + "%",
+          onHover: (i, x, y) =>
+            Dash.showTip(
+              citeLdv(DATA[i], "ZEV share of LDV", "Calculated", Dash.fmtPct(DATA[i].ZEV_Share_of_LDV_Sales)),
+              x, y
+            ),
+        }
+      );
+
+      if (CHG_CHRONO.length) {
+        Dash.drawLineChart(
+          document.getElementById("chartChargers"),
+          [
+            { color: "#c4923a", values: CHG_CHRONO.map((r) => r.Public_Ports_Total) },
+            { color: "#6aa8ff", values: CHG_CHRONO.map((r) => r.Public_DC_Fast) },
+          ],
+          {
+            labels: CHG_CHRONO.map((r) => String(r.Snapshot_Label).replace(/20/, "'").slice(0, 10)),
+            yFormat: (v) => Dash.fmt(v / 1000, 0) + "k",
+            onHover: (i, x, y) => {
+              const r = CHG_CHRONO[i];
+              Dash.showTip(
+                citeChg(
+                  r,
+                  "CA public charging ports",
+                  "Public total " + Dash.fmt(r.Public_Ports_Total) +
+                    " · Public DCFC " + Dash.fmt(r.Public_DC_Fast) +
+                    " · Shared-private " + Dash.fmt(r.Shared_Private_Ports_Total)
+                ),
+                x, y
+              );
+            },
+          }
+        );
+      }
+    }
+
+    function renderTable() {
+      const body = document.getElementById("detailBody");
+      let rows = DATA.slice().reverse();
+      if (tableMode.value === "recent") {
+        rows = rows.filter((r) => Number(r.Data_Year) >= 2022);
+        document.getElementById("tableHint").textContent =
+          "2022+ quarters · Source_File from CEC New ZEV Sales export";
+      } else {
+        document.getElementById("tableHint").textContent =
+          "All periods in Fact_EV_Market · Source_File from CEC New ZEV Sales export";
+      }
+      body.innerHTML = rows
+        .map(
+          (r) => `<tr>
+        <td>${r.Period_ID}</td>
+        <td class="num">${Dash.fmt(r.Tesla_ZEV_Sales_CA)}</td>
+        <td class="num">${Dash.fmt(r.Total_ZEV_Sales_CA)}</td>
+        <td class="num">${Dash.fmtPct(r.Tesla_Share_of_ZEV_Sales)}</td>
+        <td class="num">${Dash.fmt(r.Total_LDV_Sales_CA)}</td>
+        <td class="num">${Dash.fmtPct(r.ZEV_Share_of_LDV_Sales)}</td>
+        <td><code style="font-size:10px;color:var(--accent)">${r.Source_File_ZEV}</code></td>
+      </tr>`
+        )
+        .join("");
+    }
+
+    function renderAll() {
+      renderKpis();
+      renderCharts();
+      renderTable();
+    }
+
+    periodSelect.addEventListener("change", renderKpis);
+    tableMode.addEventListener("change", renderTable);
+    window.addEventListener("resize", renderCharts);
+
+    if (!DATA.length) {
+      document.querySelector(".wrap").insertAdjacentHTML(
+        "afterbegin",
+        "<p style='color:#c4923a'>EV market embeds failed to load. Run <code>python scripts/build_dashboard_embeds.py</code>.</p>"
+      );
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>

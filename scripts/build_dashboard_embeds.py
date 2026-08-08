@@ -220,6 +220,12 @@ def main() -> None:
         w.writerows(by_model)
     print(f"Wrote {len(by_model)} rows -> {by_model_path}")
 
+    ev = load_csv(ROOT / "data" / "processed" / "Fact_EV_Market.csv")
+    write_js("fact_ev_market", "FACT_EV_MARKET", ev)
+
+    chg = load_csv(ROOT / "data" / "processed" / "Fact_EV_Chargers_CA.csv")
+    write_js("fact_ev_chargers", "FACT_EV_CHARGERS", chg)
+
 
 if __name__ == "__main__":
     main()

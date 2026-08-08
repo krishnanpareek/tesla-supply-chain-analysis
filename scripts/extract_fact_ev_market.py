@@ -112,32 +112,55 @@ def main() -> None:
             }
         )
 
-    # Chargers: statewide totals by snapshot sheet
+    # Chargers: statewide PORT counts by snapshot sheet.
+    # CEC Total = public + shared-private (workplaces/MFH/fleets); excludes residential.
+    # Page 5 primary KPIs use public ports only.
     chg_path = CEC / CHG_FILE
     xl = pd.ExcelFile(chg_path)
     charger_rows = []
+
+    def col_sum(frame: pd.DataFrame, *names: str) -> int:
+        for name in names:
+            if name in frame.columns:
+                return int(frame[name].sum())
+        return 0
+
     for sheet in xl.sheet_names:
         if sheet.lower() in ("info", "readme"):
             continue
         df = pd.read_excel(chg_path, sheet_name=sheet)
         df.columns = [str(c).strip() for c in df.columns]
-        if "Total" not in df.columns:
+        if "Total" not in df.columns or "County" not in df.columns:
             continue
-        # Drop possible statewide duplicate rows named Total
         dff = df[~df["County"].astype(str).str.lower().isin(["total", "statewide", "nan"])].copy()
-        for col in df.columns:
+        for col in dff.columns:
             if col == "County":
                 continue
             dff[col] = pd.to_numeric(dff[col], errors="coerce").fillna(0)
-        total = int(dff["Total"].sum())
-        pub_l2 = int(dff.get("Public Level 2", pd.Series([0])).sum()) if "Public Level 2" in dff else None
-        pub_dc = int(dff.get("Public DC Fast", pd.Series([0])).sum()) if "Public DC Fast" in dff else None
+
+        pub_l1 = col_sum(dff, "Public Level 1")
+        priv_l1 = col_sum(dff, "Shared Private Level 1")
+        pub_l2 = col_sum(dff, "Public Level 2")
+        priv_l2 = col_sum(dff, "Shared Private Level 2")
+        pub_dc = col_sum(dff, "Public DC Fast", "Public DCFC")
+        priv_dc = col_sum(dff, "Shared Private DC Fast", "Shared Private DCFC")
+        all_ports = int(dff["Total"].sum())
+        public_ports = pub_l1 + pub_l2 + pub_dc
+        shared_private_ports = priv_l1 + priv_l2 + priv_dc
+
         charger_rows.append(
             {
                 "Snapshot_Label": sheet,
+                "Public_Level_1": pub_l1,
                 "Public_Level_2": pub_l2,
                 "Public_DC_Fast": pub_dc,
-                "Total_Chargers": total,
+                "Public_Ports_Total": public_ports,
+                "Shared_Private_Level_1": priv_l1,
+                "Shared_Private_Level_2": priv_l2,
+                "Shared_Private_DC_Fast": priv_dc,
+                "Shared_Private_Ports_Total": shared_private_ports,
+                "All_Sectors_Ports_Total": all_ports,
+                "Unit": "charging_ports",
                 "Geography": "California",
                 "Source_File": CHG_FILE,
                 "Source_URL": CHG_URL,
@@ -146,6 +169,11 @@ def main() -> None:
                 "Data_As_Of_File": "December 31, 2025 (Info sheet)",
                 "Snapshot_Date": snap,
                 "Metric_Label": "reported",
+                "Notes": (
+                    "Ports (not stations). All_Sectors = public + shared private "
+                    "(workplaces/MFH/fleets); excludes residential. "
+                    "Public_Ports_Total is the Page 5 primary infrastructure KPI."
+                ),
             }
         )
 

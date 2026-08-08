@@ -1,30 +1,14 @@
 # powerbi/
 
-Power BI dashboard artifacts for the six-page report.
+DAX measure documentation and page design specs. The **live deliverable is the HTML dashboard** in `../dashboard/`.
 
-## Page 2 — Production & Delivery Performance (built)
+These DAX files document the analytical logic behind each KPI; they are not executed in a `.pbix` in this repository.
 
-| Artifact | Path |
-|----------|------|
-| Page design spec | `pages/page02_production_delivery_performance.md` |
-| DAX measures + tooltip citation templates | `dax/Page02_Production_Delivery_Measures.md` |
-| Browser prototype (demoable now) | `page02_production_delivery_performance.html` |
-| Embedded fact JSON for prototype | `_embed_data.js`, `data/Fact_Tesla_Operations.json` |
-
-### How to view Page 2 today
-
-Open `page02_production_delivery_performance.html` in a browser (double-click or Live Server). Hover KPIs/chart points for Source_File citations.
-
-### How to build the .pbix in Power BI Desktop
-
-1. Load `../data/processed/Fact_Tesla_Operations.csv`
-2. Implement measures from `dax/Page02_Production_Delivery_Measures.md`
-3. Follow layout/filters/tooltips in `pages/page02_production_delivery_performance.md`
-4. Save as `Tesla_Supply_Chain_Analysis.pbix` in this folder
-5. Export a PNG to `../visuals/page02_production_delivery_performance.png`
-
-`*.pbix.bak` files are gitignored.
-
-## Remaining pages
-
-3 Financial · 4 Quality · 5 EV Market · 6 Battery Materials · 1 Executive Overview (last)
+| Page | Spec | DAX reference | HTML |
+|------|------|---------------|------|
+| 1 Executive Overview | — | `dax/Page01_Executive_Overview_Measures.md` | `../dashboard/page01_*.html` |
+| 2 Production & Delivery | `pages/page02_*.md` | `dax/Page02_Production_Delivery_Measures.md` | `../dashboard/page02_*.html` |
+| 3 Financial & Inventory | `pages/page03_*.md` | `dax/Page03_Financial_Inventory_Measures.md` | `../dashboard/page03_*.html` |
+| 4 Quality & Recall | `pages/page04_*.md` | `dax/Page04_Quality_Recall_Measures.md` | `../dashboard/page04_*.html` |
+| 5 EV Market | — | `dax/Page05_EV_Market_Measures.md` | `../dashboard/page05_*.html` |
+| 6 Battery Materials | — | `dax/Page06_Battery_Material_Measures.md` | `../dashboard/page06_*.html` |
