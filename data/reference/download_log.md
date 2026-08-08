@@ -111,11 +111,21 @@ Exact local file inventory for Phase 3 raw downloads.
 
 Extract: `scripts/extract_fact_recalls_flat.py` → `Fact_Recalls.csv` (MAKETXT=TESLA). POTAFF populated.
 
-### C2. NHTSA API snapshot (superseded for Fact_Recalls; retained for complaints path)
+### C2. NHTSA complaints flat file (primary for Fact_Complaints)
+
+| Source_ID | Local_Filename | Last-Modified (HTTP) | Source_URL | Bytes | Access_Date |
+|-----------|----------------|----------------------|------------|-------|-------------|
+| SRC-NHTSA-002 | `FLAT_CMPL.zip` | 2026-08-07 (hub: 08/07/2026 06:27:36 AM ET) | https://static.nhtsa.gov/odi/ffdd/cmpl/FLAT_CMPL.zip | 368800360 | 2026-08-07 |
+| SRC-NHTSA-002 | `CMPL.txt` | — | https://static.nhtsa.gov/odi/ffdd/cmpl/CMPL.txt | 9982 | 2026-08-07 |
+| SRC-NHTSA-002 | `Import_Instructions_Excel_All.pdf` | — | https://static.nhtsa.gov/odi/ffdd/cmpl/Import_Instructions_Excel_All.pdf | 687956 | 2026-08-07 |
+
+Extract: `scripts/extract_fact_complaints_flat.py` → distinct ODINO for TESLA. Roadster check: MODELTXT contains `ROADSTER` (includes `ROADSTER2`).
+
+### C3. NHTSA API snapshot (superseded for Page 4 facts)
 
 | Source_ID | Dataset | Local files | Snapshot_Date | Notes |
 |-----------|---------|-------------|---------------|-------|
-| SRC-NHTSA-003 | recallsByVehicle / complaintsByVehicle | `data/raw/nhtsa/*_raw.jsonl` (gitignored) | 2026-08-02 | API path dropped for Fact_Recalls after flat-file rebuild. Still used historically for complaints extract. |
+| SRC-NHTSA-003 | recallsByVehicle / complaintsByVehicle | `data/raw/nhtsa/*_raw.jsonl` (gitignored) | 2026-08-02 | Dropped for Fact_Recalls (no POTAFF) and Fact_Complaints (under-counted Roadster vs FLAT_CMPL). |
 
 ---
 

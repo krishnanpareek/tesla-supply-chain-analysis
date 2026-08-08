@@ -165,9 +165,9 @@ Traceability log for every externally sourced dataset in this project.
 | Data_Definition | Safety-related defect complaints submitted to NHTSA |
 | Primary/Secondary | Primary → `Fact_Complaints` |
 | Access_Date | 2026-08-02 |
-| Reliability_Notes | Complaints are allegations, not confirmed defects. Useful for **reported** complaint volume / flags; not incidence rates without exposure denominators. |
-| Limitations | Selection bias; duplicates possible; not normalized per vehicles in operation unless you add an external exposure metric (often unavailable publicly at model-year grain). |
-| Status | Hub + CMPL.txt dictionary URL verified. **MANUAL LOCATE:** download FLAT_CMPL.zip (or year slices) and record size/timestamp; file is hundreds of MB — do not commit. |
+| Reliability_Notes | Complaints are allegations, not confirmed defects. Useful for **reported** complaint volume / flags; not incidence rates without exposure denominators. Fact grain = distinct **ODINO** (component/CMPLID rows collapsed). |
+| Limitations | Selection bias; ODINO may repeat across components in the raw file (we collapse). Not normalized per vehicles in operation. |
+| Status | Downloaded `FLAT_CMPL.zip` + `CMPL.txt` (2026-08-07 hub update). Primary extract for `Fact_Complaints` via `scripts/extract_fact_complaints_flat.py`. Prefer over SRC-NHTSA-003 API (API under-counted Roadster vs flat file). |
 
 ### SRC-NHTSA-003 — Vehicle-level Recalls / Complaints API (optional extract path)
 
@@ -188,8 +188,8 @@ Traceability log for every externally sourced dataset in this project.
 | Primary/Secondary | Secondary / alternate extract method for Tesla-only subsets |
 | Access_Date | 2026-08-02 |
 | Reliability_Notes | No API key required per NHTSA docs. Prefer flat files for bulk reproducibility; API useful for model-year targeted pulls. |
-| Limitations | Must enumerate model + year combinations; pagination/completeness should be validated against flat-file counts. |
-| Status | Documentation URL verified; example endpoint patterns documented by NHTSA. **MANUAL LOCATE:** finalize Tesla model name spellings as they appear in NHTSA (`MODEL 3`, `MODEL Y`, etc.) before scripting. |
+| Limitations | Must enumerate model + year combinations; pagination/completeness should be validated against flat-file counts. `recallsByVehicle` historically omitted POTAFF — do not use API for recall units (use SRC-NHTSA-001). |
+| Status | Superseded for Page 4 KPIs. Historical API JSONL retained under `data/raw/nhtsa/*_raw.jsonl` (gitignored). Recalls/units = SRC-NHTSA-001; complaints = SRC-NHTSA-002. |
 
 ---
 
@@ -381,9 +381,9 @@ Traceability log for every externally sourced dataset in this project.
 | SRC-TESLA-IR-001 | Tesla IR | Fact_Tesla_Operations | Hub + examples verified; historical series MANUAL LOCATE |
 | SRC-TESLA-IR-002 | Tesla IR | Context / cross-check | Example deck verified; archive set MANUAL LOCATE |
 | SRC-SEC-001 / 002* | SEC EDGAR | Fact_Financials | Index + seed filings verified; full period set MANUAL LOCATE |
-| SRC-NHTSA-001 | NHTSA | Fact_Recalls | Hub verified; ZIP selection MANUAL LOCATE |
-| SRC-NHTSA-002 | NHTSA | Fact_Complaints | Hub verified; large ZIP MANUAL LOCATE |
-| SRC-NHTSA-003 | NHTSA | Recalls/Complaints alternate | API docs verified; model spellings MANUAL LOCATE |
+| SRC-NHTSA-001 | NHTSA | Fact_Recalls / Fact_NHTSA_Annual | Flat files 2026-08-07; POTAFF populated; Page 4 recalls |
+| SRC-NHTSA-002 | NHTSA | Fact_Complaints | FLAT_CMPL.zip loaded; distinct ODINO; Page 4 complaints |
+| SRC-NHTSA-003 | NHTSA | (superseded for Page 4) | API path dropped after flat-file rebuilds |
 | SRC-CEC-001/002/003 | CEC | Fact_EV_Market | ZEV/LDV exports logged (Data as of June 30, 2026); 2025Q2 press vs export revision noted under SRC-CEC-001 |
 | SRC-AFDC-001/002 | DOE AFDC / NREL | Fact_EV_Market (chargers) | Hub/docs verified; snapshot + API key MANUAL LOCATE |
 | SRC-USGS-001/002/003 | USGS | Fact_Raw_Materials | MCS 2026 CSV loaded; Metric_Label follows USGS Estimated notes; PDF chapters for spot-check |

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 4 — Quality &amp; Recall Risk | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <nav class="site-nav" id="siteNav"></nav>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Dashboard Page 4 · Fact_Recalls + Fact_Complaints (ODI flat files)</p>
+      <h1>Quality &amp; Recall Risk</h1>
+      <p class="sub">
+        Tesla NHTSA recall campaigns and consumer complaints from ODI <em>flat files</em>
+        (recalls SRC-NHTSA-001 · complaints SRC-NHTSA-002). Campaign counts and POTAFF are <em>reported</em>;
+        crash share is <em>calculated</em>. Complaint counts are distinct ODINO (allegation cases).
+        Hover for Source_Zip / Source_URL.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label>Focus year (recall report year)
+        <select id="yearSelect"></select>
+      </label>
+      <label>Campaign table
+        <select id="tableMode">
+          <option value="year">Focus year only</option>
+          <option value="recent">25 most recent (all years)</option>
+        </select>
+      </label>
+      <span class="pill" id="snapPill"></span>
+      <span class="pill">Recalls: SRC-NHTSA-001</span>
+      <span class="pill">Complaints: SRC-NHTSA-002</span>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Recall campaigns by report year</h2>
+        <p class="hint">Reported · distinct Campaign_Number (earliest Report_Received_Date year)</p>
+        <canvas id="chartRecalls" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Potential units affected by year</h2>
+        <p class="hint">Reported POTAFF · max per campaign, then summed · not repairs completed</p>
+        <canvas id="chartUnits" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Complaints filed by year</h2>
+        <p class="hint">Reported allegations (FLAT_CMPL, distinct ODINO) · not defect incidence rates</p>
+        <div class="legend">
+          <span><i style="background:var(--deliv)"></i>Complaints</span>
+          <span><i style="background:var(--warn)"></i>Crash-flagged</span>
+          <span><i style="background:var(--prod)"></i>Fire-flagged</span>
+        </div>
+        <canvas id="chartComplaints" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Crash share of complaints</h2>
+        <p class="hint">Calculated · crash-flagged ÷ complaints (same filed year)</p>
+        <canvas id="chartCrashShare" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>By model — complaints vs recall campaigns</h2>
+        <p class="hint">Complaints: SRC-NHTSA-002 · Campaigns: SRC-NHTSA-001 (includes Roadster)</p>
+      <canvas id="chartByModel" height="240"></canvas>
+    </section>
+
+    <section class="panel">
+      <h2>Recall campaigns</h2>
+      <p class="hint" id="tableHint">One row per Campaign_Number · POTAFF from flat-file RCL · Source_Zip cited</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Campaign</th>
+              <th>Report date</th>
+              <th>Models</th>
+              <th>POTAFF</th>
+              <th>Component</th>
+              <th>Summary (truncated)</th>
+              <th>Source zip</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">Interpretation guardrails.</strong>
+      POTAFF is the potential population Tesla reported to NHTSA — not completed repairs and not confirmed defect count.
+      Rising complaint counts can reflect fleet growth, media attention, or reporting behavior — not only quality deterioration.
+      Component text is free-form; do not treat it as a bill-of-materials link to a supplier.
+      Roadster-era campaigns (e.g. <code>09V178000</code>, 345 units) are included from <code>FLAT_RCL_PRE_2010.zip</code>.
+    </div>
+    <p class="footer-note">Facts: Fact_Recalls.csv · Fact_NHTSA_Annual.csv · Fact_Complaints.csv · Fact_NHTSA_By_Model.csv · DAX: powerbi/dax/Page04_Quality_Recall_Measures.md</p>
+  </div>
+
+  <div class="tooltip" id="tooltip"></div>
+  <script src="data/fact_nhtsa_annual.js"></script>
+  <script src="data/fact_complaints_annual.js"></script>
+  <script src="data/fact_nhtsa_by_model.js"></script>
+  <script src="data/fact_recalls.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    Dash.renderNav("04");
+    const ANNUAL = (window.FACT_NHTSA_ANNUAL || []).slice().sort((a, b) => a.Year - b.Year);
+    const COMP_ANNUAL = (window.FACT_COMPLAINTS_ANNUAL || []).slice().sort((a, b) => a.Year - b.Year);
+    const BY_MODEL = (window.FACT_NHTSA_BY_MODEL || [])
+      .slice()
+      .filter((r) => r.Complaint_Count > 0 || r.Recall_Campaign_Count > 0)
+      .sort((a, b) => b.Complaint_Count - a.Complaint_Count || b.Recall_Campaign_Count - a.Recall_Campaign_Count);
+    const RECALLS = (window.FACT_RECALLS || []).slice().sort((a, b) =>
+      String(b.Report_Received_Date || "").localeCompare(String(a.Report_Received_Date || ""))
+    );
+
+    const yearSelect = document.getElementById("yearSelect");
+    const tableMode = document.getElementById("tableMode");
+    ANNUAL.forEach((r) => {
+      const opt = document.createElement("option");
+      opt.value = r.Year;
+      opt.textContent = r.Year;
+      yearSelect.appendChild(opt);
+    });
+    if (ANNUAL.length) yearSelect.value = ANNUAL[ANNUAL.length - 1].Year;
+
+    const snapRecall = ANNUAL[0] && ANNUAL[0].Snapshot_Date;
+    const snapComp = COMP_ANNUAL[0] && COMP_ANNUAL[0].Snapshot_Date;
+    document.getElementById("snapPill").textContent =
+      "Recalls snapshot " + (snapRecall || "—") +
+      (snapComp ? " · Complaints snapshot " + snapComp : "");
+
+    function selectedAnnual() {
+      return ANNUAL.find((r) => String(r.Year) === String(yearSelect.value)) || ANNUAL[ANNUAL.length - 1];
+    }
+
+    function selectedComplaints() {
+      return COMP_ANNUAL.find((r) => String(r.Year) === String(yearSelect.value)) || null;
+    }
+
+    function citeRecallAnnual(row, metricName, metricLabel, valueText, note) {
+      return Dash.citationHtml({
+        periodId: String(row.Year),
+        metricName,
+        metricLabel,
+        valueText,
+        reportingPeriod: "Report_Received_Date year " + row.Year,
+        publicationDate: row.Snapshot_Date,
+        sourceId: row.Source_ID || "SRC-NHTSA-001",
+        sourceFile: "Fact_NHTSA_Annual <- Fact_Recalls (FLAT_RCL_*.zip)",
+        sourceUrl: "https://static.nhtsa.gov/odi/ffdd/rcl/",
+        note: note || row.Notes,
+      });
+    }
+
+    function citeComplaint(row, metricName, metricLabel, valueText) {
+      return Dash.citationHtml({
+        periodId: String(row.Year),
+        metricName,
+        metricLabel,
+        valueText,
+        reportingPeriod: "Complaint filed year " + row.Year,
+        publicationDate: row.Snapshot_Date,
+        sourceId: row.Source_ID || "SRC-NHTSA-002",
+        sourceFile: "Fact_Complaints.csv <- FLAT_CMPL.zip",
+        sourceUrl: "https://static.nhtsa.gov/odi/ffdd/cmpl/FLAT_CMPL.zip",
+        note: row.Notes || "Distinct ODINO allegations — not confirmed defects.",
+      });
+    }
+
+    function citeCampaign(row, metricName, valueText) {
+      return Dash.citationHtml({
+        periodId: row.Campaign_Number,
+        metricName,
+        metricLabel: row.Metric_Label || "reported",
+        valueText,
+        reportingPeriod: "Report received " + (row.Report_Received_Date || "—"),
+        publicationDate: row.Snapshot_Date,
+        sourceId: row.Source_ID || "SRC-NHTSA-001",
+        sourceFile: row.Source_File || row.Source_Zip,
+        sourceUrl: row.Source_URL,
+        note: row.Units_Note || "POTAFF = potential units; not repairs completed.",
+      });
+    }
+
+    function bindKpi(el, html, onMove) {
+      const div = document.createElement("div");
+      div.className = "kpi";
+      div.innerHTML = html;
+      div.addEventListener("mousemove", onMove);
+      div.addEventListener("mouseleave", Dash.hideTip);
+      el.appendChild(div);
+    }
+
+    function renderKpis() {
+      const el = document.getElementById("kpis");
+      el.innerHTML = "";
+      const ann = selectedAnnual();
+      if (!ann) return;
+      const comp = selectedComplaints();
+      const crashShare = comp && comp.Complaint_Count
+        ? comp.Crash_Flagged_Complaints / comp.Complaint_Count
+        : null;
+
+      bindKpi(
+        el,
+        `<div class="lbl">Recall Campaigns</div>
+         <div class="val">${Dash.fmt(ann.Recall_Campaign_Count)}</div>
+         <div class="meta">Reported · ${ann.Year}</div>`,
+        (e) => Dash.showTip(
+          citeRecallAnnual(ann, "Recall Campaigns", "Reported", Dash.fmt(ann.Recall_Campaign_Count)),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el,
+        `<div class="lbl">Potential Units Affected</div>
+         <div class="val">${Dash.fmt(ann.Potential_Units_Affected_Sum)}</div>
+         <div class="meta">Reported POTAFF · ${ann.Year}</div>`,
+        (e) => Dash.showTip(
+          citeRecallAnnual(
+            ann,
+            "Potential Units Affected",
+            "Reported",
+            Dash.fmt(ann.Potential_Units_Affected_Sum),
+            "Max POTAFF per campaign, summed for the year. Not repairs completed."
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el,
+        `<div class="lbl">Complaints Filed</div>
+         <div class="val">${comp ? Dash.fmt(comp.Complaint_Count) : "—"}</div>
+         <div class="meta">${comp ? "Reported allegations · " + comp.Year : "No complaint rollup for year"}</div>`,
+        (e) => {
+          if (!comp) return;
+          Dash.showTip(
+            citeComplaint(comp, "Complaints Filed", "Reported", Dash.fmt(comp.Complaint_Count)),
+            e.clientX, e.clientY
+          );
+        }
+      );
+      bindKpi(
+        el,
+        `<div class="lbl">Crash Share of Complaints</div>
+         <div class="val">${Dash.fmtPct(crashShare)}</div>
+         <div class="meta">Calculated · ${ann.Year}</div>`,
+        (e) => {
+          if (!comp) return;
+          Dash.showTip(
+            citeComplaint(
+              comp,
+              "Crash Share of Complaints",
+              "Calculated",
+              Dash.fmtPct(crashShare) +
+                " (" + Dash.fmt(comp.Crash_Flagged_Complaints) + " / " + Dash.fmt(comp.Complaint_Count) + ")"
+            ),
+            e.clientX, e.clientY
+          );
+        }
+      );
+    }
+
+    function yearLabels(rows) {
+      return rows.map((r) => "'" + String(r.Year).slice(2));
+    }
+
+    function renderCharts() {
+      const labs = yearLabels(ANNUAL);
+      Dash.drawBarChart(
+        document.getElementById("chartRecalls"),
+        ANNUAL.map((r) => r.Recall_Campaign_Count),
+        {
+          labels: labs,
+          colors: ANNUAL.map(() => "#6aa8ff"),
+          onHover: (i, x, y) => {
+            const r = ANNUAL[i];
+            Dash.showTip(
+              citeRecallAnnual(r, "Recall Campaigns", "Reported", Dash.fmt(r.Recall_Campaign_Count)),
+              x, y
+            );
+          },
+        }
+      );
+
+      Dash.drawBarChart(
+        document.getElementById("chartUnits"),
+        ANNUAL.map((r) => r.Potential_Units_Affected_Sum),
+        {
+          labels: labs,
+          colors: ANNUAL.map(() => "#c4923a"),
+          onHover: (i, x, y) => {
+            const r = ANNUAL[i];
+            Dash.showTip(
+              citeRecallAnnual(
+                r,
+                "Potential Units Affected",
+                "Reported",
+                Dash.fmt(r.Potential_Units_Affected_Sum),
+                "POTAFF — not repairs completed."
+              ),
+              x, y
+            );
+          },
+        }
+      );
+
+      if (COMP_ANNUAL.length) {
+        const cLabs = yearLabels(COMP_ANNUAL);
+        Dash.drawLineChart(
+          document.getElementById("chartComplaints"),
+          [
+            { color: "#3d9c84", values: COMP_ANNUAL.map((r) => r.Complaint_Count) },
+            { color: "#c4923a", values: COMP_ANNUAL.map((r) => r.Crash_Flagged_Complaints) },
+            { color: "#6aa8ff", values: COMP_ANNUAL.map((r) => r.Fire_Flagged_Complaints) },
+          ],
+          {
+            labels: cLabs,
+            yFormat: (v) => Dash.fmt(v, 0),
+            onHover: (i, x, y) => {
+              const r = COMP_ANNUAL[i];
+              Dash.showTip(
+                citeComplaint(
+                  r,
+                  "Complaints / crash / fire flags",
+                  "Reported",
+                  "Complaints " + Dash.fmt(r.Complaint_Count) +
+                    " · Crash " + Dash.fmt(r.Crash_Flagged_Complaints) +
+                    " · Fire " + Dash.fmt(r.Fire_Flagged_Complaints)
+                ),
+                x, y
+              );
+            },
+          }
+        );
+
+        const shares = COMP_ANNUAL.map((r) =>
+          r.Complaint_Count ? r.Crash_Flagged_Complaints / r.Complaint_Count : null
+        );
+        Dash.drawLineChart(
+          document.getElementById("chartCrashShare"),
+          [{ color: "#c4923a", values: shares }],
+          {
+            labels: cLabs,
+            yFormat: (v) => (v * 100).toFixed(0) + "%",
+            onHover: (i, x, y) => {
+              const r = COMP_ANNUAL[i];
+              const share = shares[i];
+              Dash.showTip(
+                citeComplaint(r, "Crash Share of Complaints", "Calculated", Dash.fmtPct(share)),
+                x, y
+              );
+            },
+          }
+        );
+      }
+
+      drawModelBars(document.getElementById("chartByModel"));
+    }
+
+    function drawModelBars(canvas) {
+      const rows = BY_MODEL.filter((r) =>
+        ["MODEL 3", "MODEL Y", "MODEL S", "MODEL X", "CYBERTRUCK", "ROADSTER", "SEMI"].includes(r.Model)
+      );
+      const ctx = canvas.getContext("2d");
+      const dpr = window.devicePixelRatio || 1;
+      const w = canvas.clientWidth;
+      const h = canvas.height;
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      const pad = { l: 88, r: 12, t: 12, b: 28 };
+      const plotW = w - pad.l - pad.r;
+      const plotH = h - pad.t - pad.b;
+      const n = rows.length || 1;
+      const maxC = Math.max(...rows.map((r) => r.Complaint_Count), 1);
+      const rowH = plotH / n;
+      rows.forEach((r, i) => {
+        const y = pad.t + i * rowH + rowH * 0.15;
+        const bh = rowH * 0.7;
+        const bw = (r.Complaint_Count / maxC) * plotW * 0.85;
+        ctx.fillStyle = "#3d9c84";
+        ctx.fillRect(pad.l, y, Math.max(bw, 1), bh);
+        ctx.fillStyle = "#93a1b0";
+        ctx.font = "11px IBM Plex Sans, sans-serif";
+        ctx.fillText(r.Model, 8, y + bh * 0.7);
+        ctx.fillStyle = "#e8eef4";
+        ctx.font = "10px IBM Plex Mono, monospace";
+        ctx.fillText(
+          Dash.fmt(r.Complaint_Count) + " c / " + Dash.fmt(r.Recall_Campaign_Count) + " camp",
+          pad.l + Math.max(bw, 1) + 6,
+          y + bh * 0.7
+        );
+      });
+      canvas.onmousemove = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const my = e.clientY - rect.top;
+        const i = Math.min(rows.length - 1, Math.max(0, Math.floor((my - pad.t) / rowH)));
+        if (my < pad.t || my > pad.t + plotH || !rows[i]) { Dash.hideTip(); return; }
+        const r = rows[i];
+        Dash.showTip(
+          Dash.citationHtml({
+            periodId: r.Model,
+            metricName: "Complaints / recall campaigns",
+            metricLabel: "Reported",
+            valueText: "Complaints " + Dash.fmt(r.Complaint_Count) +
+              " · Campaigns " + Dash.fmt(r.Recall_Campaign_Count),
+            reportingPeriod: "Model rollup",
+            publicationDate: snapRecall || snapComp,
+            sourceId: r.Recall_Source_ID + " / " + r.Complaint_Source_ID,
+            sourceFile: "Fact_Recalls + Fact_Complaints",
+            note: "Campaign counts from FLAT_RCL_*.zip; complaints from FLAT_CMPL.zip (distinct ODINO).",
+          }),
+          e.clientX, e.clientY
+        );
+      };
+      canvas.onmouseleave = Dash.hideTip;
+    }
+
+    function trunc(s, n) {
+      const t = (s || "").replace(/\s+/g, " ").trim();
+      return t.length <= n ? t : t.slice(0, n - 1) + "...";
+    }
+
+    function renderTable() {
+      const body = document.getElementById("detailBody");
+      body.innerHTML = "";
+      const year = String(yearSelect.value);
+      let rows;
+      if (tableMode.value === "year") {
+        rows = RECALLS.filter((r) => String(r.Report_Received_Date || "").startsWith(year));
+        document.getElementById("tableHint").textContent =
+          "Campaigns with Report_Received_Date in " + year + " · POTAFF from flat-file RCL · Source_Zip cited";
+      } else {
+        rows = RECALLS.slice(0, 25);
+        document.getElementById("tableHint").textContent =
+          "25 most recent campaigns (all years) · POTAFF from flat-file RCL · Source_Zip cited";
+      }
+      if (!rows.length) {
+        body.innerHTML = `<tr><td colspan="7" style="color:var(--faint)">No campaigns for ${year}.</td></tr>`;
+        return;
+      }
+      rows.forEach((r) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><code style="font-size:11px;color:var(--accent)">${r.Campaign_Number}</code></td>
+          <td>${r.Report_Received_Date || "—"}</td>
+          <td>${r.Models || "—"}</td>
+          <td class="num">${Dash.fmt(r.Potential_Units_Affected)}</td>
+          <td>${trunc(r.Component, 42)}</td>
+          <td>${trunc(r.Summary, 90)}</td>
+          <td><code style="font-size:10px;color:var(--accent)">${r.Source_Zip || "—"}</code></td>`;
+        tr.addEventListener("mousemove", (e) => {
+          Dash.showTip(
+            citeCampaign(
+              r,
+              "Campaign " + r.Campaign_Number,
+              "POTAFF " + Dash.fmt(r.Potential_Units_Affected) + " · " + (r.Models || "")
+            ),
+            e.clientX, e.clientY
+          );
+        });
+        tr.addEventListener("mouseleave", Dash.hideTip);
+        body.appendChild(tr);
+      });
+    }
+
+    function renderAll() {
+      renderKpis();
+      renderCharts();
+      renderTable();
+    }
+
+    yearSelect.addEventListener("change", () => {
+      renderKpis();
+      renderTable();
+    });
+    tableMode.addEventListener("change", renderTable);
+    window.addEventListener("resize", renderCharts);
+
+    if (!ANNUAL.length || !RECALLS.length) {
+      document.querySelector(".wrap").insertAdjacentHTML(
+        "afterbegin",
+        "<p style='color:#c4923a'>Recall embeds failed to load. Run <code>python scripts/build_dashboard_embeds.py</code>.</p>"
+      );
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>

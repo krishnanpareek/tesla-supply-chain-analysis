@@ -1,0 +1,16 @@
+---
+description: Prefer NHTSA ODI flat files over vehicle APIs; never trust API zero-results
+alwaysApply: true
+---
+
+# NHTSA data authority
+
+For NHTSA recalls and complaints in this project:
+
+1. **Primary sources are ODI flat files**, not the vehicle APIs:
+   - Recalls: `SRC-NHTSA-001` (`FLAT_RCL_PRE_2010.zip` / `FLAT_RCL_POST_2010.zip`)
+   - Complaints: `SRC-NHTSA-002` (`FLAT_CMPL.zip`)
+2. **`SRC-NHTSA-003` (recallsByVehicle / complaintsByVehicle) is superseded** for Page 4 facts. Do not rebuild Fact_Recalls or Fact_Complaints from the API.
+3. **Never trust an API zero-result as ground truth.** A query that returns zero campaigns or complaints may simply omit that make/model/year from the request matrix (especially older or low-volume models such as Roadster). Always cross-check against the flat file (`MAKETXT=TESLA`, model text contains the target) before treating zero as real.
+4. Recall units come from flat-file **POTAFF** (`Potential_Units_Affected`); the vehicle recalls API historically omitted this field.
+5. Complaint counts are **distinct ODINO** from the flat file (component/CMPLID rows collapsed).
