@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/dashboard.css" />
 </head>
-<body class="theme-ops">
+<body class="theme-ops theme-light" data-theme-mode="light">
   <nav class="site-nav" id="siteNav"></nav>
   <div class="wrap">
     <header>
@@ -41,6 +41,13 @@
       </label>
       <span class="pill" id="taxonomyPill"></span>
       <span class="pill">Charts: ops blue · brand chrome: red</span>
+    </div>
+
+    <div class="time-selector" id="timeSelector" aria-label="Quarter time selector">
+      <button type="button" class="time-nav" id="timePrev" aria-label="Previous quarter">‹</button>
+      <div class="time-strip" id="timeStrip" role="listbox" aria-label="Select quarter"></div>
+      <button type="button" class="time-nav" id="timeNext" aria-label="Next quarter">›</button>
+      <span class="time-hint">or click a chart point</span>
     </div>
 
     <section class="kpis k5" id="kpis"></section>
@@ -149,6 +156,9 @@
 
     const T = totals();
     const periodSelect = document.getElementById("periodSelect");
+    const timeStrip = document.getElementById("timeStrip");
+    const timePrev = document.getElementById("timePrev");
+    const timeNext = document.getElementById("timeNext");
     T.forEach((r) => {
       const opt = document.createElement("option");
       opt.value = r.Period_ID;
@@ -157,8 +167,57 @@
     });
     if (T.length) periodSelect.value = T[T.length - 1].Period_ID;
 
+    function selectedIndex() {
+      const i = T.findIndex((r) => r.Period_ID === periodSelect.value);
+      return i < 0 ? T.length - 1 : i;
+    }
+
     function selectedTotal() {
-      return T.find((r) => r.Period_ID === periodSelect.value) || T[T.length - 1];
+      return T[selectedIndex()] || T[T.length - 1];
+    }
+
+    function setPeriodByIndex(i, scrollChip) {
+      if (!T.length) return;
+      const idx = Math.max(0, Math.min(T.length - 1, i));
+      const pid = T[idx].Period_ID;
+      if (periodSelect.value === pid) {
+        syncTimeStrip(scrollChip);
+        renderCharts();
+        return;
+      }
+      periodSelect.value = pid;
+      renderAll();
+      if (scrollChip) syncTimeStrip(true);
+    }
+
+    function syncTimeStrip(scrollIntoView) {
+      const idx = selectedIndex();
+      timeStrip.querySelectorAll(".time-chip").forEach((chip, i) => {
+        const on = i === idx;
+        chip.classList.toggle("active", on);
+        chip.setAttribute("aria-selected", on ? "true" : "false");
+        if (on && scrollIntoView) {
+          chip.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+      });
+      timePrev.disabled = idx <= 0;
+      timeNext.disabled = idx >= T.length - 1;
+    }
+
+    function buildTimeStrip() {
+      timeStrip.innerHTML = "";
+      T.forEach((r, i) => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "time-chip";
+        btn.setAttribute("role", "option");
+        btn.dataset.index = String(i);
+        btn.textContent = r.Period_ID.replace("20", "'");
+        btn.title = r.Reporting_Period;
+        btn.addEventListener("click", () => setPeriodByIndex(i, true));
+        timeStrip.appendChild(btn);
+      });
+      syncTimeStrip(true);
     }
 
     function renderKpis() {
@@ -358,6 +417,7 @@
 
     function renderCharts() {
       const labs = T.map((r) => r.Period_ID.replace("20", "'"));
+      const sel = selectedIndex();
       Dash.drawDualLineGap(
         document.getElementById("chartTrend"),
         T.map((r) => r.Vehicles_Produced),
@@ -366,6 +426,7 @@
           labels: labs,
           prodLabel: "reported",
           delivLabel: "reported",
+          selectedIndex: sel,
           yFormat: (v) => Dash.fmt(v / 1000, 0) + "k",
           onHover: (i, x, y) => {
             const row = T[i];
@@ -380,12 +441,13 @@
                   Dash.fmt(row.Vehicles_Delivered) +
                   "<br/>Gap " +
                   Dash.fmt(row.Production_Delivery_Gap) +
-                  " (calculated)"
+                  " (calculated)<br/><span style='color:#93a1b0'>Click to focus this quarter</span>"
               ),
               x,
               y
             );
           },
+          onSelect: (i) => setPeriodByIndex(i, true),
         }
       );
 
@@ -395,6 +457,7 @@
         {
           labels: labs,
           metricLabel: "calculated",
+          selectedIndex: sel,
           colors: T.map((r) =>
             r.Production_Delivery_Gap >= 0
               ? Dash.cssVar("--gap-pos", "#6aa8ff")
@@ -403,11 +466,18 @@
           onHover: (i, x, y) => {
             const row = T[i];
             Dash.showTip(
-              citationHtml(row, "Production–Delivery Gap", "Calculated", Dash.fmt(row.Production_Delivery_Gap)),
+              citationHtml(
+                row,
+                "Production–Delivery Gap",
+                "Calculated",
+                Dash.fmt(row.Production_Delivery_Gap) +
+                  "<br/><span style='color:#93a1b0'>Click to focus this quarter</span>"
+              ),
               x,
               y
             );
           },
+          onSelect: (i) => setPeriodByIndex(i, true),
         }
       );
 
@@ -440,12 +510,18 @@
 
     function renderAll() {
       renderKpis();
+      syncTimeStrip(false);
       renderCharts();
       renderTable();
     }
 
-    periodSelect.addEventListener("change", renderAll);
+    periodSelect.addEventListener("change", () => {
+      syncTimeStrip(true);
+      renderAll();
+    });
     document.getElementById("groupSelect").addEventListener("change", renderTable);
+    timePrev.addEventListener("click", () => setPeriodByIndex(selectedIndex() - 1, true));
+    timeNext.addEventListener("click", () => setPeriodByIndex(selectedIndex() + 1, true));
     window.addEventListener("resize", renderCharts);
 
     if (!DATA.length) {
@@ -454,7 +530,9 @@
         "<p style='color:#c4923a'>Fact data failed to load. Ensure dashboard/data/fact_tesla_operations.js is present.</p>"
       );
     } else {
+      buildTimeStrip();
       renderAll();
+      syncTimeStrip(true);
     }
   </script>
 </body>

@@ -25,7 +25,10 @@
 
   function applyTheme(themeKey) {
     Object.values(THEME_CLASS).forEach((c) => document.body.classList.remove(c));
-    document.body.classList.add(THEME_CLASS[themeKey] || THEME_CLASS.overview);
+    const key = themeKey || "overview";
+    document.body.classList.add(THEME_CLASS[key] || THEME_CLASS.overview);
+    document.body.classList.add("theme-light");
+    document.body.setAttribute("data-theme-mode", "light");
   }
 
   function renderNav(activeId) {
@@ -383,6 +386,18 @@
       ctx.fillStyle = cssVar("--accent-soft", "rgba(106,168,255,0.12)");
       ctx.fill();
 
+      const selIdx = opts.selectedIndex;
+      if (selIdx != null && selIdx >= 0 && selIdx < n) {
+        ctx.strokeStyle = cssVar("--brand", "#e31937");
+        ctx.globalAlpha = 0.55;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(xAt(selIdx), pad.t);
+        ctx.lineTo(xAt(selIdx), pad.t + plotH);
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.lineWidth = 1;
+      }
       if (hoverIdx != null) {
         ctx.strokeStyle = cssVar("--accent", "#6aa8ff");
         ctx.globalAlpha = 0.35;
@@ -434,8 +449,26 @@
     };
 
     canvas._dashRedraw = paint;
+    canvas._dashOptions = opts;
     paint(null);
     bindHover(canvas, produced.length, (i) => canvas._dashXAt(i), opts.onHover);
+    if (opts.onSelect) {
+      canvas.onclick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const mx = e.clientX - rect.left;
+        let best = 0;
+        let bestDist = Infinity;
+        const n = produced.length;
+        for (let i = 0; i < n; i++) {
+          const d = Math.abs(mx - canvas._dashXAt(i));
+          if (d < bestDist) {
+            bestDist = d;
+            best = i;
+          }
+        }
+        if (bestDist <= 28) opts.onSelect(best);
+      };
+    }
   }
 
   function drawBarChart(canvas, values, options) {
@@ -472,6 +505,7 @@
         ctx.fillText(lab, x - 14, h - 10);
       });
 
+      const selIdx = opts.selectedIndex;
       values.forEach((v, i) => {
         if (v == null) return;
         const x = pad.l + (i + 0.5) * (plotW / n) - barW / 2;
@@ -489,9 +523,14 @@
           ctx.setLineDash([]);
         } else {
           ctx.fillStyle = color;
-          ctx.globalAlpha = hoverIdx === i ? 1 : 0.88;
+          ctx.globalAlpha = hoverIdx === i || selIdx === i ? 1 : 0.78;
           ctx.fillRect(x, y, barW, bh);
           ctx.globalAlpha = 1;
+        }
+        if (selIdx === i) {
+          ctx.strokeStyle = cssVar("--brand", "#e31937");
+          ctx.lineWidth = 1.5;
+          ctx.strokeRect(x - 1, y - 1, barW + 2, bh + 2);
         }
         if (hoverIdx === i) {
           ctx.strokeStyle = color;
@@ -510,6 +549,7 @@
     };
 
     canvas._dashRedraw = paint;
+    canvas._dashOptions = opts;
     paint(null);
     canvas.onmousemove = (e) => {
       const rect = canvas.getBoundingClientRect();
@@ -533,6 +573,13 @@
       canvas._dashHoverIndex = null;
       paint(null);
     };
+    if (opts.onSelect) {
+      canvas.onclick = (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const i = canvas._dashBarIndex(e.clientX - rect.left);
+        if (i != null) opts.onSelect(i);
+      };
+    }
   }
 
   global.Dash = {
