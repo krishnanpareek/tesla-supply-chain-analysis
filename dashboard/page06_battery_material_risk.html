@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page 6 — Battery Material Risk | Tesla Supply Chain Analysis</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/dashboard.css" />
+</head>
+<body>
+  <nav class="site-nav" id="siteNav"></nav>
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Dashboard Page 6 · Fact_Raw_Materials (USGS MCS 2026)</p>
+      <h1>Battery Material Risk</h1>
+      <p class="sub">
+        USGS Mineral Commodity Summaries 2026 statistics for lithium, cobalt, nickel, and natural graphite.
+        Primary year is <em>2025</em>. Many 2025 cells are USGS <em>estimated</em> (Notes contain “Estimated”);
+        earlier years may be reported — labels follow the fact table, not a page-wide default.
+        These are national mineral-market figures, not Tesla purchase volumes. Hover for DOI / Source_File.
+      </p>
+    </header>
+
+    <div class="controls">
+      <label>Commodity
+        <select id="commoditySelect"></select>
+      </label>
+      <span class="pill">Primary year: 2025</span>
+      <span class="pill">Publication 2026-02-06</span>
+      <span class="pill">DOI 10.5066/P1WKQ63T</span>
+      <span class="pill">SRC-USGS-002</span>
+    </div>
+
+    <section class="kpis" id="kpis"></section>
+    <section class="kpis" id="kpis2"></section>
+
+    <section class="grid2">
+      <div class="panel">
+        <h2>Top producing countries (2025)</h2>
+        <p class="hint" id="topHint">World mine production · Metric_Label from USGS Notes</p>
+        <canvas id="chartTop" height="220"></canvas>
+      </div>
+      <div class="panel">
+        <h2>Selected-country production trend</h2>
+        <p class="hint">Mine production · hover points for estimated vs reported</p>
+        <canvas id="chartTrend" height="220"></canvas>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Commodity risk snapshot (2025)</h2>
+      <p class="hint">US net import reliance and top-producer concentration · labels are field-level</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Commodity</th>
+              <th>US net import reliance</th>
+              <th>NIR label</th>
+              <th>Top producer</th>
+              <th>Top producer output</th>
+              <th>Prod. label</th>
+              <th>Share of world</th>
+              <th>Source file</th>
+            </tr>
+          </thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">What this page does not claim.</strong>
+      USGS production and import-reliance statistics describe national mineral markets.
+      They do not identify Tesla’s suppliers, contract volumes, or cell-chemistry mix.
+      Concentration among producing countries is a structural risk signal — not proof of a Tesla-specific shortage.
+      <br /><br />
+      <strong style="color:var(--text)">Estimated vs reported.</strong>
+      In MCS 2026, world mine production and U.S. net import reliance for <em>2025</em> are marked estimated for
+      lithium, cobalt, nickel, and natural graphite. <code>Metric_Label=estimated</code> when USGS Notes contain
+      “Estimated”; otherwise <code>reported</code>. Top-producer share of world is <em>calculated</em>.
+    </div>
+    <p class="footer-note">Source: SRC-USGS-002 · MCS2026_Commodities_Data.csv · DAX: powerbi/dax/Page06_Battery_Material_Measures.md</p>
+  </div>
+  <div class="tooltip" id="tooltip"></div>
+  <script src="data/fact_raw_materials_kpi.js"></script>
+  <script src="data/fact_raw_materials_production.js"></script>
+  <script src="assets/common.js"></script>
+  <script>
+    Dash.renderNav("06");
+    const ORDER = ["Lithium", "Cobalt", "Nickel", "Graphite (Natural)"];
+    const KPI = (window.FACT_RAW_MATERIALS_KPI || []).slice().sort((a, b) => {
+      const ia = ORDER.indexOf(a.Commodity);
+      const ib = ORDER.indexOf(b.Commodity);
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
+    });
+    const PROD = window.FACT_RAW_MATERIALS_PROD || [];
+    const commoditySelect = document.getElementById("commoditySelect");
+    KPI.forEach((r) => {
+      const o = document.createElement("option");
+      o.value = r.Commodity;
+      o.textContent = r.Commodity;
+      commoditySelect.appendChild(o);
+    });
+    if (KPI.length) commoditySelect.value = KPI[0].Commodity;
+
+    function selected() {
+      return KPI.find((r) => r.Commodity === commoditySelect.value) || KPI[0];
+    }
+
+    function fmtNir(row) {
+      const nir = row.Net_Import_Reliance_US;
+      if (nir == null || nir === "") return "—";
+      if (typeof nir === "number") return Dash.fmt(nir, 0) + "%";
+      const s = String(nir);
+      return s.includes("%") ? s : s + "%";
+    }
+
+    function cite(row, name, label, val, note, year) {
+      return Dash.citationHtml({
+        periodId: row.Commodity,
+        metricName: name,
+        metricLabel: label,
+        valueText: val,
+        reportingPeriod: "MCS year " + (year || row.Primary_Year || "—") + " · " + row.Commodity,
+        publicationDate: row.Publication_Date,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File,
+        sourceUrl: row.Source_URL,
+        note: note || row.Notes || ("DOI " + (row.DOI || "")),
+      });
+    }
+
+    function topProducers(row) {
+      return (row.Top_Producers || []).filter((p) => !/world/i.test(p.Country || ""));
+    }
+
+    function bindKpi(el, html, onMove) {
+      const div = document.createElement("div");
+      div.className = "kpi";
+      div.innerHTML = html;
+      div.addEventListener("mousemove", onMove);
+      div.addEventListener("mouseleave", Dash.hideTip);
+      el.appendChild(div);
+    }
+
+    function renderKpis() {
+      const row = selected();
+      if (!row) return;
+      const tops = topProducers(row);
+      const el1 = document.getElementById("kpis");
+      const el2 = document.getElementById("kpis2");
+      el1.innerHTML = "";
+      el2.innerHTML = "";
+
+      const nirText = fmtNir(row);
+      const nirLabel = row.Net_Import_Reliance_Metric_Label || "reported";
+      const worldLabel = row.World_Mine_Production_Metric_Label || "estimated";
+      const top = tops[0];
+      const topLabel = top ? top.Metric_Label || "estimated" : "—";
+      const share = row.Top_Producer_Share_of_World;
+      const shareText = share == null ? "—" : Dash.fmtPct(share, 0);
+
+      bindKpi(
+        el1,
+        `<div class="lbl">Commodity</div>
+         <div class="val" style="font-size:1.25rem">${row.Commodity}</div>
+         <div class="meta">Critical mineral · MCS ${row.Primary_Year}</div>`,
+        (e) => Dash.showTip(
+          cite(row, "Commodity", "reported", row.Commodity, "Battery-relevant commodity in Fact_Raw_Materials"),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">US Net Import Reliance</div>
+         <div class="val">${nirText}</div>
+         <div class="meta">${nirLabel} · ${row.Net_Import_Reliance_Year || row.Primary_Year}</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "US Net Import Reliance",
+            nirLabel,
+            nirText,
+            row.Net_Import_Reliance_Notes || "Share of apparent consumption",
+            row.Net_Import_Reliance_Year
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">World Mine Production</div>
+         <div class="val">${Dash.fmt(row.World_Mine_Production)}</div>
+         <div class="meta">${worldLabel} · ${row.World_Mine_Production_Unit || "metric tons"} · ${row.Primary_Year}</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "World Mine Production",
+            worldLabel,
+            Dash.fmt(row.World_Mine_Production) + " " + (row.World_Mine_Production_Unit || ""),
+            row.World_Mine_Production_Notes || "World total mine production (rounded)",
+            row.Primary_Year
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el1,
+        `<div class="lbl">Top Producer</div>
+         <div class="val" style="font-size:1.2rem">${top ? top.Country : "—"}</div>
+         <div class="meta">${topLabel} · ${row.Top_Producers_Year || ""}</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "Top Producer",
+            topLabel,
+            top ? top.Country : "—",
+            top ? top.Notes : null,
+            row.Top_Producers_Year
+          ),
+          e.clientX, e.clientY
+        )
+      );
+
+      bindKpi(
+        el2,
+        `<div class="lbl">Top Producer Output</div>
+         <div class="val">${top ? Dash.fmt(top.Value) : "—"}</div>
+         <div class="meta">${topLabel} · ${top ? top.Unit || "" : ""} · ${row.Top_Producers_Year || ""}</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "Top Producer Output",
+            topLabel,
+            top ? Dash.fmt(top.Value) + " " + (top.Unit || "") : "—",
+            top ? top.Notes : null,
+            row.Top_Producers_Year
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el2,
+        `<div class="lbl">Top Producer Share of World</div>
+         <div class="val">${shareText}</div>
+         <div class="meta">Calculated · ${row.Primary_Year}</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "Top Producer Share of World",
+            "calculated",
+            shareText,
+            top
+              ? top.Country + " output ÷ world mine production (" + row.Primary_Year + ")"
+              : null,
+            row.Primary_Year
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el2,
+        `<div class="lbl">2025 Production Label</div>
+         <div class="val" style="font-size:1.2rem">${worldLabel}</div>
+         <div class="meta">From USGS Notes · MCS 2026</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "Metric label (world production)",
+            worldLabel,
+            worldLabel,
+            "estimated when USGS Notes contain “Estimated”; otherwise reported"
+          ),
+          e.clientX, e.clientY
+        )
+      );
+      bindKpi(
+        el2,
+        `<div class="lbl">2025 NIR Label</div>
+         <div class="val" style="font-size:1.2rem">${nirLabel}</div>
+         <div class="meta">From USGS Notes · MCS 2026</div>`,
+        (e) => Dash.showTip(
+          cite(
+            row,
+            "Metric label (net import reliance)",
+            nirLabel,
+            nirLabel,
+            row.Net_Import_Reliance_Notes
+          ),
+          e.clientX, e.clientY
+        )
+      );
+    }
+
+    function renderCharts() {
+      const row = selected();
+      if (!row) return;
+      const tops = topProducers(row).slice(0, 6);
+      const labelSet = new Set(tops.map((p) => p.Metric_Label || "estimated"));
+      document.getElementById("topHint").textContent =
+        "2025 mine production · labels: " + [...labelSet].join(", ") + " · excludes World total";
+
+      Dash.drawBarChart(
+        document.getElementById("chartTop"),
+        tops.map((p) => p.Value),
+        {
+          labels: tops.map((p) => String(p.Country).slice(0, 12)),
+          colors: tops.map(() => "#6aa8ff"),
+          onHover: (i, x, y) => {
+            const p = tops[i];
+            Dash.showTip(
+              cite(
+                row,
+                "Production · " + p.Country,
+                p.Metric_Label || "estimated",
+                Dash.fmt(p.Value) + " " + (p.Unit || ""),
+                p.Notes || ("Year " + row.Top_Producers_Year),
+                row.Top_Producers_Year
+              ),
+              x, y
+            );
+          },
+        }
+      );
+
+      const seriesCountries = [
+        "United States",
+        "China",
+        "Australia",
+        "Chile",
+        "Indonesia",
+        "Congo (Kinshasa)",
+        "Canada",
+        "Philippines",
+      ];
+      const years = [
+        ...new Set(
+          PROD.filter((r) => r.Commodity === row.Commodity).map((r) => r.Year)
+        ),
+      ].sort((a, b) => a - b);
+      const colors = ["#3d9c84", "#6aa8ff", "#c4923a", "#9b7bff", "#d46a6a", "#7ab0c4", "#b0a080", "#5a8fad"];
+      const series = [];
+      seriesCountries.forEach((c, idx) => {
+        const vals = years.map((y) => {
+          const hit = PROD.find(
+            (r) => r.Commodity === row.Commodity && r.Country === c && r.Year === y
+          );
+          return hit ? hit.Value : null;
+        });
+        if (vals.some((v) => v != null)) {
+          series.push({ color: colors[idx % colors.length], values: vals, name: c });
+        }
+      });
+
+      const canvas = document.getElementById("chartTrend");
+      if (!series.length) {
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+      } else {
+        Dash.drawLineChart(canvas, series, {
+          labels: years.map(String),
+          yFormat: (v) => (v >= 1000 ? Dash.fmt(v / 1000, 0) + "k" : Dash.fmt(v, 0)),
+          onHover: (i, x, y) => {
+            const parts = series
+              .map((s) => {
+                const hit = PROD.find(
+                  (r) =>
+                    r.Commodity === row.Commodity &&
+                    r.Country === s.name &&
+                    r.Year === years[i]
+                );
+                const lab = hit ? hit.Metric_Label : "—";
+                const val = s.values[i] == null ? "—" : Dash.fmt(s.values[i]);
+                return s.name + ": " + val + " (" + lab + ")";
+              })
+              .join("<br/>");
+            Dash.showTip(
+              cite(row, "Mine production trend", "mixed", years[i] + "<br/>" + parts, null, years[i]),
+              x, y
+            );
+          },
+        });
+      }
+    }
+
+    function renderTable() {
+      const body = document.getElementById("detailBody");
+      body.innerHTML = "";
+      KPI.forEach((r) => {
+        const tops = topProducers(r);
+        const top = tops[0];
+        const nirText = fmtNir(r);
+        const share =
+          r.Top_Producer_Share_of_World == null
+            ? "—"
+            : Dash.fmtPct(r.Top_Producer_Share_of_World, 0);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.Commodity}</td>
+          <td class="num">${nirText}</td>
+          <td>${r.Net_Import_Reliance_Metric_Label || "—"}</td>
+          <td>${top ? top.Country : "—"}</td>
+          <td class="num">${top ? Dash.fmt(top.Value) : "—"}</td>
+          <td>${top ? top.Metric_Label : "—"}</td>
+          <td class="num">${share}</td>
+          <td><code style="font-size:10px;color:var(--accent)">${r.Source_File}</code></td>`;
+        tr.addEventListener("mousemove", (e) =>
+          Dash.showTip(
+            cite(
+              r,
+              r.Commodity + " snapshot",
+              "mixed",
+              "NIR " + nirText + " (" + (r.Net_Import_Reliance_Metric_Label || "") + ")"
+            ),
+            e.clientX,
+            e.clientY
+          )
+        );
+        tr.addEventListener("mouseleave", Dash.hideTip);
+        body.appendChild(tr);
+      });
+    }
+
+    function renderAll() {
+      renderKpis();
+      renderCharts();
+      renderTable();
+    }
+
+    commoditySelect.addEventListener("change", renderAll);
+    window.addEventListener("resize", renderCharts);
+
+    if (!KPI.length) {
+      document.querySelector(".wrap").insertAdjacentHTML(
+        "afterbegin",
+        "<p style='color:#c4923a'>Raw materials embeds failed to load. Run <code>python scripts/build_dashboard_embeds.py</code>.</p>"
+      );
+    } else {
+      renderAll();
+    }
+  </script>
+</body>
+</html>

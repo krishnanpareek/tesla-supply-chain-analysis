@@ -1,0 +1,242 @@
+[
+  {
+    "Commodity": "Lithium",
+    "Primary_Year": 2025,
+    "Net_Import_Reliance_US": ">50",
+    "Net_Import_Reliance_Year": 2025,
+    "Net_Import_Reliance_Unit": "percent",
+    "Net_Import_Reliance_Metric_Label": "estimated",
+    "Net_Import_Reliance_Notes": "Estimated. -- Defined as imports \u2013 exports \u00b1 adjustments for industry stock changes.",
+    "World_Mine_Production": 290000.0,
+    "World_Mine_Production_Unit": "metric tons",
+    "World_Mine_Production_Metric_Label": "estimated",
+    "World_Mine_Production_Notes": "Estimated. -- Excludes U.S. production.",
+    "Top_Producers_Year": 2025,
+    "Top_Producers": [
+      {
+        "Country": "Australia",
+        "Value": 92000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "China",
+        "Value": 62000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Chile",
+        "Value": 56000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Zimbabwe",
+        "Value": 28000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Argentina",
+        "Value": 23000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      }
+    ],
+    "Top_Producer_Share_of_World": 0.31724137931034485,
+    "Top_Producer_Share_Metric_Label": "calculated",
+    "Source_ID": "SRC-USGS-002",
+    "Source_File": "MCS2026_Commodities_Data.csv",
+    "Source_URL": "https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7",
+    "Publication_Date": "2026-02-06",
+    "DOI": "https://doi.org/10.5066/P1WKQ63T",
+    "Metric_Label": "mixed",
+    "Notes": "Primary dashboard year 2025. World mine production and US net import reliance for 2025 are typically USGS-estimated in MCS 2026; Metric_Label follows USGS Notes containing 'Estimated'."
+  },
+  {
+    "Commodity": "Cobalt",
+    "Primary_Year": 2025,
+    "Net_Import_Reliance_US": 79.0,
+    "Net_Import_Reliance_Year": 2025,
+    "Net_Import_Reliance_Unit": "percent",
+    "Net_Import_Reliance_Metric_Label": "estimated",
+    "Net_Import_Reliance_Notes": "Estimated. -- Defined for 2021\u201322 as imports \u2013 exports \u00b1 adjustments for Government and industry stock changes for refined cobalt. Beginning in 2023, Government stock changes no longer included.",
+    "World_Mine_Production": 310000.0,
+    "World_Mine_Production_Unit": "metric tons",
+    "World_Mine_Production_Metric_Label": "estimated",
+    "World_Mine_Production_Notes": "Estimated.",
+    "Top_Producers_Year": 2025,
+    "Top_Producers": [
+      {
+        "Country": "Congo (Kinshasa)",
+        "Value": 230000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Indonesia",
+        "Value": 44000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Other countries",
+        "Value": 9100.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Russia",
+        "Value": 7700.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Madagascar",
+        "Value": 3900.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      }
+    ],
+    "Top_Producer_Share_of_World": 0.7419354838709677,
+    "Top_Producer_Share_Metric_Label": "calculated",
+    "Source_ID": "SRC-USGS-002",
+    "Source_File": "MCS2026_Commodities_Data.csv",
+    "Source_URL": "https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7",
+    "Publication_Date": "2026-02-06",
+    "DOI": "https://doi.org/10.5066/P1WKQ63T",
+    "Metric_Label": "mixed",
+    "Notes": "Primary dashboard year 2025. World mine production and US net import reliance for 2025 are typically USGS-estimated in MCS 2026; Metric_Label follows USGS Notes containing 'Estimated'."
+  },
+  {
+    "Commodity": "Nickel",
+    "Primary_Year": 2025,
+    "Net_Import_Reliance_US": 41.0,
+    "Net_Import_Reliance_Year": 2025,
+    "Net_Import_Reliance_Unit": "percent",
+    "Net_Import_Reliance_Metric_Label": "estimated",
+    "Net_Import_Reliance_Notes": "Estimated. -- Defined as imports \u2013 exports \u00b1 adjustments for consumer stock changes. -- Includes the nickel content of stainless steel and alloy scrap. Excluding scrap, net import reliance would be nearly 100%.",
+    "World_Mine_Production": 3900000.0,
+    "World_Mine_Production_Unit": "metric tons",
+    "World_Mine_Production_Metric_Label": "estimated",
+    "World_Mine_Production_Notes": "Estimated.",
+    "Top_Producers_Year": 2025,
+    "Top_Producers": [
+      {
+        "Country": "Indonesia",
+        "Value": 2600000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Other countries",
+        "Value": 290000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Philippines",
+        "Value": 270000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Russia",
+        "Value": 200000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Canada",
+        "Value": 140000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      }
+    ],
+    "Top_Producer_Share_of_World": 0.6666666666666666,
+    "Top_Producer_Share_Metric_Label": "calculated",
+    "Source_ID": "SRC-USGS-002",
+    "Source_File": "MCS2026_Commodities_Data.csv",
+    "Source_URL": "https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7",
+    "Publication_Date": "2026-02-06",
+    "DOI": "https://doi.org/10.5066/P1WKQ63T",
+    "Metric_Label": "mixed",
+    "Notes": "Primary dashboard year 2025. World mine production and US net import reliance for 2025 are typically USGS-estimated in MCS 2026; Metric_Label follows USGS Notes containing 'Estimated'."
+  },
+  {
+    "Commodity": "Graphite (Natural)",
+    "Primary_Year": 2025,
+    "Net_Import_Reliance_US": 100.0,
+    "Net_Import_Reliance_Year": 2025,
+    "Net_Import_Reliance_Unit": "percent",
+    "Net_Import_Reliance_Metric_Label": "estimated",
+    "Net_Import_Reliance_Notes": "Estimated. -- Defined as imports \u2013 exports.",
+    "World_Mine_Production": 1800000.0,
+    "World_Mine_Production_Unit": "metric tons",
+    "World_Mine_Production_Metric_Label": "estimated",
+    "World_Mine_Production_Notes": "Estimated.",
+    "Top_Producers_Year": 2025,
+    "Top_Producers": [
+      {
+        "Country": "China",
+        "Value": 1400000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Madagascar",
+        "Value": 80000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Tanzania",
+        "Value": 75000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Brazil",
+        "Value": 65000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      },
+      {
+        "Country": "Mozambique",
+        "Value": 60000.0,
+        "Unit": "metric tons",
+        "Metric_Label": "estimated",
+        "Notes": "Estimated."
+      }
+    ],
+    "Top_Producer_Share_of_World": 0.7777777777777778,
+    "Top_Producer_Share_Metric_Label": "calculated",
+    "Source_ID": "SRC-USGS-002",
+    "Source_File": "MCS2026_Commodities_Data.csv",
+    "Source_URL": "https://www.sciencebase.gov/catalog/item/69837e43b66b01367d7ec7c7",
+    "Publication_Date": "2026-02-06",
+    "DOI": "https://doi.org/10.5066/P1WKQ63T",
+    "Metric_Label": "mixed",
+    "Notes": "Primary dashboard year 2025. World mine production and US net import reliance for 2025 are typically USGS-estimated in MCS 2026; Metric_Label follows USGS Notes containing 'Estimated'."
+  }
+]
