@@ -184,9 +184,9 @@
       });
     }
 
-    function bindKpi(el, html, onMove) {
+    function bindKpi(el, html, onMove, brandPrimary) {
       const div = document.createElement("div");
-      div.className = "kpi";
+      div.className = "kpi" + (brandPrimary ? " kpi-brand-primary" : "");
       div.innerHTML = html;
       div.addEventListener("mousemove", onMove);
       div.addEventListener("mouseleave", Dash.hideTip);
@@ -237,7 +237,8 @@
         (e) => Dash.showTip(
           citeSales(row, "Tesla Share of ZEV", "Calculated", Dash.fmtPct(row.Tesla_Share_of_ZEV_Sales)),
           e.clientX, e.clientY
-        )
+        ),
+        true
       );
       bindKpi(
         el1,
@@ -268,7 +269,8 @@
                 Dash.fmt(chg.All_Sectors_Ports_Total) + "."
             ),
             e.clientX, e.clientY
-          )
+          ),
+          true
         );
         bindKpi(
           el2,

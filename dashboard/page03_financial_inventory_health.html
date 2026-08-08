@@ -160,9 +160,9 @@
       });
     }
 
-    function bindKpi(el, row, name, label, valText, cls, note) {
+    function bindKpi(el, row, name, label, valText, cls, note, brandPrimary) {
       const div = document.createElement("div");
-      div.className = "kpi " + (cls || "");
+      div.className = "kpi " + (cls || "") + (brandPrimary ? " kpi-brand-primary" : "");
       div.innerHTML =
         `<div class="lbl">${name}</div>` +
         `<div class="val">${valText}</div>` +
@@ -188,7 +188,7 @@
         : "Three-month amount as reported in the 10-Q.";
 
       bindKpi(el1, row, "Total Revenue", pl, Dash.fmtUSD(row.Total_Revenue), "", plNote);
-      bindKpi(el1, row, "Automotive Revenue", pl, Dash.fmtUSD(row.Automotive_Revenue), "", plNote);
+      bindKpi(el1, row, "Automotive Revenue", pl, Dash.fmtUSD(row.Automotive_Revenue), "", plNote, true);
       bindKpi(
         el1,
         row,

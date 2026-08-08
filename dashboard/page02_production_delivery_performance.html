@@ -9,17 +9,22 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/dashboard.css" />
 </head>
-<body>
+<body class="theme-ops">
   <nav class="site-nav" id="siteNav"></nav>
   <div class="wrap">
     <header>
-      <p class="eyebrow">Dashboard Page 2 · Fact_Tesla_Operations</p>
+      <p class="eyebrow">Dashboard Page 2 · Operations · Fact_Tesla_Operations</p>
       <h1>Production &amp; Delivery Performance</h1>
       <p class="sub">
         Tesla public IR production/delivery series (Q1 2022–Q2 2026). Figures are reported from SEC 8-K Exhibit 99.1;
-        gap and rates are calculated. Hover any KPI or chart point for source file citation.
+        gap and rates are calculated. Solid marks = reported/calculated; dashed/hatch = estimated (none on core ops series).
       </p>
     </header>
+
+    <div class="metric-key" aria-hidden="true">
+      <span><i class="swatch solid"></i> Reported / calculated (solid)</span>
+      <span><i class="swatch estimated"></i> Estimated (dashed / hatch)</span>
+    </div>
 
     <div class="controls">
       <label>Focus period
@@ -35,39 +40,50 @@
         </select>
       </label>
       <span class="pill" id="taxonomyPill"></span>
+      <span class="pill">Charts: ops blue · brand chrome: red</span>
     </div>
 
-    <section class="kpis" id="kpis"></section>
+    <section class="kpis k5" id="kpis"></section>
 
     <section class="grid2">
       <div class="panel">
         <h2>Production vs Deliveries (Total)</h2>
-        <p class="hint">Reported · hover points for Source_File / Publication_Date</p>
+        <p class="hint">Reported dual-line · shaded band = production–delivery gap</p>
         <div class="legend">
-          <span><i style="background:var(--prod)"></i>Produced</span>
-          <span><i style="background:var(--deliv)"></i>Delivered</span>
+          <span><i class="solid" style="background:var(--prod)"></i>Produced</span>
+          <span><i class="solid" style="background:var(--deliv)"></i>Delivered</span>
+          <span><i class="gap-fill" style="background:var(--accent)"></i>Gap band</span>
         </div>
-        <canvas id="chartTrend" height="220"></canvas>
+        <canvas id="chartTrend" height="240"></canvas>
       </div>
       <div class="panel">
-        <h2>Production–Delivery Gap (Calculated)</h2>
-        <p class="hint">Produced − Delivered · not unsold inventory</p>
-        <canvas id="chartGap" height="220"></canvas>
+        <h2>Production–Delivery Gap</h2>
+        <p class="hint">Calculated · Produced − Delivered · not unsold inventory</p>
+        <div class="legend">
+          <span><i class="solid" style="background:var(--gap-pos)"></i>Prod &gt; deliv</span>
+          <span><i class="solid" style="background:var(--gap-neg)"></i>Deliv &gt; prod</span>
+        </div>
+        <canvas id="chartGap" height="240"></canvas>
       </div>
     </section>
 
     <section class="grid2">
       <div class="panel">
         <h2>Delivery mix by vehicle group</h2>
-        <p class="hint">Reported segment deliveries · taxonomy break at 2023Q4 (Model S/X → Other Models)</p>
+        <p class="hint">Reported segment deliveries · taxonomy break at 2023Q4</p>
+        <div class="legend">
+          <span><i class="solid" style="background:var(--prod)"></i>Model 3/Y</span>
+          <span><i class="solid" style="background:var(--series-2)"></i>Model S/X</span>
+          <span><i class="solid" style="background:var(--series-3)"></i>Other Models</span>
+        </div>
         <canvas id="chartMix" height="220"></canvas>
       </div>
       <div class="panel">
         <h2>Deliveries — QoQ growth &amp; 4Q rolling average</h2>
         <p class="hint">Calculated from Total deliveries</p>
         <div class="legend">
-          <span><i style="background:var(--warn)"></i>QoQ growth</span>
-          <span><i style="background:var(--deliv)"></i>4Q rolling avg (vehicles)</span>
+          <span><i class="solid" style="background:var(--series-3)"></i>QoQ growth</span>
+          <span><i class="solid" style="background:var(--deliv)"></i>4Q rolling avg</span>
         </div>
         <canvas id="chartGrowth" height="220"></canvas>
       </div>
@@ -98,10 +114,11 @@
 
     <div class="callout">
       <strong style="color:var(--text)">Executive interpretation.</strong>
-      Reported production and deliveries do not move in lockstep. Positive and negative gaps both appear in the public series.
-      The data indicates timing and logistics effects can dominate a single quarter; additional internal data would be required to attribute any quarter to demand, shutdowns, or mix.
-      Vehicle-group labels change at Q4 2023 (<code>Model S/X</code> → <code>Other Models</code>) and must not be treated as one continuous segment without disclosure.
+      Reported production and deliveries do not move in lockstep — the shaded band highlights the gap without labeling it inventory.
+      Positive and negative gaps both appear in the public series; timing and logistics can dominate a single quarter.
+      Vehicle-group labels change at Q4 2023 (<code>Model S/X</code> → <code>Other Models</code>) and must not be merged without disclosure.
     </div>
+    <p class="footer-note">Design preview · Page 2 Operations theme · Source: Fact_Tesla_Operations</p>
   </div>
 
   <div class="tooltip" id="tooltip"></div>
@@ -110,40 +127,24 @@
   <script>
     Dash.renderNav("02");
     const DATA = window.FACT_TESLA_OPS || [];
-    const tip = document.getElementById("tooltip");
 
-    function periodSort(id) {
-      return Number(id.slice(0, 4)) * 10 + Number(id.slice(-1));
-    }
-    function fmt(n) {
-      if (n === null || n === undefined || Number.isNaN(n)) return "—";
-      return Math.round(n).toLocaleString("en-US");
-    }
-    function fmtPct(n) {
-      if (n === null || n === undefined || Number.isNaN(n)) return "—";
-      return (n * 100).toFixed(1) + "%";
-    }
     function totals() {
       return DATA.filter((d) => d.Vehicle_Group === "Total")
-        .sort((a, b) => periodSort(a.Period_ID) - periodSort(b.Period_ID));
+        .sort((a, b) => Dash.periodSort(a.Period_ID) - Dash.periodSort(b.Period_ID));
     }
-    function showTip(html, x, y) {
-      tip.innerHTML = html;
-      tip.style.display = "block";
-      const pad = 14;
-      tip.style.left = Math.min(x + pad, window.innerWidth - 360) + "px";
-      tip.style.top = Math.min(y + pad, window.innerHeight - 180) + "px";
-    }
-    function hideTip() { tip.style.display = "none"; }
 
     function citationHtml(row, metricName, metricLabel, valueText) {
-      return `<strong>${row.Period_ID} · ${row.Vehicle_Group} · ${metricName} (${metricLabel})</strong>
-        Value: ${valueText}<br/>
-        Reporting period: ${row.Reporting_Period}<br/>
-        Published: ${row.Publication_Date}<br/>
-        Source ID: ${row.Source_ID}<br/>
-        <code>${row.Source_File}</code><br/>
-        <span style="color:#93a1b0">Gap is not unsold inventory.</span>`;
+      return Dash.citationHtml({
+        periodId: row.Period_ID + " · " + row.Vehicle_Group,
+        metricName: metricName,
+        metricLabel: metricLabel,
+        valueText: valueText,
+        reportingPeriod: row.Reporting_Period,
+        publicationDate: row.Publication_Date,
+        sourceId: row.Source_ID,
+        sourceFile: row.Source_File,
+        note: "Gap is not unsold inventory.",
+      });
     }
 
     const T = totals();
@@ -154,7 +155,7 @@
       opt.textContent = r.Period_ID + " (" + r.Reporting_Period + ")";
       periodSelect.appendChild(opt);
     });
-    periodSelect.value = T[T.length - 1].Period_ID;
+    if (T.length) periodSelect.value = T[T.length - 1].Period_ID;
 
     function selectedTotal() {
       return T.find((r) => r.Period_ID === periodSelect.value) || T[T.length - 1];
@@ -162,27 +163,29 @@
 
     function renderKpis() {
       const row = selectedTotal();
+      if (!row) return;
       const idx = T.findIndex((r) => r.Period_ID === row.Period_ID);
       const yoyBase = idx >= 4 ? T[idx - 4].Vehicles_Delivered : null;
       const yoy = yoyBase ? (row.Vehicles_Delivered - yoyBase) / yoyBase : null;
       const gapClass = row.Production_Delivery_Gap > 0 ? "gap-pos" : row.Production_Delivery_Gap < 0 ? "gap-neg" : "";
       const cards = [
-        { name: "Vehicles Produced", label: "Reported", val: fmt(row.Vehicles_Produced), raw: row.Vehicles_Produced, cls: "" },
-        { name: "Vehicles Delivered", label: "Reported", val: fmt(row.Vehicles_Delivered), raw: row.Vehicles_Delivered, cls: "" },
-        { name: "Production–Delivery Gap", label: "Calculated", val: fmt(row.Production_Delivery_Gap), raw: row.Production_Delivery_Gap, cls: gapClass },
-        { name: "Delivery Conversion Rate", label: "Calculated", val: fmtPct(row.Delivery_Conversion_Rate), raw: row.Delivery_Conversion_Rate, cls: "" },
-        { name: "Deliveries YoY Growth", label: "Calculated", val: fmtPct(yoy), raw: yoy, cls: "" },
+        { name: "Vehicles Produced", label: "Reported", val: Dash.fmt(row.Vehicles_Produced), cls: "" },
+        { name: "Vehicles Delivered", label: "Reported", val: Dash.fmt(row.Vehicles_Delivered), cls: "", brand: true },
+        { name: "Production–Delivery Gap", label: "Calculated", val: Dash.fmt(row.Production_Delivery_Gap), cls: gapClass },
+        { name: "Delivery Conversion Rate", label: "Calculated", val: Dash.fmtPct(row.Delivery_Conversion_Rate), cls: "" },
+        { name: "Deliveries YoY Growth", label: "Calculated", val: Dash.fmtPct(yoy), cls: "" },
       ];
       const el = document.getElementById("kpis");
       el.innerHTML = "";
       cards.forEach((c) => {
         const div = document.createElement("div");
-        div.className = "kpi " + c.cls;
+        div.className =
+          "kpi " + Dash.metricClass(c.label) + " " + c.cls + (c.brand ? " kpi-brand-primary" : "");
         div.innerHTML = `<div class="lbl">${c.name}</div><div class="val">${c.val}</div><div class="meta">${c.label} · ${row.Period_ID}</div>`;
         div.addEventListener("mousemove", (e) => {
-          showTip(citationHtml(row, c.name, c.label, c.val), e.clientX, e.clientY);
+          Dash.showTip(citationHtml(row, c.name, c.label, c.val), e.clientX, e.clientY);
         });
-        div.addEventListener("mouseleave", hideTip);
+        div.addEventListener("mouseleave", Dash.hideTip);
         el.appendChild(div);
       });
       const flags = row.Format_Flags || "";
@@ -191,130 +194,24 @@
         : "Taxonomy: Model S/X era";
     }
 
-    function drawLineChart(canvas, series, colors, yFormat) {
-      const ctx = canvas.getContext("2d");
-      const dpr = window.devicePixelRatio || 1;
-      const w = canvas.clientWidth;
-      const h = canvas.height;
-      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, w, h);
-      const pad = { l: 48, r: 12, t: 12, b: 36 };
-      const plotW = w - pad.l - pad.r;
-      const plotH = h - pad.t - pad.b;
-      const n = series[0].values.length;
-      let min = Infinity, max = -Infinity;
-      series.forEach((s) => s.values.forEach((v) => { if (v != null) { min = Math.min(min, v); max = Math.max(max, v); } }));
-      if (min === max) { min -= 1; max += 1; }
-      const y0 = Math.min(0, min);
-      const span = max - y0 || 1;
-      const xAt = (i) => pad.l + (n === 1 ? plotW / 2 : (i / (n - 1)) * plotW);
-      const yAt = (v) => pad.t + plotH - ((v - y0) / span) * plotH;
-
-      ctx.strokeStyle = "#2c3642"; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, pad.t + plotH); ctx.lineTo(pad.l + plotW, pad.t + plotH); ctx.stroke();
-      // zero line if in range
-      if (y0 < 0 && max > 0) {
-        ctx.strokeStyle = "#3a4552";
-        ctx.beginPath(); ctx.moveTo(pad.l, yAt(0)); ctx.lineTo(pad.l + plotW, yAt(0)); ctx.stroke();
-      }
-
-      series.forEach((s, si) => {
-        ctx.strokeStyle = colors[si]; ctx.lineWidth = 2; ctx.beginPath();
-        let started = false;
-        s.values.forEach((v, i) => {
-          if (v == null) return;
-          const x = xAt(i), y = yAt(v);
-          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
-        });
-        ctx.stroke();
-        s.values.forEach((v, i) => {
-          if (v == null) return;
-          ctx.fillStyle = colors[si];
-          ctx.beginPath(); ctx.arc(xAt(i), yAt(v), 3.2, 0, Math.PI * 2); ctx.fill();
-        });
-      });
-
-      ctx.fillStyle = "#6b7886"; ctx.font = "10px IBM Plex Mono, monospace";
-      T.forEach((r, i) => {
-        if (i % 2 !== 0 && i !== T.length - 1) return;
-        const x = xAt(i);
-        ctx.fillText(r.Period_ID.replace("20", "'"), x - 14, h - 12);
-      });
-      ctx.fillText(yFormat(max), 4, pad.t + 8);
-      ctx.fillText(yFormat(y0), 4, pad.t + plotH);
-
-      canvas.onmousemove = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        let best = 0, bestDist = Infinity;
-        for (let i = 0; i < n; i++) {
-          const d = Math.abs(xAt(i) - x);
-          if (d < bestDist) { bestDist = d; best = i; }
-        }
-        if (bestDist > 24) { hideTip(); return; }
-        const row = T[best];
-        const lines = series.map((s, si) => `${s.name}: ${yFormat(s.values[best])}`).join("<br/>");
-        showTip(citationHtml(row, series.map((s) => s.name).join(" / "), series[0].label, lines), e.clientX, e.clientY);
-      };
-      canvas.onmouseleave = hideTip;
-    }
-
-    function drawGapBars(canvas) {
-      const ctx = canvas.getContext("2d");
-      const dpr = window.devicePixelRatio || 1;
-      const w = canvas.clientWidth;
-      const h = canvas.height;
-      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, w, h);
-      const pad = { l: 48, r: 12, t: 12, b: 36 };
-      const plotW = w - pad.l - pad.r;
-      const plotH = h - pad.t - pad.b;
-      const vals = T.map((r) => r.Production_Delivery_Gap);
-      const max = Math.max(...vals.map(Math.abs), 1);
-      const xAt = (i) => pad.l + (i + 0.15) * (plotW / vals.length);
-      const barW = (plotW / vals.length) * 0.7;
-      const yAt = (v) => pad.t + plotH / 2 - (v / max) * (plotH / 2);
-      ctx.strokeStyle = "#3a4552";
-      ctx.beginPath(); ctx.moveTo(pad.l, pad.t + plotH / 2); ctx.lineTo(pad.l + plotW, pad.t + plotH / 2); ctx.stroke();
-      vals.forEach((v, i) => {
-        const y = yAt(v);
-        const y0 = pad.t + plotH / 2;
-        ctx.fillStyle = v >= 0 ? "#6aa8ff" : "#c4923a";
-        const top = Math.min(y, y0);
-        const bh = Math.abs(y - y0);
-        ctx.fillRect(xAt(i), top, barW, Math.max(bh, 1));
-      });
-      ctx.fillStyle = "#6b7886"; ctx.font = "10px IBM Plex Mono, monospace";
-      ctx.fillText("prod > deliv", 4, pad.t + 10);
-      ctx.fillText("deliv > prod", 4, pad.t + plotH - 2);
-      canvas.onmousemove = (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        let best = 0, bestDist = Infinity;
-        for (let i = 0; i < vals.length; i++) {
-          const cx = xAt(i) + barW / 2;
-          const d = Math.abs(cx - x);
-          if (d < bestDist) { bestDist = d; best = i; }
-        }
-        if (bestDist > 20) { hideTip(); return; }
-        const row = T[best];
-        showTip(citationHtml(row, "Production–Delivery Gap", "Calculated", fmt(row.Production_Delivery_Gap)), e.clientX, e.clientY);
-      };
-      canvas.onmouseleave = hideTip;
-    }
-
     function drawMix(canvas) {
       const ctx = canvas.getContext("2d");
       const dpr = window.devicePixelRatio || 1;
-      const w = canvas.clientWidth;
-      const h = canvas.height;
-      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const w = Math.max(1, canvas.clientWidth);
+      const h = Math.max(1, canvas.clientHeight || Number(canvas.getAttribute("height")) || 220);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       const pad = { l: 36, r: 12, t: 18, b: 36 };
       const plotW = w - pad.l - pad.r;
       const plotH = h - pad.t - pad.b;
       const periods = T.map((r) => r.Period_ID);
       const breakIdx = periods.indexOf("2023Q4");
+      const c3y = Dash.cssVar("--prod", "#6aa8ff");
+      const csx = Dash.cssVar("--series-2", "#8eb4d9");
+      const coth = Dash.cssVar("--series-3", "#c9a227");
+
       periods.forEach((pid, i) => {
         const segs = DATA.filter((d) => d.Period_ID === pid && d.Vehicle_Group !== "Total");
         const sum = segs.reduce((a, s) => a + s.Vehicles_Delivered, 0) || 1;
@@ -323,9 +220,11 @@
         const bw = (plotW / periods.length) - 4;
         segs.forEach((s) => {
           const bh = (s.Vehicles_Delivered / sum) * plotH;
-          ctx.fillStyle = s.Vehicle_Group === "Model 3/Y" ? "#3d9c84"
-            : s.Vehicle_Group === "Model S/X" ? "#6aa8ff" : "#c4923a";
+          ctx.fillStyle =
+            s.Vehicle_Group === "Model 3/Y" ? c3y : s.Vehicle_Group === "Model S/X" ? csx : coth;
+          ctx.globalAlpha = 0.92;
           ctx.fillRect(x, y, bw, bh);
+          ctx.globalAlpha = 1;
           y += bh;
         });
       });
@@ -333,9 +232,13 @@
         const x = pad.l + breakIdx * (plotW / periods.length);
         ctx.strokeStyle = "#e8eef4";
         ctx.setLineDash([4, 3]);
-        ctx.beginPath(); ctx.moveTo(x, pad.t - 4); ctx.lineTo(x, pad.t + plotH); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, pad.t - 4);
+        ctx.lineTo(x, pad.t + plotH);
+        ctx.stroke();
         ctx.setLineDash([]);
-        ctx.fillStyle = "#93a1b0"; ctx.font = "10px IBM Plex Sans, sans-serif";
+        ctx.fillStyle = "#93a1b0";
+        ctx.font = "10px IBM Plex Sans, sans-serif";
         ctx.fillText("taxonomy break", x + 4, pad.t - 6);
       }
       canvas.onmousemove = (e) => {
@@ -345,10 +248,10 @@
         const pid = periods[i];
         const segs = DATA.filter((d) => d.Period_ID === pid && d.Vehicle_Group !== "Total");
         const totalRow = T.find((r) => r.Period_ID === pid);
-        const body = segs.map((s) => `${s.Vehicle_Group}: ${fmt(s.Vehicles_Delivered)}`).join("<br/>");
-        showTip(citationHtml(totalRow, "Delivery mix (segments)", "Reported", body), e.clientX, e.clientY);
+        const body = segs.map((s) => s.Vehicle_Group + ": " + Dash.fmt(s.Vehicles_Delivered)).join("<br/>");
+        Dash.showTip(citationHtml(totalRow, "Delivery mix (segments)", "Reported", body), e.clientX, e.clientY);
       };
-      canvas.onmouseleave = hideTip;
+      canvas.onmouseleave = Dash.hideTip;
     }
 
     function drawGrowth(canvas) {
@@ -361,12 +264,13 @@
         const slice = T.slice(Math.max(0, i - 3), i + 1);
         return slice.reduce((a, r) => a + r.Vehicles_Delivered, 0) / slice.length;
       });
-      // dual: bars for qoq mapped to -axis, line for roll on secondary — simplify to two panels in one canvas
       const ctx = canvas.getContext("2d");
       const dpr = window.devicePixelRatio || 1;
-      const w = canvas.clientWidth;
-      const h = canvas.height;
-      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const w = Math.max(1, canvas.clientWidth);
+      const h = Math.max(1, canvas.clientHeight || Number(canvas.getAttribute("height")) || 220);
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.clearRect(0, 0, w, h);
       const pad = { l: 48, r: 48, t: 12, b: 36 };
       const plotW = w - pad.l - pad.r;
@@ -385,49 +289,130 @@
         const span = rmax - rmin || 1;
         return pad.t + plotH - ((v - rmin) / span) * plotH;
       };
-      // zero for qoq
+      const barColor = Dash.cssVar("--series-3", "#c9a227");
+      const lineColor = Dash.cssVar("--deliv", "#a8cfff");
+
       if (qmin < 0 && qmax > 0) {
         ctx.strokeStyle = "#3a4552";
-        ctx.beginPath(); ctx.moveTo(pad.l, yQ(0)); ctx.lineTo(pad.l + plotW, yQ(0)); ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(pad.l, yQ(0));
+        ctx.lineTo(pad.l + plotW, yQ(0));
+        ctx.stroke();
       }
       qoq.forEach((v, i) => {
         if (v == null) return;
         const y = yQ(v);
         const y0 = yQ(0);
-        ctx.fillStyle = "#c4923a";
+        ctx.fillStyle = barColor;
+        ctx.globalAlpha = 0.85;
         ctx.fillRect(xAt(i), Math.min(y, y0), barW, Math.max(Math.abs(y - y0), 1));
+        ctx.globalAlpha = 1;
       });
-      ctx.strokeStyle = "#3d9c84"; ctx.lineWidth = 2; ctx.beginPath();
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 2.25;
+      ctx.beginPath();
       roll.forEach((v, i) => {
         const x = xAt(i) + barW / 2;
         const y = yR(v);
-        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        if (i === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
       });
       ctx.stroke();
+      roll.forEach((v, i) => {
+        ctx.fillStyle = lineColor;
+        ctx.beginPath();
+        ctx.arc(xAt(i) + barW / 2, yR(v), 3, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
       canvas.onmousemove = (e) => {
         const rect = canvas.getBoundingClientRect();
         const x = e.clientX - rect.left;
-        let best = 0, bestDist = Infinity;
+        let best = 0;
+        let bestDist = Infinity;
         for (let i = 0; i < T.length; i++) {
           const d = Math.abs(xAt(i) + barW / 2 - x);
-          if (d < bestDist) { bestDist = d; best = i; }
+          if (d < bestDist) {
+            bestDist = d;
+            best = i;
+          }
         }
-        if (bestDist > 22) { hideTip(); return; }
+        if (bestDist > 22) {
+          Dash.hideTip();
+          return;
+        }
         const row = T[best];
-        const g = qoq[best];
-        const rr = roll[best];
-        showTip(
+        Dash.showTip(
           citationHtml(
             row,
             "QoQ growth / 4Q rolling avg",
             "Calculated",
-            `QoQ: ${fmtPct(g)}<br/>4Q rolling avg deliveries: ${fmt(rr)}`
+            "QoQ: " + Dash.fmtPct(qoq[best]) + "<br/>4Q rolling avg deliveries: " + Dash.fmt(roll[best])
           ),
           e.clientX,
           e.clientY
         );
       };
-      canvas.onmouseleave = hideTip;
+      canvas.onmouseleave = Dash.hideTip;
+    }
+
+    function renderCharts() {
+      const labs = T.map((r) => r.Period_ID.replace("20", "'"));
+      Dash.drawDualLineGap(
+        document.getElementById("chartTrend"),
+        T.map((r) => r.Vehicles_Produced),
+        T.map((r) => r.Vehicles_Delivered),
+        {
+          labels: labs,
+          prodLabel: "reported",
+          delivLabel: "reported",
+          yFormat: (v) => Dash.fmt(v / 1000, 0) + "k",
+          onHover: (i, x, y) => {
+            const row = T[i];
+            Dash.showTip(
+              citationHtml(
+                row,
+                "Produced / Delivered",
+                "Reported",
+                "Produced " +
+                  Dash.fmt(row.Vehicles_Produced) +
+                  "<br/>Delivered " +
+                  Dash.fmt(row.Vehicles_Delivered) +
+                  "<br/>Gap " +
+                  Dash.fmt(row.Production_Delivery_Gap) +
+                  " (calculated)"
+              ),
+              x,
+              y
+            );
+          },
+        }
+      );
+
+      Dash.drawBarChart(
+        document.getElementById("chartGap"),
+        T.map((r) => r.Production_Delivery_Gap),
+        {
+          labels: labs,
+          metricLabel: "calculated",
+          colors: T.map((r) =>
+            r.Production_Delivery_Gap >= 0
+              ? Dash.cssVar("--gap-pos", "#6aa8ff")
+              : Dash.cssVar("--gap-neg", "#d4a574")
+          ),
+          onHover: (i, x, y) => {
+            const row = T[i];
+            Dash.showTip(
+              citationHtml(row, "Production–Delivery Gap", "Calculated", Dash.fmt(row.Production_Delivery_Gap)),
+              x,
+              y
+            );
+          },
+        }
+      );
+
+      drawMix(document.getElementById("chartMix"));
+      drawGrowth(document.getElementById("chartGrowth"));
     }
 
     function renderTable() {
@@ -436,40 +421,33 @@
       let rows = DATA.filter((d) => d.Period_ID === pid);
       if (g !== "ALL") rows = rows.filter((d) => d.Vehicle_Group === g);
       rows.sort((a, b) => a.Vehicle_Group.localeCompare(b.Vehicle_Group));
-      const body = document.getElementById("detailBody");
-      body.innerHTML = rows.map((r) => `<tr>
+      document.getElementById("detailBody").innerHTML = rows
+        .map(
+          (r) => `<tr>
         <td>${r.Period_ID}</td>
         <td>${r.Vehicle_Group}</td>
-        <td class="num">${fmt(r.Vehicles_Produced)}</td>
-        <td class="num">${fmt(r.Vehicles_Delivered)}</td>
-        <td class="num">${fmt(r.Production_Delivery_Gap)}</td>
-        <td class="num">${fmtPct(r.Delivery_Conversion_Rate)}</td>
+        <td class="num">${Dash.fmt(r.Vehicles_Produced)}</td>
+        <td class="num">${Dash.fmt(r.Vehicles_Delivered)}</td>
+        <td class="num">${Dash.fmt(r.Production_Delivery_Gap)}</td>
+        <td class="num">${Dash.fmtPct(r.Delivery_Conversion_Rate)}</td>
         <td class="num">${r.Energy_Storage_GWh == null ? "—" : r.Energy_Storage_GWh}</td>
         <td>${r.Publication_Date}</td>
-        <td><code style="font-size:10px;color:#3d9c84">${r.Source_File}</code></td>
-      </tr>`).join("");
+        <td><code style="font-size:10px;color:var(--accent)">${r.Source_File}</code></td>
+      </tr>`
+        )
+        .join("");
     }
 
     function renderAll() {
       renderKpis();
-      drawLineChart(
-        document.getElementById("chartTrend"),
-        [
-          { name: "Vehicles Produced", label: "Reported", values: T.map((r) => r.Vehicles_Produced) },
-          { name: "Vehicles Delivered", label: "Reported", values: T.map((r) => r.Vehicles_Delivered) },
-        ],
-        ["#6aa8ff", "#3d9c84"],
-        fmt
-      );
-      drawGapBars(document.getElementById("chartGap"));
-      drawMix(document.getElementById("chartMix"));
-      drawGrowth(document.getElementById("chartGrowth"));
+      renderCharts();
       renderTable();
     }
 
     periodSelect.addEventListener("change", renderAll);
     document.getElementById("groupSelect").addEventListener("change", renderTable);
-    window.addEventListener("resize", renderAll);
+    window.addEventListener("resize", renderCharts);
+
     if (!DATA.length) {
       document.querySelector(".wrap").insertAdjacentHTML(
         "afterbegin",

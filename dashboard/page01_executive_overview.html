@@ -9,11 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="assets/dashboard.css" />
 </head>
-<body>
+<body class="theme-overview">
   <nav class="site-nav" id="siteNav"></nav>
   <div class="wrap">
     <header>
-      <p class="eyebrow">Dashboard Page 1 · Executive Overview</p>
+      <p class="eyebrow">Dashboard Page 1 · Executive Overview · Independent public-data analysis</p>
       <h1>Tesla Supply Chain Analysis</h1>
       <p class="sub">
         Cross-page snapshot from the same public facts used on Pages 2–6.
@@ -65,6 +65,7 @@
       Built entirely from verifiable public sources (Tesla IR / SEC EDGAR, NHTSA ODI flat files, CEC, USGS MCS 2026).
       Metrics are labeled reported, calculated, or estimated at the field level.
       No internal Tesla factory, supplier-contract, or SKU inventory data is claimed.
+      Brand styling is independent and unaffiliated — not an official Tesla product.
     </div>
     <p class="footer-note">Primary deliverable: HTML dashboard · DAX measure logic under powerbi/dax/ · Page 1 aggregates Pages 2–6</p>
   </div>
@@ -108,9 +109,9 @@
     if (ev) document.getElementById("evPill").textContent = "CA ZEV " + ev.Period_ID;
     if (chg) document.getElementById("chgPill").textContent = "Public ports " + chg.Snapshot_Label;
 
-    function kpi(el, name, val, label, citeOpts) {
+    function kpi(el, name, val, label, citeOpts, brandPrimary) {
       const div = document.createElement("div");
-      div.className = "kpi";
+      div.className = "kpi" + (brandPrimary ? " kpi-brand-primary" : "");
       div.innerHTML =
         `<div class="lbl">${name}</div><div class="val">${val}</div><div class="meta">${label}</div>`;
       div.addEventListener("mousemove", (e) =>
@@ -141,7 +142,7 @@
         sourceFile: ops.Source_File,
         sourceUrl: ops.Source_URL,
         note: "Fact_Tesla_Operations · Total vehicle group · Page 2",
-      });
+      }, true);
       kpi(elOps, "Vehicles Produced", Dash.fmt(ops.Vehicles_Produced), "Reported · " + ops.Period_ID, {
         periodId: ops.Period_ID,
         metricName: "Vehicles produced",
@@ -206,7 +207,7 @@
         sourceFile: fin.Source_File,
         sourceUrl: fin.Source_URL,
         note: "USD millions · Page 3",
-      });
+      }, true);
       kpi(elFin, "Auto Gross Margin", Dash.fmtPct(fin.Automotive_Gross_Margin), "Calculated · " + fin.Period_ID, {
         periodId: fin.Period_ID,
         metricName: "Automotive gross margin",
@@ -282,7 +283,8 @@
           sourceFile: ev.Source_File_ZEV,
           sourceUrl: ev.Source_URL_ZEV,
           note: "Not national deliveries · Page 5",
-        }
+        },
+        true
       );
       kpi(
         elMkt,
@@ -364,7 +366,8 @@
           sourceFile: "Fact_NHTSA_Annual.csv",
           sourceUrl: "https://www.nhtsa.gov/nhtsa-datasets-and-apis",
           note: (nht.Notes || "") + " · Page 4 flat-file recalls",
-        }
+        },
+        true
       );
       kpi(
         elRisk,
