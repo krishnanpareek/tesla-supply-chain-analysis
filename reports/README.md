@@ -5,4 +5,5 @@ Narrative deliverables for the portfolio.
 | File | Purpose |
 |------|---------|
 | `executive_summary.md` | One-page project summary for recruiters |
-| `insights_and_recommendations.md` | 5–8 structured insights (Observation → metric → explanation → implication → limitation → next analysis) |
+| `portfolio_materials.md` | Resume bullets, LinkedIn post, 2-minute interview script |
+| `insights_and_recommendations.md` | Optional deeper insight write-ups (template retained) |
