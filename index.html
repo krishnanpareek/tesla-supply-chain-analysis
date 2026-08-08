@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tesla Supply Chain Analysis — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,500;6..72,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="dashboard/assets/dashboard.css" />
+  <style>
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    .btn-primary { background: var(--accent); color: #0b1210; }
+    .btn-primary:hover { filter: brightness(1.08); }
+    .btn-ghost {
+      border: 1px solid var(--line);
+      color: var(--text);
+      background: var(--bg2);
+    }
+    .btn-ghost:hover { border-color: var(--accent-dim); }
+    .page-list { display: grid; gap: 10px; margin-top: 8px; }
+    .page-list a {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: start;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--bg2);
+      color: var(--text);
+      text-decoration: none;
+    }
+    .page-list a:hover { border-color: var(--accent-dim); }
+    .page-list .num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      padding-top: 2px;
+    }
+    .page-list .title { font-weight: 600; }
+    .page-list .desc {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="inner">
+      <span class="brand">Tesla Supply Chain Analysis</span>
+      <a class="page active" href="index.html">Home</a>
+      <a class="page" href="dashboard/page01_executive_overview.html">01 Overview</a>
+      <a class="page" href="dashboard/page02_production_delivery_performance.html">02 Production</a>
+      <a class="page" href="dashboard/page03_financial_inventory_health.html">03 Financial</a>
+      <a class="page" href="dashboard/page04_quality_recall_risk.html">04 Quality</a>
+      <a class="page" href="dashboard/page05_ev_market_infrastructure.html">05 EV Market</a>
+      <a class="page" href="dashboard/page06_battery_material_risk.html">06 Materials</a>
+    </div>
+  </nav>
+
+  <div class="wrap">
+    <header>
+      <p class="eyebrow">Public-data portfolio project · HTML / CSS / JS dashboard</p>
+      <h1>Tesla Supply Chain Analysis</h1>
+      <p class="sub">
+        Six interactive pages on production &amp; deliveries, financial inventory health,
+        NHTSA quality/recalls, California ZEV market &amp; public charging ports, and USGS
+        battery-material concentration. Public sources only — no Tesla-confidential data.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="dashboard/page01_executive_overview.html">Open Executive Overview</a>
+        <a class="btn btn-ghost" href="https://github.com/krishnanpareek/tesla-supply-chain-analysis">GitHub repository</a>
+      </div>
+    </header>
+
+    <section class="panel" style="margin-top: 8px">
+      <h2>Dashboard pages</h2>
+      <p class="hint">Same design system and citation tooltips on every page</p>
+      <div class="page-list">
+        <a href="dashboard/page01_executive_overview.html">
+          <div class="num">01</div>
+          <div>
+            <div class="title">Executive Overview</div>
+            <div class="desc">Cross-page KPI snapshot from Pages 2–6</div>
+          </div>
+        </a>
+        <a href="dashboard/page02_production_delivery_performance.html">
+          <div class="num">02</div>
+          <div>
+            <div class="title">Production &amp; Delivery</div>
+            <div class="desc">Tesla IR / SEC 8-K · gap is not inventory</div>
+          </div>
+        </a>
+        <a href="dashboard/page03_financial_inventory_health.html">
+          <div class="num">03</div>
+          <div>
+            <div class="title">Financial &amp; Inventory Health</div>
+            <div class="desc">SEC 10-Q / 10-K · revenue, margin, inventory, FCF</div>
+          </div>
+        </a>
+        <a href="dashboard/page04_quality_recall_risk.html">
+          <div class="num">04</div>
+          <div>
+            <div class="title">Quality &amp; Recall Risk</div>
+            <div class="desc">NHTSA ODI flat files · recalls &amp; allegations</div>
+          </div>
+        </a>
+        <a href="dashboard/page05_ev_market_infrastructure.html">
+          <div class="num">05</div>
+          <div>
+            <div class="title">EV Market &amp; Infrastructure</div>
+            <div class="desc">CEC California ZEV sales · public charging ports</div>
+          </div>
+        </a>
+        <a href="dashboard/page06_battery_material_risk.html">
+          <div class="num">06</div>
+          <div>
+            <div class="title">Battery Material Risk</div>
+            <div class="desc">USGS MCS 2026 · estimated vs reported labels</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <div class="callout">
+      <strong style="color:var(--text)">How to read this dashboard.</strong>
+      Hover any KPI for Source_File / Source_ID / publication date.
+      Metrics are labeled reported, calculated, or estimated.
+      See the repository README and <code>documentation/limitations.md</code> for scope limits.
+    </div>
+    <p class="footer-note">
+      Live entry point for GitHub Pages · Primary docs:
+      <a href="https://github.com/krishnanpareek/tesla-supply-chain-analysis" style="color:var(--accent)">github.com/krishnanpareek/tesla-supply-chain-analysis</a>
+    </p>
+  </div>
+</body>
+</html>

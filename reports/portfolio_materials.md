@@ -36,8 +36,8 @@ What I cared about most wasn’t a flashy chart. It was **definitional accuracy*
 
 Stack: Python fact extracts → CSV star-schema tables → HTML/CSS/JS dashboard with hover citations to source files. No Tesla-confidential data. No fabricated numbers.
 
-Repo: https://github.com/krishnanpareek/tesla-supply-chain-analysis  
-Start at `dashboard/page01_executive_overview.html`
+Live dashboard: https://krishnanpareek.github.io/tesla-supply-chain-analysis/  
+Code: https://github.com/krishnanpareek/tesla-supply-chain-analysis
 
 If you work in supply chain, demand planning, inventory, or procurement analytics and like projects that survive “where did that number come from?” — I’d love feedback.
 

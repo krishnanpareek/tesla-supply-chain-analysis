@@ -12,7 +12,10 @@ Public-data portfolio project analyzing Tesla’s production and delivery trends
 
 ## View the dashboard
 
-Start here: [`dashboard/page01_executive_overview.html`](dashboard/page01_executive_overview.html)
+**Live site (GitHub Pages):** [https://krishnanpareek.github.io/tesla-supply-chain-analysis/](https://krishnanpareek.github.io/tesla-supply-chain-analysis/)
+
+Local / repo entry: [`index.html`](index.html) → links to all six pages.  
+Or open [`dashboard/page01_executive_overview.html`](dashboard/page01_executive_overview.html) directly.
 
 | Page | File | Focus |
 |------|------|--------|
